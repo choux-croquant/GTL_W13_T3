@@ -43,6 +43,7 @@
 #include "imgui/imgui_curve.h"
 #include "Math/Transform.h"
 #include "Animation/AnimStateMachine.h"
+#include "Components/SocketComponent.h"
 #include "Particles/ParticleEmitter.h"
 #include "Particles/ParticleSystem.h"
 #include "Particles/ParticleSystemComponent.h"
@@ -101,27 +102,6 @@ void PropertyEditorPanel::Render()
     if (SelectedActor)
     {
         RenderForActor(SelectedActor, TargetComponent);
-
-        if (ASequencerPlayer* SP = Cast<ASequencerPlayer>(SelectedActor))
-        {
-            FString Label = SP->Socket.ToString();
-            if (ImGui::InputText("##Socket", GetData(Label), 256))
-            {
-                SP->Socket = Label;
-            }
-
-            if (ImGui::BeginCombo("##Parent", "Parent", ImGuiComboFlags_None))
-            {
-                for (auto It : TObjectRange<USkeletalMeshComponent>())
-                {
-                    if (ImGui::Selectable(GetData(It->GetName()), false))
-                    {
-                        SP->SkeletalMeshComponent = It;
-                    }
-                }
-                ImGui::EndCombo();
-            }
-        }
     }
     
     if (UAmbientLightComponent* LightComponent = GetTargetComponent<UAmbientLightComponent>(SelectedActor, SelectedComponent))
@@ -181,6 +161,11 @@ void PropertyEditorPanel::Render()
     if (UParticleSystemComponent* ParticleSystemComponent = GetTargetComponent<UParticleSystemComponent>(SelectedActor, SelectedComponent))
     {
         RenderForParticleSystem(ParticleSystemComponent);
+    }
+
+    if (USocketComponent* SocketComponent = GetTargetComponent<USocketComponent>(SelectedActor, SelectedComponent))
+    {
+        RenderForSocketComponent(SocketComponent);
     }
 
     if (SelectedActor)
@@ -788,6 +773,40 @@ void PropertyEditorPanel::RenderForPhysicsAsset(const USkeletalMeshComponent* Sk
         ImGui::TreePop();
     }
     ImGui::PopStyleColor();
+}
+
+void PropertyEditorPanel::RenderForSocketComponent(USocketComponent* SocketComponent) const
+{
+    FReferenceSkeleton& RefSkel = SocketComponent->GetRefSkeletal();
+    const TArray<FMeshBoneInfo>& BoneInfos = RefSkel.RawRefBoneInfo;
+    
+    FName& Label = SocketComponent->Socket;
+    
+    if (ImGui::BeginCombo("##SocketBone", *Label.ToString(), ImGuiComboFlags_None))
+    {
+        for (const FMeshBoneInfo& BoneInfo : BoneInfos)
+        {
+            if (ImGui::Selectable(GetData(BoneInfo.Name.ToString()), false))
+            {
+                Label = BoneInfo.Name;
+            }
+        }
+        ImGui::EndCombo();
+    }
+    
+    // FString ParentSkeletalName = SocketComponent->SkeletalMeshComponent ? SocketComponent->SkeletalMeshComponent->GetName() : FString("Parent");
+    //         
+    // if (ImGui::BeginCombo("##Parent", *ParentSkeletalName, ImGuiComboFlags_None))
+    // {
+    //     for (auto It : TObjectRange<USkeletalMeshComponent>())
+    //     {
+    //         if (ImGui::Selectable(GetData(It->GetName()), false))
+    //         {
+    //             SocketComponent->SkeletalMeshComponent = It;
+    //         }
+    //     }
+    //     ImGui::EndCombo();
+    // }
 }
 
 void PropertyEditorPanel::RenderForParticleSystem(UParticleSystemComponent* ParticleSystemComponent) const

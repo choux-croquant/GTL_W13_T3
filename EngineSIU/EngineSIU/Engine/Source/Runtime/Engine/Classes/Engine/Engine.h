@@ -23,6 +23,8 @@ public:
     UAssetManager* AssetManager = nullptr;
     FPhysicsManager* PhysicsManager = nullptr;
 
+    TMap<void*, void*> DuplicationMap;
+    
 protected:
     TArray<FWorldContext*> WorldList;
     int32 NextWorldContextHandle = 0;
