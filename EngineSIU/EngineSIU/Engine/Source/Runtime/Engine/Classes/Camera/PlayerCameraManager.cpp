@@ -334,11 +334,18 @@ void APlayerCameraManager::UpdateViewTarget(FTViewTarget& OutVT, float DeltaTime
     OutVT.POV.Location = OutVT.Target->GetActorLocation();
     OutVT.POV.Rotation = OutVT.Target->GetActorRotation();
     OutVT.POV.Rotation.Roll = 0.0f;
-    
+
 	if (UCameraComponent* CamComp = OutVT.Target->GetComponentByClass<UCameraComponent>())
 	{
 		// Viewing through a camera actor.
 		CamComp->GetCameraView(DeltaTime, OutVT.POV);
+	}
+    else //카메라 안잡히면 씬에있는 아무 카메라 가져오기
+	{
+	    for (auto It: TObjectRange<UCameraComponent>())
+	    {
+	        It->GetCameraView(DeltaTime, OutVT.POV);
+	    }
 	}
     
 	ApplyCameraModifiers(DeltaTime, OutVT.POV);

@@ -711,7 +711,8 @@ void UAssetManager::HandlePhysicsAsset(FAssetInfo& AssetInfo)
      */
     if (USkeletalMesh* PreviewMesh = PhysicsAsset->GetPreviewMesh())
     {
-        PreviewMesh->SetPhysicsAsset(PhysicsAsset);
+        // TODO: 나중에 풀기
+        // PreviewMesh->SetPhysicsAsset(PhysicsAsset);
     }
 }
 

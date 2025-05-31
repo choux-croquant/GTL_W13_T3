@@ -373,7 +373,6 @@ void ControlEditorPanel::CreateModifyButton(const ImVec2 ButtonSize, ImFont* Ico
             { .Label = "SphereCol",         .OBJ = OBJ_SPHERE_COLLISION },
             { .Label = "CapsuleCol",        .OBJ = OBJ_CAPSULE_COLLISION },
             { .Label = "SkeletalMeshActor", .OBJ = OBJ_SKELETALMESH },
-            { .Label = "SequencerPlayer",   .OBJ = OBJ_SEQUENCERPLAYER },
         };
 
         for (const auto& primitive : primitives)
@@ -490,11 +489,6 @@ void ControlEditorPanel::CreateModifyButton(const ImVec2 ButtonSize, ImFont* Ico
                         SpawnedActor->SetActorTickInEditor(true);
                     }
                     break;
-                case OBJ_SEQUENCERPLAYER:
-                {
-                    SpawnedActor = World->SpawnActor<ASequencerPlayer>();
-                    SpawnedActor->SetActorLabel(TEXT("OBJ_SEQUENCERPLAYER"));
-                }
                 case OBJ_CAMERA:
                 case OBJ_PLAYER:
                 case OBJ_END:
