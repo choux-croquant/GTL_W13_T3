@@ -1,0 +1,321 @@
+# Blender 4.4.3 MTL File: 'FinalArena.blend'
+# www.blender.org
+
+newmtl Arch
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+Ps 0.000000
+Pc 0.000000
+Pcr 0.030000
+aniso 0.000000
+anisor 0.000000
+map_Kd P_Arch_initialShadingGroup_BaseColor.png
+map_Pm P_Arch_initialShadingGroup_Metallic.png
+map_Pr P_Arch_initialShadingGroup_Roughness.png
+map_Bump -bm 1.000000 P_Arch_initialShadingGroup_Normal.png
+
+newmtl Bridge
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+Ps 0.000000
+Pc 0.000000
+Pcr 0.030000
+aniso 0.000000
+anisor 0.000000
+map_Kd Bridge_initialShadingGroup_BaseColor.png
+map_Pm Bridge_initialShadingGroup_Metallic.png
+map_Pr Bridge_initialShadingGroup_Roughness.png
+
+newmtl Dome
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+Ps 0.000000
+Pc 0.000000
+Pcr 0.030000
+aniso 0.000000
+anisor 0.000000
+map_Kd Dome_initialShadingGroup_BaseColor.png
+map_Pm Dome_initialShadingGroup_Metallic.png
+map_Pr Dome_initialShadingGroup_Roughness.png
+map_Bump -bm 1.000000 Dome_initialShadingGroup_Normal.png
+
+newmtl Gazebo
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+Ps 0.000000
+Pc 0.000000
+Pcr 0.030000
+aniso 0.000000
+anisor 0.000000
+map_Kd Gazebo_initialShadingGroup_BaseColor.png
+map_Pm Gazebo_initialShadingGroup_Metallic.png
+map_Pr Gazebo_initialShadingGroup_Roughness.png
+map_Bump -bm 1.000000 Gazebo_initialShadingGroup_Normal.png
+
+newmtl MainArena
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+Pr 0.552786
+Pm 0.000000
+Ps 0.000000
+Pc 0.000000
+Pcr 0.030000
+aniso 0.000000
+anisor 0.000000
+map_Kd mainarena_MainArena_BaseColor.png
+map_Bump -bm 1.000000 mainarena_MainArena_Normal.png
+
+newmtl MiddleArch
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+Ps 0.000000
+Pc 0.000000
+Pcr 0.030000
+aniso 0.000000
+anisor 0.000000
+map_Kd Middle_Arch_initialShadingGroup_BaseColor.png
+map_Pm Middle_Arch_initialShadingGroup_Metallic.png
+map_Pr Middle_Arch_initialShadingGroup_Roughness.png
+map_Bump -bm 1.000000 Middle_Arch_initialShadingGroup_Normal.png
+
+newmtl MiddlePilalr
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+Pr 0.552786
+Pm 0.000000
+Ps 0.000000
+Pc 0.000000
+Pcr 0.030000
+aniso 0.000000
+anisor 0.000000
+map_Kd Middle_Pillars_initialShadingGroup_BaseCol.png
+map_Bump -bm 1.000000 Middle_Pillars_initialShadingGroup_Normal.png
+
+newmtl Pillar
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+Ps 0.000000
+Pc 0.000000
+Pcr 0.030000
+aniso 0.000000
+anisor 0.000000
+map_Kd Pillar_initialShadingGroup_BaseColor.png
+map_Pm Pillar_initialShadingGroup_Metallic.png
+map_Pr Pillar_initialShadingGroup_Roughness.png
+map_Bump -bm 1.000000 Pillar_initialShadingGroup_Normal.png
+
+newmtl PillarBroken
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+Pr 0.552786
+Ps 0.000000
+Pc 0.000000
+Pcr 0.030000
+aniso 0.000000
+anisor 0.000000
+map_Kd Pillar_broken_initialShadingGroup_BaseColo.png
+map_Pm Pillar_broken_initialShadingGroup_Metallic.png
+map_Bump -bm 1.000000 Pillar_broken_initialShadingGroup_Normal.png
+
+newmtl SideArch
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+Ps 0.000000
+Pc 0.000000
+Pcr 0.030000
+aniso 0.000000
+anisor 0.000000
+map_Kd SideArch_initialShadingGroup_BaseColor.png
+map_Pm SideArch_initialShadingGroup_Metallic.png
+map_Pr SideArch_initialShadingGroup_Roughness.png
+map_Bump -bm 1.000000 SideArch_initialShadingGroup_Normal.png
+
+newmtl aecondraryarens
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+Ps 0.000000
+Pc 0.000000
+Pcr 0.030000
+aniso 0.000000
+anisor 0.000000
+map_Kd secondary_arena_aecondraryarens_BaseColor.png
+map_Pm secondary_arena_aecondraryarens_Metallic.png
+map_Pr secondary_arena_aecondraryarens_Roughness.png
+map_Bump -bm 1.000000 secondary_arena_aecondraryarens_Normal.png
+
+newmtl archbroken1
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+Pr 0.552786
+Ps 0.000000
+Pc 0.000000
+Pcr 0.030000
+aniso 0.000000
+anisor 0.000000
+map_Kd P_ArchBroken1_initialShadingGroup_BaseColo.png
+map_Pm P_ArchBroken1_initialShadingGroup_Metallic.png
+map_Bump -bm 1.000000 P_ArchBroken1_initialShadingGroup_Normal.png
+
+newmtl archbroken2
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+Pr 0.552786
+Pm 0.000000
+Ps 0.000000
+Pc 0.000000
+Pcr 0.030000
+aniso 0.000000
+anisor 0.000000
+map_Kd P_ArchBroken3_initialShadingGroup_BaseColo.png
+map_Bump -bm 1.000000 P_ArchBroken3_initialShadingGroup_Normal.png
+
+newmtl archbroken3
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+Pr 0.552786
+Pm 0.000000
+Ps 0.000000
+Pc 0.000000
+Pcr 0.030000
+aniso 0.000000
+anisor 0.000000
+map_Kd P_ArchBroken3_initialShadingGroup_BaseColo.png
+map_Bump -bm 1.000000 P_ArchBroken3_initialShadingGroup_Normal.png
+
+newmtl archbroken4
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+Pr 0.552786
+Pm 0.000000
+Ps 0.000000
+Pc 0.000000
+Pcr 0.030000
+aniso 0.000000
+anisor 0.000000
+map_Kd P_ArchBroken4_initialShadingGroup_BaseColo.png
+map_Bump -bm 1.000000 P_ArchBroken4_initialShadingGroup_Normal.png
+
+newmtl atairs
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+Pm 0.000000
+Ps 0.000000
+Pc 0.000000
+Pcr 0.030000
+aniso 0.000000
+anisor 0.000000
+map_Kd Stair_Small_initialShadingGroup_BaseColor.png
+map_Pr Stair_Small_initialShadingGroup_Roughness.png
+map_Bump -bm 1.000000 Stair_Small_initialShadingGroup_Normal.png
+
+newmtl bigstairs
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+Pm 0.000000
+Ps 0.000000
+Pc 0.000000
+Pcr 0.030000
+aniso 0.000000
+anisor 0.000000
+map_Kd Stairs_Large_initialShadingGroup_BaseColor.png
+map_Pr Stairs_Large_initialShadingGroup_Roughness.png
+map_Bump -bm 1.000000 Stairs_Large_initialShadingGroup_Normal.png
+
+newmtl lambert1
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+Pr 0.552786
+Ps 0.000000
+Pc 0.000000
+Pcr 0.030000
+aniso 0.000000
+anisor 0.000000
+map_Kd Pillar_broken_initialShadingGroup_BaseColo.png
+map_Pm Pillar_broken_initialShadingGroup_Metallic.png
+map_Bump -bm 1.000000 Pillar_broken_initialShadingGroup_Normal.png
+
+newmtl little
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+Ps 0.000000
+Pc 0.000000
+Pcr 0.030000
+aniso 0.000000
+anisor 0.000000
+map_Kd Pillar_initialShadingGroup_BaseColor.png
+map_Pm Pillar_initialShadingGroup_Metallic.png
+map_Pr Pillar_initialShadingGroup_Roughness.png
+map_Bump -bm 1.000000 Pillar_initialShadingGroup_Normal.png
+
+newmtl torch
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+Ps 0.000000
+Pc 0.000000
+Pcr 0.030000
+aniso 0.000000
+anisor 0.000000
+map_Kd Torch_initialShadingGroup_BaseColor.png
+map_Pm Torch_initialShadingGroup_Metallic.png
+map_Pr Torch_initialShadingGroup_Roughness.png
+map_Bump -bm 1.000000 Torch_initialShadingGroup_Normal.png
