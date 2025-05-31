@@ -189,19 +189,6 @@
                     }
                 },
                 {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
-                        "ComponentOwner": "APointLight_328",
-                        "ComponentOwnerClass": "APointLight",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
                     "ComponentClass": "UBillboardComponent",
                     "ComponentID": "UBillboardComponent_0",
                     "Properties": {
@@ -224,6 +211,19 @@
                         "bIsActive": "true",
                         "bSimulate": "false",
                         "m_Type": "UBillboardComponent"
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "APointLight_328",
+                        "ComponentOwnerClass": "APointLight",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
                     }
                 },
                 {
@@ -333,6 +333,19 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "APointLight_344",
+                        "ComponentOwnerClass": "APointLight",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
                     "ComponentClass": "UPointLightComponent",
                     "ComponentID": "PointLightComponent_0",
                     "Properties": {
@@ -383,19 +396,6 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
-                        "ComponentOwner": "APointLight_344",
-                        "ComponentOwnerClass": "APointLight",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
                     "ComponentID": "ULuaScriptComponent_351",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
@@ -416,6 +416,19 @@
             "ActorLabel": "APointLight352",
             "ActorTickInEditor": "false",
             "Components": [
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "APointLight_352",
+                        "ComponentOwnerClass": "APointLight",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
                 {
                     "ComponentClass": "UPointLightComponent",
                     "ComponentID": "PointLightComponent_0",
@@ -467,19 +480,6 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
-                        "ComponentOwner": "APointLight_352",
-                        "ComponentOwnerClass": "APointLight",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
                     "ComponentID": "ULuaScriptComponent_359",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
@@ -501,28 +501,16 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
-                    "ComponentClass": "UBillboardComponent",
-                    "ComponentID": "UBillboardComponent_0",
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_367",
                     "Properties": {
-                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
-                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
-                        "AttachParentID": "nullptr",
-                        "BufferKey": "Assets/Editor/Icon/S_LightPoint.PNG",
-                        "ComponentClass": "UBillboardComponent",
-                        "ComponentName": "UBillboardComponent_0",
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_367",
                         "ComponentOwner": "APointLight_360",
                         "ComponentOwnerClass": "APointLight",
-                        "FinalIndexU": "0.000000",
-                        "FinalIndexV": "0.000000",
-                        "RelativeLocation": "X=-201.190 Y=35.080 Z=42.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
-                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "RigidBodyType": "1",
-                        "bApplyGravity": "false",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
                         "bAutoActive": "true",
-                        "bIsActive": "true",
-                        "bSimulate": "false",
-                        "m_Type": "UBillboardComponent"
+                        "bIsActive": "true"
                     }
                 },
                 {
@@ -550,24 +538,36 @@
                     }
                 },
                 {
+                    "ComponentClass": "UBillboardComponent",
+                    "ComponentID": "UBillboardComponent_0",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "AttachParentID": "nullptr",
+                        "BufferKey": "Assets/Editor/Icon/S_LightPoint.PNG",
+                        "ComponentClass": "UBillboardComponent",
+                        "ComponentName": "UBillboardComponent_0",
+                        "ComponentOwner": "APointLight_360",
+                        "ComponentOwnerClass": "APointLight",
+                        "FinalIndexU": "0.000000",
+                        "FinalIndexV": "0.000000",
+                        "RelativeLocation": "X=-201.190 Y=35.080 Z=42.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "RigidBodyType": "1",
+                        "bApplyGravity": "false",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "bSimulate": "false",
+                        "m_Type": "UBillboardComponent"
+                    }
+                },
+                {
                     "ComponentClass": "ULuaScriptComponent",
                     "ComponentID": "LuaComponent",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
                         "ComponentName": "LuaComponent",
-                        "ComponentOwner": "APointLight_360",
-                        "ComponentOwnerClass": "APointLight",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_367",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_367",
                         "ComponentOwner": "APointLight_360",
                         "ComponentOwnerClass": "APointLight",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -584,19 +584,6 @@
             "ActorLabel": "OBJ_FOG_518",
             "ActorTickInEditor": "false",
             "Components": [
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
-                        "ComponentOwner": "AHeightFogActor_518",
-                        "ComponentOwnerClass": "AHeightFogActor",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
                 {
                     "ComponentClass": "UHeightFogComponent",
                     "ComponentID": "UHeightFogComponent_0",
@@ -624,14 +611,27 @@
                         "bSimulate": "false",
                         "m_Type": ""
                     }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "AHeightFogActor_518",
+                        "ComponentOwnerClass": "AHeightFogActor",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
                 }
             ],
             "RootComponentID": "UHeightFogComponent_0"
         },
         {
             "ActorClass": "ASkeletalMeshActor",
-            "ActorID": "ASkeletalMeshActor_522",
-            "ActorLabel": "ASkeletalMeshActor522",
+            "ActorID": "ASkeletalMeshActor_391",
+            "ActorLabel": "ASkeletalMeshActor391",
             "ActorTickInEditor": "true",
             "Components": [
                 {
@@ -640,54 +640,7 @@
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
                         "ComponentName": "LuaComponent",
-                        "ComponentOwner": "ASkeletalMeshActor_522",
-                        "ComponentOwnerClass": "ASkeletalMeshActor",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "USkeletalMeshComponent",
-                    "ComponentID": "SkeletalMeshComponent",
-                    "Properties": {
-                        "AABB_max": "X=95.483 Y=154.317 Z=215.966",
-                        "AABB_min": "X=-52.106 Y=-120.246 Z=-2.274",
-                        "AnimClass": "None",
-                        "AnimationMode": "0",
-                        "AttachParentID": "nullptr",
-                        "ComponentClass": "USkeletalMeshComponent",
-                        "ComponentName": "SkeletalMeshComponent",
-                        "ComponentOwner": "ASkeletalMeshActor_522",
-                        "ComponentOwnerClass": "ASkeletalMeshActor",
-                        "RelativeLocation": "X=-49.416 Y=1.197 Z=1.818",
-                        "RelativeRotation": "Pitch=0.000 Yaw=2.200 Roll=-0.000",
-                        "RelativeScale3D": "X=0.200 Y=0.200 Z=0.200",
-                        "RigidBodyType": "1",
-                        "SkeletalMeshKey": "Contents/Player/Parrying1",
-                        "bApplyGravity": "false",
-                        "bAutoActive": "true",
-                        "bIsActive": "true",
-                        "bSimulate": "false",
-                        "m_Type": ""
-                    }
-                }
-            ],
-            "RootComponentID": "SkeletalMeshComponent"
-        },
-        {
-            "ActorClass": "ASkeletalMeshActor",
-            "ActorID": "ASkeletalMeshActor_534",
-            "ActorLabel": "ASkeletalMeshActor534",
-            "ActorTickInEditor": "true",
-            "Components": [
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
-                        "ComponentOwner": "ASkeletalMeshActor_534",
+                        "ComponentOwner": "ASkeletalMeshActor_391",
                         "ComponentOwnerClass": "ASkeletalMeshActor",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
                         "bAutoActive": "true",
@@ -705,13 +658,62 @@
                         "AttachParentID": "nullptr",
                         "ComponentClass": "USkeletalMeshComponent",
                         "ComponentName": "SkeletalMeshComponent",
-                        "ComponentOwner": "ASkeletalMeshActor_534",
+                        "ComponentOwner": "ASkeletalMeshActor_391",
                         "ComponentOwnerClass": "ASkeletalMeshActor",
-                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=178.000 Roll=-0.000",
+                        "RelativeLocation": "X=-38.153 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=0.300 Y=0.300 Z=0.300",
                         "RigidBodyType": "1",
                         "SkeletalMeshKey": "Contents/GameJamEnemy/GameJamEnemy",
+                        "StateMachineFileName": "LuaScripts/Animations/DefaultStateMachine.lua",
+                        "bApplyGravity": "false",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "bSimulate": "false",
+                        "m_Type": ""
+                    }
+                }
+            ],
+            "RootComponentID": "SkeletalMeshComponent"
+        },
+        {
+            "ActorClass": "ASkeletalMeshActor",
+            "ActorID": "ASkeletalMeshActor_452",
+            "ActorLabel": "ASkeletalMeshActor452",
+            "ActorTickInEditor": "true",
+            "Components": [
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "ASkeletalMeshActor_452",
+                        "ComponentOwnerClass": "ASkeletalMeshActor",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "USkeletalMeshComponent",
+                    "ComponentID": "SkeletalMeshComponent",
+                    "Properties": {
+                        "AABB_max": "X=95.483 Y=154.317 Z=215.966",
+                        "AABB_min": "X=-52.106 Y=-120.246 Z=-2.274",
+                        "AnimClass": "None",
+                        "AnimationMode": "0",
+                        "AttachParentID": "nullptr",
+                        "ComponentClass": "USkeletalMeshComponent",
+                        "ComponentName": "SkeletalMeshComponent",
+                        "ComponentOwner": "ASkeletalMeshActor_452",
+                        "ComponentOwnerClass": "ASkeletalMeshActor",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=180.000 Roll=-0.000",
+                        "RelativeScale3D": "X=0.200 Y=0.200 Z=0.200",
+                        "RigidBodyType": "1",
+                        "SkeletalMeshKey": "Contents/Player/Parrying1",
+                        "StateMachineFileName": "LuaScripts/Animations/DefaultStateMachine.lua",
                         "bApplyGravity": "false",
                         "bAutoActive": "true",
                         "bIsActive": "true",
