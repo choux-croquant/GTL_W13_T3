@@ -55,6 +55,8 @@ void UAnimStateMachine::InitLuaStateMachine()
     FLuaScriptManager::Get().RegisterActiveAnimLua(this);
     if (!LuaTable.valid())
         return;
+
+    LuaTable["OwnerCharacter"] = Cast<AActor>(OwningComponent->GetOwner());
 }
 
 
