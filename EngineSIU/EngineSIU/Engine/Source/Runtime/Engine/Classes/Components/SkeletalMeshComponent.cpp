@@ -42,6 +42,7 @@ UObject* USkeletalMeshComponent::Duplicate(UObject* InOuter)
 {
     ThisClass* NewComponent = Cast<ThisClass>(Super::Duplicate(InOuter));
 
+    NewComponent->StateMachineFileName = StateMachineFileName;
     NewComponent->SetRelativeTransform(GetRelativeTransform());
     NewComponent->SetSkeletalMeshAsset(SkeletalMeshAsset);
     NewComponent->SetAnimationMode(AnimationMode);
@@ -87,6 +88,8 @@ void USkeletalMeshComponent::SetProperties(const TMap<FString, FString>& InPrope
         UClass* InAnimClass = UClass::FindClass(InProperties["AnimClass"]);
         SetAnimClass(InAnimClass);
     }
+
+    StateMachineFileName = FString(InProperties["StateMachineFileName"]);
 
     if (AnimationMode == EAnimationMode::AnimationSingleNode)
     {
@@ -144,6 +147,11 @@ void USkeletalMeshComponent::GetProperties(TMap<FString, FString>& OutProperties
         }
     }
     OutProperties.Add(TEXT("AnimClass"), AnimClassStr);
+
+    FString StateMachineFileNameStr = FName().ToString();
+    StateMachineFileNameStr = StateMachineFileName;
+
+    OutProperties.Add(TEXT("StateMachineFileName"), StateMachineFileNameStr);
 
     if (AnimationMode == EAnimationMode::AnimationSingleNode)
     {

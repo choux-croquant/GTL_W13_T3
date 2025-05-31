@@ -3,20 +3,12 @@ AnimFSM = {
     Update = function(self, dt)
 
         -- self.current = "Contents/Fbx/Capoeira.fbx"
-
-        local Exciting = self.Owner.Exciting
-
-        if Exciting < 2 then
-            self.current = "Contents/Fbx/Capoeira.fbx"
-        else
-            self.current = "Contents/Fbx/Twerkbin.fbx"
-        end
-
-        self.current = "Contents/Fbx/Twerkbin.fbx"
+        self.current = "Contents/Enemy_Idle/Armature|Enemy_Idle"
+        -- self.current = "Contents/Combo_RLU/Armature|Combo_RLU"
 
         return {
             anim = self.current,
-            blend = 10.0
+            blend = 5.0
         }
     end
 }
