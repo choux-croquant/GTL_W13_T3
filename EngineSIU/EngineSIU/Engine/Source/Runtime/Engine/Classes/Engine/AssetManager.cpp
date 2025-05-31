@@ -561,7 +561,7 @@ void UAssetManager::AddToAssetMap(const FAssetLoadResult& Result, const FString&
         FString BaseAssetName = Animation->GetName();
 
         FAssetInfo Info = BaseAssetInfo;
-        Info.AssetName = FName(BaseName+BaseAssetName);
+        Info.AssetName = FName(BaseAssetName);
         Info.AssetType = EAssetType::Animation;
         Info.AssetObject = Animation;
         
