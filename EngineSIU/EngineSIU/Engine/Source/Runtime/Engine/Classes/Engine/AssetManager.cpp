@@ -561,7 +561,7 @@ void UAssetManager::AddToAssetMap(const FAssetLoadResult& Result, const FString&
         FString BaseAssetName = Animation->GetName();
 
         FAssetInfo Info = BaseAssetInfo;
-        Info.AssetName = FName(BaseAssetName);
+        Info.AssetName = FName(BaseName+BaseAssetName);
         Info.AssetType = EAssetType::Animation;
         Info.AssetObject = Animation;
         
@@ -711,7 +711,8 @@ void UAssetManager::HandlePhysicsAsset(FAssetInfo& AssetInfo)
      */
     if (USkeletalMesh* PreviewMesh = PhysicsAsset->GetPreviewMesh())
     {
-        PreviewMesh->SetPhysicsAsset(PhysicsAsset);
+        // TODO: 나중에 풀기
+        // PreviewMesh->SetPhysicsAsset(PhysicsAsset);
     }
 }
 

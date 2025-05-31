@@ -4,6 +4,7 @@
 #include "Components/ActorComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/SceneComponent.h"
+#include "Components/SocketComponent.h"
 #include "GameFramework/Actor.h"
 #include "UnrealEd/EditorPanel.h"
 #include "Math/Rotator.h"
@@ -66,6 +67,7 @@ private:
     void RenderForStaticMesh(UStaticMeshComponent* StaticMeshComp) const;
     void RenderForSkeletalMesh(USkeletalMeshComponent* SkeletalMeshComp) const;
     void RenderForPhysicsAsset(const USkeletalMeshComponent* SkeletalMeshComp) const;
+    void RenderForSocketComponent(USocketComponent* SocketComponent) const;
     void RenderForParticleSystem(UParticleSystemComponent* ParticleSystemComponent) const;
 
     void RenderForAmbientLightComponent(UAmbientLightComponent* AmbientLightComponent) const;

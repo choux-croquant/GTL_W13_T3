@@ -57,6 +57,8 @@ UObject* USkeletalMeshComponent::Duplicate(UObject* InOuter)
     }
     NewComponent->SetLooping(this->IsLooping());
     NewComponent->SetPlaying(this->IsPlaying());
+
+    GEngine->DuplicationMap[this] = NewComponent;
     return NewComponent;
 }
 
