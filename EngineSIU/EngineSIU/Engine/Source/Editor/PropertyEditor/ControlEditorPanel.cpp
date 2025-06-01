@@ -374,6 +374,7 @@ void ControlEditorPanel::CreateModifyButton(const ImVec2 ButtonSize, ImFont* Ico
             { .Label = "SphereCol",         .OBJ = OBJ_SPHERE_COLLISION },
             { .Label = "CapsuleCol",        .OBJ = OBJ_CAPSULE_COLLISION },
             { .Label = "SkeletalMeshActor", .OBJ = OBJ_SKELETALMESH },
+            { .Label = "Hero",             .OBJ = OBJ_HERO},
             { .Label = "Enemy",             .OBJ = OBJ_ENEMY},
         };
 
@@ -495,6 +496,10 @@ void ControlEditorPanel::CreateModifyButton(const ImVec2 ButtonSize, ImFont* Ico
                     {
                         SpawnedActor = World->SpawnActor<AEnemy>();
                     }
+                case OBJ_HERO:
+                {
+                    SpawnedActor = World->SpawnActor<AHeroPlayer>();
+                }
                 break;
                 case OBJ_CAMERA:
                 case OBJ_PLAYER:

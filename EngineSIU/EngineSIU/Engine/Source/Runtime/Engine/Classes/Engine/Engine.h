@@ -24,6 +24,7 @@ public:
     FPhysicsManager* PhysicsManager = nullptr;
 
     TMap<void*, void*> DuplicationMap;
+    TArray<AActor*> DupActors;
     
 protected:
     TArray<FWorldContext*> WorldList;

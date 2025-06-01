@@ -17,6 +17,8 @@ public:
     virtual void NativeInitializeAnimation() override;
 
     virtual void NativeUpdateAnimation(float DeltaSeconds, FPoseContext& OutPose) override;
+
+    UAnimStateMachine* GetStateMachine(){ return StateMachine; }
     
     void SetPlaying(bool bIsPlaying)
     {

@@ -2,6 +2,10 @@
 
 void UInputComponent::ProcessInput(float DeltaTime)
 {
+    if (PressedKeys.Contains(EKeys::Q))
+    {
+        KeyBindDelegate[FString("Q")].Broadcast(DeltaTime);
+    }
     if (PressedKeys.Contains(EKeys::W))
     {
         KeyBindDelegate[FString("W")].Broadcast(DeltaTime);
@@ -71,6 +75,18 @@ void UInputComponent::InputKey(const FKeyEvent& InKeyEvent)
     // 일반적인 단일 키 이벤트
     switch (InKeyEvent.GetCharacter())
     {
+    case 'Q':
+        {
+            if (InKeyEvent.GetInputEvent() == IE_Pressed)
+            {
+                PressedKeys.Add(EKeys::Q);
+            }
+            else if (InKeyEvent.GetInputEvent() == IE_Released)
+            {
+                PressedKeys.Remove(EKeys::Q);
+            }
+            break;
+        }
     case 'W':
         {
             if (InKeyEvent.GetInputEvent() == IE_Pressed)

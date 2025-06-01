@@ -18,6 +18,7 @@
 #include "World/ParticleViewerWorld.h"
 #include "Physics/PhysicsManager.h"
 #include "SkeletalMesh.h"
+#include "Components/SocketComponent.h"
 #include "PhysicsEngine/PhysicsAsset.h"
 #include "Particles/ParticleSystem.h"
 
@@ -113,7 +114,7 @@ void UEditorEngine::Tick(float DeltaTime)
                         for (const auto& Comp : Actor->GetComponents())
                         {
                             // 파티클 컴포넌트는 항상 Tick 호출
-                            if (bActorTickInEditor || Comp->IsA<UParticleSystemComponent>())
+                            if (bActorTickInEditor || Comp->IsA<UParticleSystemComponent>() || Comp->IsA<USocketComponent>())
                             {
                                 Comp->TickComponent(DeltaTime);
                             }
@@ -277,6 +278,7 @@ void UEditorEngine::StartPIE()
     BindEssentialObjects();
     
     PIEWorld->BeginPlay();
+
     // 여기서 Actor들의 BeginPlay를 해줄지 안에서 해줄 지 고민.
     // WorldList.Add(GetWorldContextFromWorld(PIEWorld));
 }

@@ -1,10 +1,11 @@
-#include "Enemy.h"
+﻿#include "Enemy.h"
 #include "Components/SkeletalMeshComponent.h"
 
 void AEnemy::PostSpawnInitialize()
 {
     Super::PostSpawnInitialize();
 
+    // SetActorTickInEditor(true);
     SkeletalMeshComponent = AddComponent<USkeletalMeshComponent>("SkeletalMeshComponent");
     SkeletalMeshComponent->SetSkeletalMeshAsset(UAssetManager::Get().GetSkeletalMesh(FName("Contents/GameJamEnemy/GameJamEnemy")));
     SkeletalMeshComponent->StateMachineFileName = TEXT("LuaScripts/Animations/EnemyStateMachine.lua");

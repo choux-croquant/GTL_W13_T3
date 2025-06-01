@@ -1,6 +1,7 @@
 #include "Actor.h"
 
 #include "Components/PrimitiveComponent.h"
+#include "Engine/Engine.h"
 #include "World/World.h"
 
 #include "Lua/LuaScriptComponent.h"
@@ -99,6 +100,8 @@ UObject* AActor::Duplicate(UObject* InOuter)
     // LuaScriptComponent는 무조건 하나만 있다고 가정하고 위에서 복사된 컴포넌트를 대입.
     NewActor->LuaScriptComponent = NewActor->GetComponentByClass<ULuaScriptComponent>();
 
+    GEngine->DupActors.Add(NewActor);
+    
     return NewActor;
 }
 
