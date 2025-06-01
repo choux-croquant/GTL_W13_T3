@@ -36,11 +36,19 @@ void UAnimStateMachine::ProcessState()
     sol::table StateInfo = result.as<sol::table>();
     FString StateName = StateInfo["anim"].get_or(std::string("")).c_str();
     float Blend = StateInfo["blend"].get_or(0.f);
+    bool bLoop = StateInfo["loop"].get_or(true);
+    float RateScale = StateInfo["rate_scale"].get_or(1.0f);
 
-    if (OwningAnimInstance)
+    if (OwningAnimInstance && !StateName.IsEmpty())
     {
         UAnimSequence* NewAnim = Cast<UAnimSequence>(UAssetManager::Get().GetAnimation(StateName));
-        OwningAnimInstance->SetAnimation(NewAnim, Blend, false, false);
+        if (NewAnim)
+        {
+            // 애니메이션 속성 설정
+            OwningAnimInstance->SetLooping(bLoop);
+            OwningAnimInstance->SetPlayRate(RateScale);
+            OwningAnimInstance->SetAnimation(NewAnim, Blend, false, false);
+        }
     }
 }
 
