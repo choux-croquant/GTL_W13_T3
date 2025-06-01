@@ -37,12 +37,11 @@
 #include "Renderer/ShadowManager.h"
 #include "UnrealEd/EditorViewportClient.h"
 #include "UObject/UObjectIterator.h"
-#include "LuaScripts/LuaScriptComponent.h"
-#include "LuaScripts/LuaScriptFileUtils.h"
 #include "imgui/imgui_bezier.h"
 #include "imgui/imgui_curve.h"
 #include "Math/Transform.h"
 #include "Animation/AnimStateMachine.h"
+#include "Components/SocketComponent.h"
 #include "Particles/ParticleEmitter.h"
 #include "Particles/ParticleSystem.h"
 #include "Particles/ParticleSystemComponent.h"
@@ -101,27 +100,6 @@ void PropertyEditorPanel::Render()
     if (SelectedActor)
     {
         RenderForActor(SelectedActor, TargetComponent);
-
-        if (ASequencerPlayer* SP = Cast<ASequencerPlayer>(SelectedActor))
-        {
-            FString Label = SP->Socket.ToString();
-            if (ImGui::InputText("##Socket", GetData(Label), 256))
-            {
-                SP->Socket = Label;
-            }
-
-            if (ImGui::BeginCombo("##Parent", "Parent", ImGuiComboFlags_None))
-            {
-                for (auto It : TObjectRange<USkeletalMeshComponent>())
-                {
-                    if (ImGui::Selectable(GetData(It->GetName()), false))
-                    {
-                        SP->SkeletalMeshComponent = It;
-                    }
-                }
-                ImGui::EndCombo();
-            }
-        }
     }
     
     if (UAmbientLightComponent* LightComponent = GetTargetComponent<UAmbientLightComponent>(SelectedActor, SelectedComponent))
@@ -181,6 +159,11 @@ void PropertyEditorPanel::Render()
     if (UParticleSystemComponent* ParticleSystemComponent = GetTargetComponent<UParticleSystemComponent>(SelectedActor, SelectedComponent))
     {
         RenderForParticleSystem(ParticleSystemComponent);
+    }
+
+    if (USocketComponent* SocketComponent = GetTargetComponent<USocketComponent>(SelectedActor, SelectedComponent))
+    {
+        RenderForSocketComponent(SocketComponent);
     }
 
     if (SelectedActor)
@@ -350,65 +333,6 @@ void PropertyEditorPanel::RenderForActor(AActor* SelectedActor, USceneComponent*
     }
     
     FString BasePath = FString(L"LuaScripts\\");
-    FString LuaDisplayPath;
-    
-    if (SelectedActor->GetComponentByClass<ULuaScriptComponent>())
-    {
-        LuaDisplayPath = SelectedActor->GetComponentByClass<ULuaScriptComponent>()->GetDisplayName();
-        if (ImGui::Button("Edit Script"))
-        {
-            // 예: PickedActor에서 스크립트 경로를 받아옴
-            if (auto* ScriptComp = SelectedActor->GetComponentByClass<ULuaScriptComponent>())
-            {
-                std::wstring ws = (BasePath + ScriptComp->GetDisplayName()).ToWideString();
-                LuaScriptFileUtils::OpenLuaScriptFile(ws.c_str());
-            }
-        }
-    }
-    else
-    {
-        // Add Lua Script
-        if (ImGui::Button("Create Script"))
-        {
-            // Lua Script Component 생성 및 추가
-            ULuaScriptComponent* NewScript = SelectedActor->AddComponent<ULuaScriptComponent>();
-            FString LuaFilePath = NewScript->GetScriptPath();
-            std::filesystem::path FilePath = std::filesystem::path(GetData(LuaFilePath));
-            
-            try
-            {
-                std::filesystem::path Dir = FilePath.parent_path();
-                if (!std::filesystem::exists(Dir))
-                {
-                    std::filesystem::create_directories(Dir);
-                }
-
-                std::ifstream luaTemplateFile(TemplateFilePath.ToWideString());
-
-                std::ofstream file(FilePath);
-                if (file.is_open())
-                {
-                    if (luaTemplateFile.is_open())
-                    {
-                        file << luaTemplateFile.rdbuf();
-                    }
-                    // 생성 완료
-                    file.close();
-                }
-                else
-                {
-                    MessageBoxA(nullptr, "Failed to Create Script File for writing: ", "Error", MB_OK | MB_ICONERROR);
-                }
-            }
-            catch (const std::filesystem::filesystem_error& e)
-            {
-                MessageBoxA(nullptr, "Failed to Create Script File for writing: ", "Error", MB_OK | MB_ICONERROR);
-            }
-            LuaDisplayPath = NewScript->GetDisplayName();
-        }
-    }
-    ImGui::InputText("Script File", GetData(LuaDisplayPath), IM_ARRAYSIZE(*LuaDisplayPath),
-        ImGuiInputTextFlags_ReadOnly);
 
     if (ImGui::TreeNodeEx("Component", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen)) // 트리 노드 생성
     {
@@ -541,7 +465,7 @@ void PropertyEditorPanel::RenderForSkeletalMesh(USkeletalMeshComponent* Skeletal
             {
                 SkeletalMeshComp->SetAnimationMode(EAnimationMode::AnimationBlueprint);
                 CurrentAnimationMode = EAnimationMode::AnimationBlueprint;
-                SkeletalMeshComp->SetAnimClass(UClass::FindClass(FName("UMyAnimInstance")));
+                SkeletalMeshComp->SetAnimClass(UClass::FindClass(FName("ULuaScriptAnimInstance")));
             }
             if (ImGui::Selectable("Animation Asset", CurrentAnimationMode == EAnimationMode::AnimationSingleNode))
             {
@@ -788,6 +712,40 @@ void PropertyEditorPanel::RenderForPhysicsAsset(const USkeletalMeshComponent* Sk
         ImGui::TreePop();
     }
     ImGui::PopStyleColor();
+}
+
+void PropertyEditorPanel::RenderForSocketComponent(USocketComponent* SocketComponent) const
+{
+    FReferenceSkeleton& RefSkel = SocketComponent->GetRefSkeletal();
+    const TArray<FMeshBoneInfo>& BoneInfos = RefSkel.RawRefBoneInfo;
+    
+    FName& Label = SocketComponent->Socket;
+    
+    if (ImGui::BeginCombo("##SocketBone", *Label.ToString(), ImGuiComboFlags_None))
+    {
+        for (const FMeshBoneInfo& BoneInfo : BoneInfos)
+        {
+            if (ImGui::Selectable(GetData(BoneInfo.Name.ToString()), false))
+            {
+                Label = BoneInfo.Name;
+            }
+        }
+        ImGui::EndCombo();
+    }
+    
+    // FString ParentSkeletalName = SocketComponent->SkeletalMeshComponent ? SocketComponent->SkeletalMeshComponent->GetName() : FString("Parent");
+    //         
+    // if (ImGui::BeginCombo("##Parent", *ParentSkeletalName, ImGuiComboFlags_None))
+    // {
+    //     for (auto It : TObjectRange<USkeletalMeshComponent>())
+    //     {
+    //         if (ImGui::Selectable(GetData(It->GetName()), false))
+    //         {
+    //             SocketComponent->SkeletalMeshComponent = It;
+    //         }
+    //     }
+    //     ImGui::EndCombo();
+    // }
 }
 
 void PropertyEditorPanel::RenderForParticleSystem(UParticleSystemComponent* ParticleSystemComponent) const

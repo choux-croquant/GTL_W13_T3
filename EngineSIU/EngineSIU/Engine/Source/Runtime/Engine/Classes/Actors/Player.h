@@ -67,23 +67,36 @@ public:
     virtual void Tick(float DeltaTime) override;
 };
 
-#pragma region W10
-class ASequencerPlayer : public APlayer
+DECLARE_MULTICAST_DELEGATE_TwoParams(FOnHealthChanged, int32 /* CurrentHealth */, int32 /* MaxHealth */);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnHeroDied, bool /* DieByHealth */);
+DECLARE_MULTICAST_DELEGATE(FOnParry);
+// DECLARE_MULTICAST_DELEGATE_
+
+class AHeroPlayer : public APlayer
 {
-    DECLARE_CLASS(ASequencerPlayer, APlayer)
-
+    DECLARE_CLASS(AHeroPlayer, APlayer)
 public:
-    ASequencerPlayer();
-    virtual ~ASequencerPlayer() override = default;
-
-    virtual void PostSpawnInitialize() override;
-    virtual void Tick(float DeltaTime) override;
+    
+    AHeroPlayer() = default;
+    virtual void BeginPlay() override;
+    void GetDamaged(AActor* OverlappedActor, AActor* OtherActor);
+    void Parry(AActor* OverlappedActor, AActor* OtherActor);
     virtual UObject* Duplicate(UObject* InOuter) override;
+    virtual void Tick(float DeltaTime) override;
 
-    FName Socket = "jx_c_camera";
-    USkeletalMeshComponent* SkeletalMeshComponent = nullptr;
+    void ResetHero();
 
+    FOnHealthChanged OnHealthChanged;
+    FOnHeroDied OnHeroDied;
+    FOnParry OnParry;
+
+    void SetHealth(float InHealth);
+    bool IsDead();
+    float GetHealth();
+    float GetMaxHealth();
 private:
-    UCameraComponent* CameraComponent = nullptr;
+    UPROPERTY
+    (EditAnywhere, float, MaxHealth, = 3.f);
+    UPROPERTY
+    (EditAnywhere, float, Health, = 3.f);
 };
-#pragma endregion

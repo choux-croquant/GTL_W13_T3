@@ -165,8 +165,10 @@ void ParticleViewerPanel::RenderToolbarPanel() const
     }
     
     ImGui::SameLine();
-    if (ImGui::Button("Tool 2", ImVec2(80, 30))) {
-        // Tool 2 액션
+    if (ImGui::Button("Save", ImVec2(80, 30))) {
+        FName PackagePath = TEXT("Contents/ParticleSystem");
+        const FAssetInfo& Info = UAssetManager::Get().GetAssetRegistry()[PackagePath.ToString() / ParticleSystem->GetFName().ToString()];
+        UAssetManager::Get().SaveParticleSystemAsset(Info.GetFullPath(), ParticleSystem);
     }
     
     ImGui::SameLine();

@@ -1,5 +1,6 @@
 #include "Player.h"
 
+#include "Enemy.h"
 #include "UnrealClient.h"
 #include "World/World.h"
 #include "BaseGizmos/GizmoArrowComponent.h"
@@ -629,38 +630,101 @@ void APlayer::Tick(float DeltaTime)
     AActor::Tick(DeltaTime);
 }
 
-ASequencerPlayer::ASequencerPlayer()
+void AHeroPlayer::BeginPlay()
 {
-}
+    APlayer::BeginPlay();
 
-void ASequencerPlayer::PostSpawnInitialize()
-{
-    APlayer::PostSpawnInitialize();
+    //기본적으로 제공되는 BeginOverlap. Component에서 불림
+    OnActorBeginOverlap.AddLambda(
+        [this](AActor* OverlappedActor, AActor* OtherActor)
+        {
+            GetDamaged(OverlappedActor, OtherActor);
+        }
+    );
+
+    OnHealthChanged.AddLambda(
+        [this](int32 InHealth, int32 InMaxHealth)
+        {
+            //딱히 뭐 필요없을수도
+        }
+    );
+
+    OnHeroDied.AddLambda(
+        [this](bool bDieByHealth)
+        {
+            //TODO: 게임오버 이벤트, RagDoll 전환?
+        }
+    );
+
+    OnParry.AddLambda(
+        [this]()
+        {
+            UE_LOG(ELogLevel::Error,"Parry");
+            //TODO: 적이 나한테 구독해야함, 그로기 게이지 증가 등
+            //TODO: 패리 사운드 실행
+        }
+    );
     
-    RootComponent = AddComponent<USceneComponent>();
-
-    CameraComponent = AddComponent<UCameraComponent>();
-    CameraComponent->SetupAttachment(RootComponent);
 }
 
-void ASequencerPlayer::Tick(float DeltaTime)
+void AHeroPlayer::GetDamaged(AActor* OverlappedActor, AActor* OtherActor)
 {
-    APlayer::Tick(DeltaTime);
-
-    if (SkeletalMeshComponent)
+    if (OtherActor->IsA<AEnemy>())
     {
-        const FTransform SocketTransform = SkeletalMeshComponent->GetSocketTransform(Socket);
-        SetActorRotation(SocketTransform.GetRotation().Rotator());
-        SetActorLocation(SocketTransform.GetTranslation());
+        SetHealth(Health - 1);
+
+        //경직 애니메이션 (블렌드)
     }
 }
 
-UObject* ASequencerPlayer::Duplicate(UObject* InOuter)
+void AHeroPlayer::Parry(AActor* OverlappedActor, AActor* OtherActor)
+{
+    OnParry.Broadcast();
+}
+
+UObject* AHeroPlayer::Duplicate(UObject* InOuter)
 {
     ThisClass* NewActor = Cast<ThisClass>(Super::Duplicate(InOuter));
 
-    NewActor->Socket = Socket;
-    NewActor->SkeletalMeshComponent = nullptr;
-
+    NewActor->MaxHealth = MaxHealth;
+    
     return NewActor;
 }
+
+void AHeroPlayer::Tick(float DeltaTime)
+{
+    APlayer::Tick(DeltaTime);
+}
+
+void AHeroPlayer::ResetHero()
+{
+    Health = MaxHealth;
+}
+
+void AHeroPlayer::SetHealth(float InHealth)
+{
+    Health = InHealth;
+
+    OnHealthChanged.Broadcast(GetHealth(), GetMaxHealth());
+
+    if (IsDead() <= 0)
+    {
+        OnHeroDied.Broadcast(true);
+    }
+}
+
+bool AHeroPlayer::IsDead()
+{
+    return Health <= 0;
+}
+
+float AHeroPlayer::GetHealth()
+{
+    return Health;
+}
+
+float AHeroPlayer::GetMaxHealth()
+{
+    return MaxHealth;
+}
+

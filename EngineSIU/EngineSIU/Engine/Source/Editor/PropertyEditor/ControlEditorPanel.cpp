@@ -38,8 +38,11 @@
 #include "GameFramework/PlayerController.h"
 #include "Renderer/CompositingPass.h"
 #include <Engine/FbxLoader.h>
+
+#include "Animation/SkeletalMeshActor.h"
 #include "Engine/Classes/Engine/AssetManager.h"
 #include "Particles/ParticleSystemComponent.h"
+
 
 ControlEditorPanel::ControlEditorPanel()
 {
@@ -370,7 +373,6 @@ void ControlEditorPanel::CreateModifyButton(const ImVec2 ButtonSize, ImFont* Ico
             { .Label = "SphereCol",         .OBJ = OBJ_SPHERE_COLLISION },
             { .Label = "CapsuleCol",        .OBJ = OBJ_CAPSULE_COLLISION },
             { .Label = "SkeletalMeshActor", .OBJ = OBJ_SKELETALMESH },
-            { .Label = "SequencerPlayer",   .OBJ = OBJ_SEQUENCERPLAYER },
         };
 
         for (const auto& primitive : primitives)
@@ -483,18 +485,10 @@ void ControlEditorPanel::CreateModifyButton(const ImVec2 ButtonSize, ImFont* Ico
                 }
                 case OBJ_SKELETALMESH:
                     {
-                        SpawnedActor = World->SpawnActor<AActor>();
+                        SpawnedActor = World->SpawnActor<ASkeletalMeshActor>();
                         SpawnedActor->SetActorTickInEditor(true);
-                        auto* MeshComp = SpawnedActor->AddComponent<USkeletalMeshComponent>();
-                        SpawnedActor->SetRootComponent(MeshComp);
-                        SpawnedActor->SetActorLabel(TEXT("OBJ_SKELETALMESH"));
                     }
                     break;
-                case OBJ_SEQUENCERPLAYER:
-                {
-                    SpawnedActor = World->SpawnActor<ASequencerPlayer>();
-                    SpawnedActor->SetActorLabel(TEXT("OBJ_SEQUENCERPLAYER"));
-                }
                 case OBJ_CAMERA:
                 case OBJ_PLAYER:
                 case OBJ_END:

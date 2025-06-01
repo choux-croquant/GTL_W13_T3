@@ -16,11 +16,12 @@
 #include "UObject/Casts.h"
 #include "UObject/ObjectFactory.h"
 #include "PhysicsEngine/ConstraintInstance.h"
+#include <Engine/Contents/AnimInstance/LuaScriptAnimInstance.h>
 
 bool USkeletalMeshComponent::bIsCPUSkinning = false;
 
 USkeletalMeshComponent::USkeletalMeshComponent()
-    : AnimationMode(EAnimationMode::AnimationSingleNode)
+    : AnimationMode(EAnimationMode::AnimationBlueprint)
     , SkeletalMeshAsset(nullptr)
     , AnimClass(nullptr)
     , AnimScriptInstance(nullptr)
@@ -41,6 +42,7 @@ UObject* USkeletalMeshComponent::Duplicate(UObject* InOuter)
 {
     ThisClass* NewComponent = Cast<ThisClass>(Super::Duplicate(InOuter));
 
+    NewComponent->StateMachineFileName = StateMachineFileName;
     NewComponent->SetRelativeTransform(GetRelativeTransform());
     NewComponent->SetSkeletalMeshAsset(SkeletalMeshAsset);
     NewComponent->SetAnimationMode(AnimationMode);
@@ -57,6 +59,8 @@ UObject* USkeletalMeshComponent::Duplicate(UObject* InOuter)
     }
     NewComponent->SetLooping(this->IsLooping());
     NewComponent->SetPlaying(this->IsPlaying());
+
+    GEngine->DuplicationMap[this] = NewComponent;
     return NewComponent;
 }
 
@@ -84,6 +88,8 @@ void USkeletalMeshComponent::SetProperties(const TMap<FString, FString>& InPrope
         UClass* InAnimClass = UClass::FindClass(InProperties["AnimClass"]);
         SetAnimClass(InAnimClass);
     }
+
+    StateMachineFileName = FString(InProperties["StateMachineFileName"]);
 
     if (AnimationMode == EAnimationMode::AnimationSingleNode)
     {
@@ -141,6 +147,11 @@ void USkeletalMeshComponent::GetProperties(TMap<FString, FString>& OutProperties
         }
     }
     OutProperties.Add(TEXT("AnimClass"), AnimClassStr);
+
+    FString StateMachineFileNameStr = FName().ToString();
+    StateMachineFileNameStr = StateMachineFileName;
+
+    OutProperties.Add(TEXT("StateMachineFileName"), StateMachineFileNameStr);
 
     if (AnimationMode == EAnimationMode::AnimationSingleNode)
     {
@@ -317,7 +328,7 @@ bool USkeletalMeshComponent::InitializeAnimScriptInstance()
         bool bShouldSpawnSingleNodeInstance = !AnimScriptInstance && SkelMesh && SkelMesh->GetSkeleton();
         if (bShouldSpawnSingleNodeInstance)
         {
-            AnimScriptInstance = FObjectFactory::ConstructObject<UAnimSingleNodeInstance>(this);
+            AnimScriptInstance = FObjectFactory::ConstructObject<ULuaScriptAnimInstance>(this);
 
             if (AnimScriptInstance)
             {
@@ -375,9 +386,12 @@ FTransform USkeletalMeshComponent::GetSocketTransform(FName SocketName) const
     {
         int32 BoneIndex = Skeleton->FindBoneIndex(SocketName);
 
-        TArray<FMatrix> GlobalBoneMatrices;
-        GetCurrentGlobalBoneMatrices(GlobalBoneMatrices);
-        Transform = FTransform(GlobalBoneMatrices[BoneIndex]);
+        if (BoneIndex != INDEX_NONE)
+        {
+            TArray<FMatrix> GlobalBoneMatrices;
+            GetCurrentGlobalBoneMatrices(GlobalBoneMatrices);
+            Transform = FTransform(GlobalBoneMatrices[BoneIndex]);
+        }
     }
     return Transform;
 }
