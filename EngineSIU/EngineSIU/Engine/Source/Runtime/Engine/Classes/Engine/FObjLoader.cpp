@@ -640,13 +640,13 @@ void FObjLoader::CalculateTangent(FStaticMeshVertex& PivotVertex, const FStaticM
 
 FStaticMeshRenderData* FObjManager::LoadObjStaticMeshAsset(const FString& PathFileName)
 {
-    FStaticMeshRenderData* NewStaticMesh = new FStaticMeshRenderData();
-
     if ( const auto It = ObjStaticMeshMap.Find(PathFileName))
     {
         return *It;
     }
 
+    FStaticMeshRenderData* NewStaticMesh = new FStaticMeshRenderData();
+    
     FWString BinaryPath = (PathFileName + ".bin").ToWideString();
     if (std::ifstream(BinaryPath).good())
     {
@@ -921,7 +921,7 @@ UMaterial* FObjManager::GetMaterial(const FString& Name)
 
 UStaticMesh* FObjManager::CreateStaticMesh(const FString& FilePath)
 {
-    FStaticMeshRenderData* StaticMeshRenderData = FObjManager::LoadObjStaticMeshAsset(FilePath);
+    FStaticMeshRenderData* StaticMeshRenderData = LoadObjStaticMeshAsset(FilePath);
 
     if (StaticMeshRenderData == nullptr)
     {
