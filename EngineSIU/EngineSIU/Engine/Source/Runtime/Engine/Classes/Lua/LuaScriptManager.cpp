@@ -21,7 +21,7 @@ FLuaScriptManager::FLuaScriptManager()
         sol::lib::math,       // 수학 함수 (sin, random, pi 등) 및 상수 제공
         sol::lib::table,      // 테이블(배열/딕셔너리) 생성 및 조작 기능 (insert, sort 등)
         // sol::lib::io,         // 파일 읽기/쓰기 등 입출력 관련 기능
-        // sol::lib::os,         // 운영체제 관련 기능 (시간, 날짜, 파일 시스템 접근 등)
+        sol::lib::os,         // 운영체제 관련 기능 (시간, 날짜, 파일 시스템 접근 등)
         sol::lib::debug,      // 디버깅 및 introspection 기능 (traceback, getinfo 등)
         sol::lib::bit32,      // 32비트 정수 대상 비트 연산 기능 (Lua 5.2 이상)
         // sol::lib::jit,        // LuaJIT의 JIT 컴파일러 제어 기능 (LuaJIT 전용)

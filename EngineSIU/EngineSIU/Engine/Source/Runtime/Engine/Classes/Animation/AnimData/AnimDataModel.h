@@ -1,4 +1,4 @@
-﻿
+
 #pragma once
 #include "UObject/Object.h"
 #include "UObject/ObjectMacros.h"
@@ -42,6 +42,7 @@ public:
     virtual int32 GetNumberOfFrames() const;
     virtual int32 GetNumberOfKeys() const;
     virtual int32 GetFrameRate() const;
+    virtual int32 GetDuration() const;
 
     virtual UAnimSequence* GetAnimationSequence() const;
 

@@ -55,7 +55,18 @@ void ULuaScriptAnimInstance::NativeUpdateAnimation(float DeltaSeconds, FPoseCont
         return;
     }
     
-    ElapsedTime += DeltaSeconds;
+    ElapsedTime += DeltaSeconds * PlayRate;
+
+    if (CurrAnim && !bLooping)
+    {
+        const float AnimDuration = CurrAnim->GetDuration();
+
+        ElapsedTime = FMath::Clamp(
+            ElapsedTime,
+            0.0f,
+            FMath::FloorToFloat(AnimDuration * 10000) / 10000
+        );
+    }
 
     if (bIsBlending)
     {
@@ -120,6 +131,7 @@ void ULuaScriptAnimInstance::SetAnimation(UAnimSequence* NewAnim, float Blending
     }
     else if (CurrAnim)
     {
+        ElapsedTime = 0.0f; // 현재 애니메이션이 있으면 시간 초기화.
         PrevAnim = CurrAnim; // 현재 애니메이션이 있으면 현재를 이전으로 설정.
     }
 
