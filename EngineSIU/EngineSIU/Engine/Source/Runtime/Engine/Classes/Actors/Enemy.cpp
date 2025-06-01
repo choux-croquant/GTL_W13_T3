@@ -24,31 +24,11 @@ void AEnemy::PostSpawnInitialize()
     //  일단 여기서 초기화 하도록 함
     Attack1->RemoveNotifyTrack(0);
 
-    EnemyAttackNotify = FObjectFactory::ConstructObject<UAnimCustomNotify>(this);
+    CreateAttackNotify(Attack1, AttackRightNotify, "Attack_Right", 0.3f);
+    CreateAttackNotify(Attack1, AttackLeftNotify, "Attack_Left", 0.8f);
+    CreateAttackNotify(Attack1, AttackUpNotify, "Attack_Up", 1.3f);
 
-    // Bind Delegate sample
-    EnemyAttackNotify->OnCustomNotify.AddLambda(
-        [this](USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation)
-        {
-            this->HandleAttackNotify(MeshComp, Animation);
-        }
-    );
-
-    // Apply Notify
-    int32 TrackIndex = INDEX_NONE;
-    Attack1->AddNotifyTrack("Enemy_Attack", TrackIndex);
-
-    int32 NotifyEventIndex1 = INDEX_NONE;
-    int32 NotifyEventIndex2 = INDEX_NONE;
-    int32 NotifyEventIndex3 = INDEX_NONE;
-
-    Attack1->AddNotifyEvent(TrackIndex, 0.2f, 0.0f, "Attack_Right", NotifyEventIndex1);
-    Attack1->AddNotifyEvent(TrackIndex, 0.6f, 0.0f, "Attack_Light", NotifyEventIndex2);
-    Attack1->AddNotifyEvent(TrackIndex, 1.0f, 0.0f, "Attack_Up", NotifyEventIndex3);
-
-    Attack1->GetNotifyEvent(NotifyEventIndex1)->SetAnimNotify(EnemyAttackNotify);
-    Attack1->GetNotifyEvent(NotifyEventIndex2)->SetAnimNotify(EnemyAttackNotify);
-    Attack1->GetNotifyEvent(NotifyEventIndex3)->SetAnimNotify(EnemyAttackNotify);
+    BindAttackNotifies();
 }
     
 void AEnemy::BeginPlay()
@@ -62,46 +42,84 @@ UObject* AEnemy::Duplicate(UObject* InOuter)
 
     NewActor->SkeletalMeshComponent = NewActor->GetComponentByClass<USkeletalMeshComponent>();
 
-    NewActor->EnemyAttackNotify = EnemyAttackNotify;
-    //UAnimSequence* IdleAnim = Cast<UAnimSequence>(UAssetManager::Get().GetAnimation(FString("Contents/Enemy_Idle/Armature|Enemy_Idle")));
-    //UAnimSequence* ReactionAnim = Cast<UAnimSequence>(UAssetManager::Get().GetAnimation(FString("Contents/Enemy_Impact/Armature|Enemy_Impact")));
-    //UAnimSequence* Attack1 = Cast<UAnimSequence>(UAssetManager::Get().GetAnimation(FString("Contents/Combo_RLU/Armature|Combo_RLU")));
-    //UAnimSequence* Attack2 = Cast<UAnimSequence>(UAssetManager::Get().GetAnimation(FString("Contents/GameJamEnemy/Armature|Combo_RLR")));
-    //
-    //// AnimSequence는 Asset이라 PIE->Editor시 제거 안되어 일단 여기서 초기화 하도록 함
-    //Attack1->RemoveNotifyTrack(0);
-
-    //EnemyAttackNotify = FObjectFactory::ConstructObject<UAnimCustomNotify>(this);
-
-    //// Bind Delegate sample
-    //EnemyAttackNotify->OnCustomNotify.AddLambda(
-    //    [this](USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation)
-    //    {
-    //        this->HandleAttackNotify(MeshComp, Animation);
-    //    }
-    //);
-
-    //// Apply Notify
-    //int32 TrackIndex = INDEX_NONE;
-    //Attack1->AddNotifyTrack("Enemy_Attack", TrackIndex);
-
-    //int32 NotifyEventIndex1 = INDEX_NONE;
-    //int32 NotifyEventIndex2 = INDEX_NONE;
-    //int32 NotifyEventIndex3 = INDEX_NONE;
-
-    //Attack1->AddNotifyEvent(TrackIndex, 0.2f, 0.0f, "Attack_Right", NotifyEventIndex1);
-    //Attack1->AddNotifyEvent(TrackIndex, 0.6f, 0.0f, "Attack_Light", NotifyEventIndex2);
-    //Attack1->AddNotifyEvent(TrackIndex, 1.0f, 0.0f, "Attack_Up", NotifyEventIndex3);
-
-    //Attack1->GetNotifyEvent(NotifyEventIndex1)->SetAnimNotify(EnemyAttackNotify);
-    //Attack1->GetNotifyEvent(NotifyEventIndex2)->SetAnimNotify(EnemyAttackNotify);
-    //Attack1->GetNotifyEvent(NotifyEventIndex3)->SetAnimNotify(EnemyAttackNotify);
-
     return NewActor;
 }
 
-void AEnemy::HandleAttackNotify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation)
+void AEnemy::HandleAttackNotify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, EAttackDirection InAttackDirection)
 {
-    UE_LOG(ELogLevel::Display, TEXT("ENEMY_ATTACK"));
-    //ExecuteAttack();
+    if (!MeshComp || !Animation)
+    {
+        UE_LOG(ELogLevel::Error, TEXT("Invalid MeshComp or Animation in HandleAttackNotify"));
+        return;
+    }
+
+    switch (InAttackDirection)
+    {
+    case AD_Right:
+        UE_LOG(ELogLevel::Display, TEXT("ENEMY_ATTACK_RIGHT"));
+        break;
+    case AD_Left:
+        UE_LOG(ELogLevel::Display, TEXT("ENEMY_ATTACK_LEFT"));
+        break;
+    case AD_Up:
+        UE_LOG(ELogLevel::Display, TEXT("ENEMY_ATTACK_UP"));
+        break;
+    default:
+        break;
+    }
+
+    CurrentAttackDirection = InAttackDirection;
+}
+
+void AEnemy::CreateAttackNotify(
+    UAnimSequence* AnimSequence,
+    UAnimCustomNotify*& OutNotify,
+    const FString& NotifyName,
+    float TriggerTime)
+{
+    OutNotify = FObjectFactory::ConstructObject<UAnimCustomNotify>(this);
+
+    int32 TrackIndex = INDEX_NONE;
+    AnimSequence->AddNotifyTrack(NotifyName, TrackIndex);
+
+    int32 NotifyEventIndex = INDEX_NONE;
+    AnimSequence->AddNotifyEvent(
+        TrackIndex,
+        TriggerTime,
+        0.0f,
+        NotifyName,
+        NotifyEventIndex
+    );
+
+    AnimSequence->GetNotifyEvent(NotifyEventIndex)->SetAnimNotify(OutNotify);
+}
+
+void AEnemy::BindAttackNotifies()
+{
+    if (AttackRightNotify)
+    {
+        AttackRightNotify->OnCustomNotify.AddLambda(
+            [this](USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation) {
+                this->HandleAttackNotify(MeshComp, Animation, EAttackDirection::AD_Right);
+            }
+        );
+    }
+
+    if (AttackLeftNotify)
+    {
+        AttackLeftNotify->OnCustomNotify.AddLambda(
+            [this](USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation) {
+                this->HandleAttackNotify(MeshComp, Animation, EAttackDirection::AD_Left);
+            }
+        );
+    }
+
+    if (AttackUpNotify)
+    {
+        AttackUpNotify->OnCustomNotify.AddLambda(
+            [this](USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation) {
+                this->HandleAttackNotify(MeshComp, Animation, EAttackDirection::AD_Up);
+            }
+        );
+    }
 }
