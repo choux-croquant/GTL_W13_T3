@@ -30,7 +30,7 @@ float UAnimSequenceBase::GetDuration() const
 {
     if (DataModel)
     {
-        return static_cast<float>(DataModel->GetDuration());
+        return (DataModel->GetDuration());
     }
     return 0.f;
 }

@@ -62,6 +62,7 @@ public:
         PlayRate = Rate;
     }
 private:
+    float PreviousTime;
     float ElapsedTime;
     float PlayRate;
     

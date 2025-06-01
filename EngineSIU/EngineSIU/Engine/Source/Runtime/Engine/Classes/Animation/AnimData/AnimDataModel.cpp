@@ -204,9 +204,9 @@ int32 UAnimDataModel::GetFrameRate() const
     return FrameRate;
 }
 
-int32 UAnimDataModel::GetDuration() const
+float UAnimDataModel::GetDuration() const
 {
-    return (NumberOfFrames - 1) / FrameRate;
+    return static_cast<float>(NumberOfFrames - 1) / FrameRate;
 }
 
 UAnimSequence* UAnimDataModel::GetAnimationSequence() const

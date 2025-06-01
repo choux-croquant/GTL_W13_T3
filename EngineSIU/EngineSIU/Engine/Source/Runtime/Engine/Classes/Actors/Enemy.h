@@ -2,6 +2,16 @@
 #include "GameFramework/Actor.h"
 
 class USkeletalMeshComponent;
+class UAnimSequenceBase;
+class UAnimCustomNotify;
+class UAnimSequence;
+
+enum EAttackDirection
+{
+    AD_Right,
+    AD_Left,
+    AD_Up
+};
 
 class AEnemy : public AActor
 {
@@ -14,6 +24,19 @@ public:
     void BeginPlay();
 
     UObject* Duplicate(UObject* InOuter);
+
+    void HandleAttackNotify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, EAttackDirection InAttackDirection);
+
+    void CreateAttackNotify(UAnimSequence* AnimSequence, UAnimCustomNotify*& OutNotify, const FString& NotifyName, float TriggerTime);
+
+    void BindAttackNotifies();
+
+public:
+    UAnimCustomNotify* AttackRightNotify = nullptr;
+    UAnimCustomNotify* AttackLeftNotify = nullptr;
+    UAnimCustomNotify* AttackUpNotify = nullptr;
+
+    EAttackDirection CurrentAttackDirection = AD_Right;
 
     UPROPERTY(EditAnywhere | EditInline, USkeletalMeshComponent*, SkeletalMeshComponent, = nullptr)
 };

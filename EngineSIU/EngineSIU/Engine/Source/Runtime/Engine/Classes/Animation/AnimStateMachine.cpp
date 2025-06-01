@@ -48,9 +48,11 @@ void UAnimStateMachine::ProcessState()
     if (OwningAnimInstance && !StateName.IsEmpty())
     {
         UAnimSequence* NewAnim = Cast<UAnimSequence>(UAssetManager::Get().GetAnimation(StateName));
+
         if (NewAnim)
         {
             // 애니메이션 속성 설정
+			LuaTable["CurrentAnimDuration"] = NewAnim->GetDuration();
             OwningAnimInstance->SetLooping(bLoop);
             OwningAnimInstance->SetPlayRate(RateScale);
             OwningAnimInstance->SetAnimation(NewAnim, Blend, false, false);
@@ -64,6 +66,7 @@ void UAnimStateMachine::InitLuaStateMachine()
     {
         return;
     }
+
     LuaTable = FLuaScriptManager::Get().CreateLuaTable(LuaScriptName);
 
     FLuaScriptManager::Get().RegisterActiveAnimLua(this);
@@ -71,5 +74,6 @@ void UAnimStateMachine::InitLuaStateMachine()
         return;
 
     LuaTable["OwnerCharacter"] = Cast<AActor>(OwningComponent->GetOwner());
+    LuaTable["CurrentAnimDuration"] = 0.0f;
 }
 

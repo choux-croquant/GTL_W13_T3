@@ -15,6 +15,7 @@
 ULuaScriptAnimInstance::ULuaScriptAnimInstance()
     : PrevAnim(nullptr)
     , CurrAnim(nullptr)
+    , PreviousTime(0.f)
     , ElapsedTime(0.f)
     , PlayRate(1.f)
     , bLooping(true)
@@ -54,8 +55,11 @@ void ULuaScriptAnimInstance::NativeUpdateAnimation(float DeltaSeconds, FPoseCont
     {
         return;
     }
-    
+
+    PreviousTime = ElapsedTime;
     ElapsedTime += DeltaSeconds * PlayRate;
+
+    CurrAnim->EvaluateAnimNotifies(CurrAnim->Notifies, ElapsedTime, PreviousTime, DeltaSeconds, SkeletalMeshComp, CurrAnim, bLooping);
 
     if (CurrAnim && !bLooping)
     {
