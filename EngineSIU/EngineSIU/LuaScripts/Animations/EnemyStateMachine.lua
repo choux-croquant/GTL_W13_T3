@@ -59,7 +59,8 @@ AnimFSM = {
         if not self.isAttacking then
             self.isAttacking = true
             self.selectedAttack = self.attackAnimations[math.random(#self.attackAnimations)]
-            self.attackEndTime = os.clock() + 2
+          
+            self.attackEndTime = os.clock() + self.CurrentAnimDuration;
         end
 
         if os.clock() > self.attackEndTime then
@@ -71,7 +72,7 @@ AnimFSM = {
         return {
             anim = self.selectedAttack,
             blend = 0.1,
-            loop = false,
+            loop = true,
             rate_scale = 1.0,
         }
     end,
