@@ -244,10 +244,10 @@
                         "ComponentOwner": "ASkeletalMeshActor_452",
                         "ComponentOwnerClass": "ASkeletalMeshActor",
                         "RelativeLocation": "X=27.102 Y=0.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=180.000 Roll=-0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=-180.000 Roll=-0.000",
                         "RelativeScale3D": "X=0.200 Y=0.200 Z=0.200",
                         "RigidBodyType": "1",
-                        "SkeletalMeshKey": "Contents/Player/Parrying1",
+                        "SkeletalMeshKey": "Contents/Player/HorizontalHardParry",
                         "StateMachineFileName": "LuaScripts/Animations/DefaultStateMachine.lua",
                         "bApplyGravity": "false",
                         "bAutoActive": "true",
@@ -334,7 +334,7 @@
                         "ComponentName": "ParticleSystemComponent",
                         "ComponentOwner": "AEmitter_657",
                         "ComponentOwnerClass": "AEmitter",
-                        "RelativeLocation": "X=-204.222 Y=34.465 Z=56.407",
+                        "RelativeLocation": "X=-201.436 Y=34.465 Z=54.998",
                         "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
@@ -356,19 +356,6 @@
             "ActorTickInEditor": "true",
             "Components": [
                 {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
-                        "ComponentOwner": "AEmitter_661",
-                        "ComponentOwnerClass": "AEmitter",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
                     "ComponentClass": "UParticleSystemComponent",
                     "ComponentID": "ParticleSystemComponent",
                     "Properties": {
@@ -389,6 +376,19 @@
                         "bIsActive": "true",
                         "bSimulate": "false",
                         "m_Type": ""
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "AEmitter_661",
+                        "ComponentOwnerClass": "AEmitter",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
                     }
                 }
             ],
