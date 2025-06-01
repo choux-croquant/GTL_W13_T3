@@ -2,6 +2,8 @@
 #include "GameFramework/Actor.h"
 
 class USkeletalMeshComponent;
+class UAnimSequenceBase;
+class UAnimCustomNotify;
 
 class AEnemy : public AActor
 {
@@ -14,6 +16,11 @@ public:
     void BeginPlay();
 
     UObject* Duplicate(UObject* InOuter);
+
+    void HandleAttackNotify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation);
+
+public:
+    UAnimCustomNotify* EnemyAttackNotify;
 
     UPROPERTY(EditAnywhere | EditInline, USkeletalMeshComponent*, SkeletalMeshComponent, = nullptr)
 };
