@@ -20,7 +20,7 @@ AnimFSM = {
     currentState = "Idle",
     attackAnimations = {
         "Contents/Combo_RLU/Armature|Combo_RLU",
-        "Contents/GameJamEnemy/Armature|Combo_RLR",
+        -- "Contents/GameJamEnemy/Armature|Combo_RLR",
     },
     reactionAnimation = "Contents/Enemy_Impact/Armature|Enemy_Impact",
     attackCooldown = 3.0,
