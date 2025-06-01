@@ -89,7 +89,10 @@ void USkeletalMeshComponent::SetProperties(const TMap<FString, FString>& InPrope
         SetAnimClass(InAnimClass);
     }
 
-    StateMachineFileName = FString(InProperties["StateMachineFileName"]);
+    if (InProperties.Contains("StateMachineFileName"))
+    {
+        StateMachineFileName = FString(InProperties["StateMachineFileName"]);
+    }
 
     if (AnimationMode == EAnimationMode::AnimationSingleNode)
     {
