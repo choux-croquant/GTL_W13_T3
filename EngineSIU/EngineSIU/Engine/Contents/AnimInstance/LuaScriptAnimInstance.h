@@ -50,6 +50,15 @@ public:
 
     void SetAnimation(UAnimSequence* NewAnim, float BlendingTime, float LoopAnim = false, bool ReverseAnim = false);
 
+    void SetElapsedTime(float InElapsedTime)
+    {
+        ElapsedTime = InElapsedTime;
+    }
+
+    void SetPlayRate(float Rate)
+    {
+        PlayRate = Rate;
+    }
 private:
     float ElapsedTime;
     float PlayRate;

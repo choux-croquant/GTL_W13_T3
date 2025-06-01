@@ -30,6 +30,7 @@
 #include "Actors/DirectionalLightActor.h"
 #include "Actors/SpotLightActor.h"
 #include "Actors/AmbientLightActor.h"
+#include "Actors/Enemy.h"
 
 #include "Actors/CubeActor.h"
 #include "Actors/SphereActor.h"
@@ -373,6 +374,7 @@ void ControlEditorPanel::CreateModifyButton(const ImVec2 ButtonSize, ImFont* Ico
             { .Label = "SphereCol",         .OBJ = OBJ_SPHERE_COLLISION },
             { .Label = "CapsuleCol",        .OBJ = OBJ_CAPSULE_COLLISION },
             { .Label = "SkeletalMeshActor", .OBJ = OBJ_SKELETALMESH },
+            { .Label = "Enemy",             .OBJ = OBJ_ENEMY},
         };
 
         for (const auto& primitive : primitives)
@@ -489,6 +491,11 @@ void ControlEditorPanel::CreateModifyButton(const ImVec2 ButtonSize, ImFont* Ico
                         SpawnedActor->SetActorTickInEditor(true);
                     }
                     break;
+                case OBJ_ENEMY:
+                    {
+                        SpawnedActor = World->SpawnActor<AEnemy>();
+                    }
+                break;
                 case OBJ_CAMERA:
                 case OBJ_PLAYER:
                 case OBJ_END:
