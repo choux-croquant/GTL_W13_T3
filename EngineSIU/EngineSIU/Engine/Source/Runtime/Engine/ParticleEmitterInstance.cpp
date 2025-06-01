@@ -284,9 +284,6 @@ void FParticleEmitterInstance::UpdateParticles(float DeltaTime)
         // 회전 업데이트
         Particle->RotationRate = Particle->BaseRotationRate;
         Particle->Rotation += Particle->RotationRate * DeltaTime;
-
-        // 크기 업데이트
-        Particle->Size = Particle->BaseSize;
     }
 }
 

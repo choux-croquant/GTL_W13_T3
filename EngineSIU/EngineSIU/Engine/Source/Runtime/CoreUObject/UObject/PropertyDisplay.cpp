@@ -973,12 +973,30 @@ void UMaterialProperty::DisplayRawDataInImGui_Implement(const char* PropertyLabe
     }
 
     bool bSelectionChanged = false;
+
+    static char SearchBuffer[128] = "";
     
     if (ImGui::BeginCombo("Material", GetData(AllMaterialKeys[CurrentItemIdx]))) 
     {
+        ImGui::InputText("Search", SearchBuffer, IM_ARRAYSIZE(SearchBuffer));
+        
+        // 필터링된 인덱스 리스트 생성
+        TArray<int32> FilteredIndices;
+        FString SearchStr = SearchBuffer;
+
         for (int32 Idx = 0; Idx < AllMaterialKeys.Num(); ++Idx)
         {
+            FString KeyStr = GetData(AllMaterialKeys[Idx]);
+            if (SearchStr.IsEmpty() || KeyStr.Contains(SearchStr))
+            {
+                FilteredIndices.Add(Idx);
+            }
+        }
+        
+        for (int32 i = 0; i < FilteredIndices.Num(); ++i)
+        {
             // 고유 ID 생성 (인덱스를 ID로 사용)
+            int32 Idx = FilteredIndices[i];
             ImGui::PushID(Idx);
         
             // 이 항목이 선택되었는지 확인

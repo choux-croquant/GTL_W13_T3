@@ -268,6 +268,9 @@ void FEditorViewportClient::InputKey(const FKeyEvent& InKeyEvent)
         }
         case 'M':
         {
+            ImGuiIO& io = ImGui::GetIO();
+            if (io.WantCaptureMouse) return;
+            if (io.WantCaptureKeyboard) return;
             FEngineLoop::GraphicDevice.Resize(GEngineLoop.AppWnd);
             SLevelEditor* LevelEd = GEngineLoop.GetLevelEditor();
             LevelEd->SetEnableMultiViewport(!LevelEd->IsMultiViewport());

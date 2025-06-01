@@ -42,6 +42,7 @@
 
 #include "Animation/SkeletalMeshActor.h"
 #include "Engine/Classes/Engine/AssetManager.h"
+#include "Particles/Emitter.h"
 #include "Particles/ParticleSystemComponent.h"
 
 
@@ -440,10 +441,7 @@ void ControlEditorPanel::CreateModifyButton(const ImVec2 ButtonSize, ImFont* Ico
                 }
                 case OBJ_PARTICLESYSTEM:
                 {
-                    SpawnedActor = World->SpawnActor<AActor>();
-                    SpawnedActor->SetActorLabel(TEXT("OBJ_PARTICLESYSTEM"));
-                    UParticleSystemComponent* ParticleComponent = SpawnedActor->AddComponent<UParticleSystemComponent>();
-                    SpawnedActor->SetRootComponent(ParticleComponent);
+                    SpawnedActor = World->SpawnActor<AEmitter>();
                     SpawnedActor->SetActorTickInEditor(true);
                     break;
                 }

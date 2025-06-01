@@ -52,6 +52,7 @@ void UParticleModuleSize::Spawn(FParticleEmitterInstance* Owner, int32 Offset, f
     }
 
     ParticleBase->BaseSize = InitialSize;
+    ParticleBase->Size = InitialSize;
 }
 
 void UParticleModuleSize::SerializeAsset(FArchive& Ar)
