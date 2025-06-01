@@ -27,7 +27,7 @@ void UAnimStateMachine::ProcessState()
     sol::function ChangeStateMachineFunc = LuaTable["TransitionToState"];
     if (ChangeStateMachineFunc.valid())
     {
-        ChangeStateMachineFunc(State);
+        ChangeStateMachineFunc(LuaTable, *State);
     }
 
     sol::function UpdateFunc = LuaTable["Update"];
@@ -37,6 +37,11 @@ void UAnimStateMachine::ProcessState()
         return;
     }
     sol::object result = UpdateFunc(LuaTable, 0.0f);
+
+    if (!result.valid())
+    {
+        return;
+    }
     
     sol::table StateInfo = result.as<sol::table>();
     FString StateName = StateInfo["anim"].get_or(std::string("")).c_str();
@@ -44,7 +49,8 @@ void UAnimStateMachine::ProcessState()
     
     bool bLoop = StateInfo["loop"].get_or(true);
     float RateScale = StateInfo["rate_scale"].get_or(1.0f);
-
+    State = StateInfo["state"].get_or(std::string("")).c_str();
+    
     if (OwningAnimInstance && !StateName.IsEmpty())
     {
         UAnimSequence* NewAnim = Cast<UAnimSequence>(UAssetManager::Get().GetAnimation(StateName));
