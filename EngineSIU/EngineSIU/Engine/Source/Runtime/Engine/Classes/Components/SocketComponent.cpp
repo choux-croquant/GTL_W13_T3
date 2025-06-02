@@ -1,4 +1,4 @@
-﻿#include "SocketComponent.h"
+#include "SocketComponent.h"
 
 #include "SkeletalMeshComponent.h"
 #include "Engine/Engine.h"
@@ -6,6 +6,23 @@
 
 USocketComponent::USocketComponent()
 {
+}
+
+void USocketComponent::GetProperties(TMap<FString, FString>& OutProperties) const
+{
+    Super::GetProperties(OutProperties);
+    OutProperties.Add(TEXT("Socket"), Socket.ToString());
+}
+
+void USocketComponent::SetProperties(const TMap<FString, FString>& InProperties)
+{
+    Super::SetProperties(InProperties);
+    const FString* TempStr = nullptr;
+    TempStr = InProperties.Find(TEXT("Socket"));
+    if (TempStr)
+    {
+        Socket = *TempStr;
+    }
 }
 
 void USocketComponent::BeginPlay()

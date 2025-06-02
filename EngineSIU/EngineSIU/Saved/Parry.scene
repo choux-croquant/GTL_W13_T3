@@ -7,22 +7,6 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
-                    "ComponentClass": "USocketComponent",
-                    "ComponentID": "USocketComponent_982",
-                    "Properties": {
-                        "AttachParentID": "USkeletalMeshComponent_458",
-                        "ComponentClass": "USocketComponent",
-                        "ComponentName": "USocketComponent_982",
-                        "ComponentOwner": "AHeroPlayer_456",
-                        "ComponentOwnerClass": "AHeroPlayer",
-                        "RelativeLocation": "X=-12.271 Y=97.508 Z=168.820",
-                        "RelativeRotation": "Pitch=3.042 Yaw=107.934 Roll=-92.238",
-                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
                     "ComponentClass": "ULuaScriptComponent",
                     "ComponentID": "LuaComponent",
                     "Properties": {
@@ -83,6 +67,23 @@
                         "bSimulate": "false",
                         "m_Type": ""
                     }
+                },
+                {
+                    "ComponentClass": "USocketComponent",
+                    "ComponentID": "USocketComponent_982",
+                    "Properties": {
+                        "AttachParentID": "USkeletalMeshComponent_458",
+                        "ComponentClass": "USocketComponent",
+                        "ComponentName": "USocketComponent_982",
+                        "ComponentOwner": "AHeroPlayer_456",
+                        "ComponentOwnerClass": "AHeroPlayer",
+                        "RelativeLocation": "X=-12.271 Y=97.508 Z=168.820",
+                        "RelativeRotation": "Pitch=3.042 Yaw=107.934 Roll=-92.238",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "Socket": "mixamorig:Weapon",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
                 }
             ],
             "RootComponentID": "USkeletalMeshComponent_458"
@@ -115,6 +116,19 @@
                     }
                 },
                 {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "ADirectionalLight_462",
+                        "ComponentOwnerClass": "ADirectionalLight",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
                     "ComponentClass": "UBillboardComponent",
                     "ComponentID": "UBillboardComponent_0",
                     "Properties": {
@@ -137,19 +151,6 @@
                         "bIsActive": "true",
                         "bSimulate": "false",
                         "m_Type": "UBillboardComponent"
-                    }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
-                        "ComponentOwner": "ADirectionalLight_462",
-                        "ComponentOwnerClass": "ADirectionalLight",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
                     }
                 }
             ],
@@ -176,15 +177,15 @@
                 },
                 {
                     "ComponentClass": "USceneComponent",
-                    "ComponentID": "USceneComponent_690",
+                    "ComponentID": "USceneComponent_741",
                     "Properties": {
                         "AttachParentID": "USceneComponent_469",
                         "ComponentClass": "USceneComponent",
-                        "ComponentName": "USceneComponent_690",
+                        "ComponentName": "USceneComponent_741",
                         "ComponentOwner": "AActor_467",
                         "ComponentOwnerClass": "AActor",
                         "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "bAutoActive": "true",
                         "bIsActive": "true"
@@ -201,22 +202,6 @@
                         "ComponentOwnerClass": "AActor",
                         "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
                         "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
-                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "USceneComponent",
-                    "ComponentID": "USceneComponent_469",
-                    "Properties": {
-                        "AttachParentID": "nullptr",
-                        "ComponentClass": "USceneComponent",
-                        "ComponentName": "USceneComponent_469",
-                        "ComponentOwner": "AActor_467",
-                        "ComponentOwnerClass": "AActor",
-                        "RelativeLocation": "X=-39.655 Y=38.658 Z=169.286",
-                        "RelativeRotation": "Pitch=-13.948 Yaw=-19.785 Roll=2.819",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "bAutoActive": "true",
                         "bIsActive": "true"
@@ -244,6 +229,38 @@
                         "bSimulate": "false",
                         "m_Type": "USphereComp"
                     }
+                },
+                {
+                    "ComponentClass": "USceneComponent",
+                    "ComponentID": "USceneComponent_690",
+                    "Properties": {
+                        "AttachParentID": "USceneComponent_469",
+                        "ComponentClass": "USceneComponent",
+                        "ComponentName": "USceneComponent_690",
+                        "ComponentOwner": "AActor_467",
+                        "ComponentOwnerClass": "AActor",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "USceneComponent",
+                    "ComponentID": "USceneComponent_469",
+                    "Properties": {
+                        "AttachParentID": "nullptr",
+                        "ComponentClass": "USceneComponent",
+                        "ComponentName": "USceneComponent_469",
+                        "ComponentOwner": "AActor_467",
+                        "ComponentOwnerClass": "AActor",
+                        "RelativeLocation": "X=-39.655 Y=38.658 Z=169.286",
+                        "RelativeRotation": "Pitch=-13.948 Yaw=-19.785 Roll=2.819",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
                 }
             ],
             "RootComponentID": "USceneComponent_469"
@@ -265,6 +282,32 @@
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
                         "bAutoActive": "true",
                         "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "USkeletalMeshComponent",
+                    "ComponentID": "SkeletalMeshComponent",
+                    "Properties": {
+                        "AABB_max": "X=75.223 Y=94.646 Z=172.545",
+                        "AABB_min": "X=-44.583 Y=-85.198 Z=-0.002",
+                        "AnimClass": "ULuaScriptAnimInstance",
+                        "AnimationMode": "0",
+                        "AttachParentID": "nullptr",
+                        "ComponentClass": "USkeletalMeshComponent",
+                        "ComponentName": "SkeletalMeshComponent",
+                        "ComponentOwner": "AEnemy_694",
+                        "ComponentOwnerClass": "AEnemy",
+                        "RelativeLocation": "X=192.633 Y=-12.841 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=180.000 Roll=-0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "RigidBodyType": "1",
+                        "SkeletalMeshKey": "Contents/GameJamEnemy/GameJamEnemy",
+                        "StateMachineFileName": "LuaScripts/Animations/EnemyStateMachine.lua",
+                        "bApplyGravity": "false",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "bSimulate": "false",
+                        "m_Type": ""
                     }
                 },
                 {
@@ -291,32 +334,6 @@
                     }
                 },
                 {
-                    "ComponentClass": "USkeletalMeshComponent",
-                    "ComponentID": "SkeletalMeshComponent",
-                    "Properties": {
-                        "AABB_max": "X=75.223 Y=94.646 Z=172.545",
-                        "AABB_min": "X=-44.583 Y=-85.198 Z=-0.002",
-                        "AnimClass": "ULuaScriptAnimInstance",
-                        "AnimationMode": "0",
-                        "AttachParentID": "nullptr",
-                        "ComponentClass": "USkeletalMeshComponent",
-                        "ComponentName": "SkeletalMeshComponent",
-                        "ComponentOwner": "AEnemy_694",
-                        "ComponentOwnerClass": "AEnemy",
-                        "RelativeLocation": "X=192.633 Y=-12.841 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=-180.000 Roll=-0.000",
-                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "RigidBodyType": "1",
-                        "SkeletalMeshKey": "Contents/GameJamEnemy/GameJamEnemy",
-                        "StateMachineFileName": "LuaScripts/Animations/EnemyStateMachine.lua",
-                        "bApplyGravity": "false",
-                        "bAutoActive": "true",
-                        "bIsActive": "true",
-                        "bSimulate": "false",
-                        "m_Type": ""
-                    }
-                },
-                {
                     "ComponentClass": "USocketComponent",
                     "ComponentID": "USocketComponent_985",
                     "Properties": {
@@ -328,6 +345,7 @@
                         "RelativeLocation": "X=-5.851 Y=73.524 Z=141.791",
                         "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=-90.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "Socket": "mixamorig:Sword_joint",
                         "bAutoActive": "true",
                         "bIsActive": "true"
                     }
