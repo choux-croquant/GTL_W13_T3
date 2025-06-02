@@ -7,19 +7,6 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
-                        "ComponentOwner": "ACube_328",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
                     "ComponentClass": "UStaticMeshComponent",
                     "ComponentID": "StaticMeshComponent_0",
                     "Properties": {
@@ -40,6 +27,19 @@
                         "bIsActive": "true",
                         "bSimulate": "false",
                         "m_Type": ""
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "ACube_328",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
                     }
                 }
             ],
@@ -183,29 +183,20 @@
                     }
                 },
                 {
-                    "ComponentClass": "USkeletalMeshComponent",
-                    "ComponentID": "SkeletalMeshComponent",
+                    "ComponentClass": "USocketComponent",
+                    "ComponentID": "USocketComponent_1170",
                     "Properties": {
-                        "AABB_max": "X=75.223 Y=94.646 Z=172.545",
-                        "AABB_min": "X=-44.583 Y=-85.198 Z=-0.002",
-                        "AnimClass": "ULuaScriptAnimInstance",
-                        "AnimationMode": "0",
-                        "AttachParentID": "nullptr",
-                        "ComponentClass": "USkeletalMeshComponent",
-                        "ComponentName": "SkeletalMeshComponent",
+                        "AttachParentID": "SkeletalMeshComponent",
+                        "ComponentClass": "USocketComponent",
+                        "ComponentName": "USocketComponent_1170",
                         "ComponentOwner": "AEnemy_732",
                         "ComponentOwnerClass": "AEnemy",
-                        "RelativeLocation": "X=30.000 Y=0.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=180.000 Roll=-0.000",
-                        "RelativeScale3D": "X=0.300 Y=0.300 Z=0.300",
-                        "RigidBodyType": "1",
-                        "SkeletalMeshKey": "Contents/GameJamEnemy/GameJamEnemy",
-                        "StateMachineFileName": "LuaScripts/Animations/EnemyStateMachine.lua",
-                        "bApplyGravity": "false",
+                        "RelativeLocation": "X=-1.755 Y=22.057 Z=42.537",
+                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=-90.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "Socket": "mixamorig:Sword_joint",
                         "bAutoActive": "true",
-                        "bIsActive": "true",
-                        "bSimulate": "false",
-                        "m_Type": ""
+                        "bIsActive": "true"
                     }
                 },
                 {
@@ -232,20 +223,29 @@
                     }
                 },
                 {
-                    "ComponentClass": "USocketComponent",
-                    "ComponentID": "USocketComponent_1170",
+                    "ComponentClass": "USkeletalMeshComponent",
+                    "ComponentID": "SkeletalMeshComponent",
                     "Properties": {
-                        "AttachParentID": "SkeletalMeshComponent",
-                        "ComponentClass": "USocketComponent",
-                        "ComponentName": "USocketComponent_1170",
+                        "AABB_max": "X=75.223 Y=94.646 Z=172.545",
+                        "AABB_min": "X=-44.583 Y=-85.198 Z=-0.002",
+                        "AnimClass": "ULuaScriptAnimInstance",
+                        "AnimationMode": "0",
+                        "AttachParentID": "nullptr",
+                        "ComponentClass": "USkeletalMeshComponent",
+                        "ComponentName": "SkeletalMeshComponent",
                         "ComponentOwner": "AEnemy_732",
                         "ComponentOwnerClass": "AEnemy",
-                        "RelativeLocation": "X=-1.755 Y=22.057 Z=42.537",
-                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=-90.000",
-                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "Socket": "mixamorig:Sword_joint",
+                        "RelativeLocation": "X=30.000 Y=0.000 Z=-9.634",
+                        "RelativeRotation": "Pitch=0.000 Yaw=180.000 Roll=-0.000",
+                        "RelativeScale3D": "X=0.300 Y=0.300 Z=0.300",
+                        "RigidBodyType": "1",
+                        "SkeletalMeshKey": "Contents/GameJamEnemy/GameJamEnemy",
+                        "StateMachineFileName": "LuaScripts/Animations/EnemyStateMachine.lua",
+                        "bApplyGravity": "false",
                         "bAutoActive": "true",
-                        "bIsActive": "true"
+                        "bIsActive": "true",
+                        "bSimulate": "false",
+                        "m_Type": ""
                     }
                 }
             ],
@@ -271,6 +271,32 @@
                     }
                 },
                 {
+                    "ComponentClass": "USkeletalMeshComponent",
+                    "ComponentID": "SkeletalMeshComponent",
+                    "Properties": {
+                        "AABB_max": "X=95.483 Y=154.317 Z=215.966",
+                        "AABB_min": "X=-52.106 Y=-120.246 Z=-2.274",
+                        "AnimClass": "None",
+                        "AnimationMode": "0",
+                        "AttachParentID": "nullptr",
+                        "ComponentClass": "USkeletalMeshComponent",
+                        "ComponentName": "SkeletalMeshComponent",
+                        "ComponentOwner": "AHeroPlayer_752",
+                        "ComponentOwnerClass": "AHeroPlayer",
+                        "RelativeLocation": "X=-30.000 Y=0.000 Z=-9.412",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeScale3D": "X=0.200 Y=0.200 Z=0.200",
+                        "RigidBodyType": "1",
+                        "SkeletalMeshKey": "Contents/Player/Idle",
+                        "StateMachineFileName": "LuaScripts/Animations/HeroStateMachine.lua",
+                        "bApplyGravity": "false",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "bSimulate": "false",
+                        "m_Type": ""
+                    }
+                },
+                {
                     "ComponentClass": "USocketComponent",
                     "ComponentID": "USocketComponent_1171",
                     "Properties": {
@@ -285,32 +311,6 @@
                         "Socket": "mixamorig:Weapon",
                         "bAutoActive": "true",
                         "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "USkeletalMeshComponent",
-                    "ComponentID": "SkeletalMeshComponent",
-                    "Properties": {
-                        "AABB_max": "X=95.483 Y=154.317 Z=215.966",
-                        "AABB_min": "X=-52.106 Y=-120.246 Z=-2.274",
-                        "AnimClass": "None",
-                        "AnimationMode": "0",
-                        "AttachParentID": "nullptr",
-                        "ComponentClass": "USkeletalMeshComponent",
-                        "ComponentName": "SkeletalMeshComponent",
-                        "ComponentOwner": "AHeroPlayer_752",
-                        "ComponentOwnerClass": "AHeroPlayer",
-                        "RelativeLocation": "X=-30.000 Y=0.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
-                        "RelativeScale3D": "X=0.200 Y=0.200 Z=0.200",
-                        "RigidBodyType": "1",
-                        "SkeletalMeshKey": "Contents/Player/Idle",
-                        "StateMachineFileName": "LuaScripts/Animations/HeroStateMachine.lua",
-                        "bApplyGravity": "false",
-                        "bAutoActive": "true",
-                        "bIsActive": "true",
-                        "bSimulate": "false",
-                        "m_Type": ""
                     }
                 },
                 {
@@ -346,6 +346,22 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
+                    "ComponentClass": "UCameraComponent",
+                    "ComponentID": "UCameraComponent_719",
+                    "Properties": {
+                        "AttachParentID": "StaticMeshComponent_0",
+                        "ComponentClass": "UCameraComponent",
+                        "ComponentName": "UCameraComponent_719",
+                        "ComponentOwner": "ACube_715",
+                        "ComponentOwnerClass": "ACube",
+                        "RelativeLocation": "X=0.000 Y=0.039 Z=0.000",
+                        "RelativeRotation": "Pitch=-40.353 Yaw=-89.999 Roll=-0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
                     "ComponentClass": "ULuaScriptComponent",
                     "ComponentID": "LuaComponent",
                     "Properties": {
@@ -379,22 +395,6 @@
                         "bIsActive": "true",
                         "bSimulate": "false",
                         "m_Type": ""
-                    }
-                },
-                {
-                    "ComponentClass": "UCameraComponent",
-                    "ComponentID": "UCameraComponent_719",
-                    "Properties": {
-                        "AttachParentID": "StaticMeshComponent_0",
-                        "ComponentClass": "UCameraComponent",
-                        "ComponentName": "UCameraComponent_719",
-                        "ComponentOwner": "ACube_715",
-                        "ComponentOwnerClass": "ACube",
-                        "RelativeLocation": "X=0.000 Y=0.039 Z=0.000",
-                        "RelativeRotation": "Pitch=-40.353 Yaw=-89.999 Roll=0.000",
-                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
                     }
                 }
             ],
