@@ -30,17 +30,26 @@ public:
 
     void HandleAttackNotify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, EAttackDirection InAttackDirection);
 
+    void HandleAttackNotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation);
+
     void CreateAttackNotify(UAnimSequence* AnimSequence, UAnimCustomNotify*& OutNotify, const FString& NotifyName, float TriggerTime);
 
     void CreateSoundNotify(UAnimSequence* AnimSequence, UAnimSoundNotify*& OutNotify, const FString& NotifyName, const FString& SoundName, float TriggerTime);
 
-    void BindAttackNotifies();
+    void BindAttackNotifies(AEnemy* EnemyActor);
 
+    void ResetEnemyProperties();
 public:
+    UAnimCustomNotify* AttackToIdleNotify = nullptr;
     UAnimCustomNotify* AttackVerticalNotify = nullptr;
     UAnimCustomNotify* AttackHorizontalNotify = nullptr;
+    UAnimCustomNotify* AttackVerticalNotifyEnd = nullptr;
+    UAnimCustomNotify* AttackHorizontalNotifyEnd = nullptr;
+
     UAnimSoundNotify* ReactionNotify = nullptr;
-    EAttackDirection CurrentAttackDirection = AD_Vertical;
+    UAnimSoundNotify* PlayerHitNotify = nullptr;
+
+    EAttackDirection CurrentAttackDirection = AD_None;
 
     UPROPERTY(EditAnywhere | EditInline, USkeletalMeshComponent*, SkeletalMeshComponent, = nullptr)
 
