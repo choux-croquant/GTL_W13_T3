@@ -4,6 +4,7 @@
 class USkeletalMeshComponent;
 class UAnimSequenceBase;
 class UAnimCustomNotify;
+class UAnimSoundNotify;
 class UAnimSequence;
 
 enum EAttackDirection
@@ -31,12 +32,14 @@ public:
 
     void CreateAttackNotify(UAnimSequence* AnimSequence, UAnimCustomNotify*& OutNotify, const FString& NotifyName, float TriggerTime);
 
+    void CreateSoundNotify(UAnimSequence* AnimSequence, UAnimSoundNotify*& OutNotify, const FString& NotifyName, const FString& SoundName, float TriggerTime);
+
     void BindAttackNotifies();
 
 public:
     UAnimCustomNotify* AttackVerticalNotify = nullptr;
     UAnimCustomNotify* AttackHorizontalNotify = nullptr;
-
+    UAnimSoundNotify* ReactionNotify = nullptr;
     EAttackDirection CurrentAttackDirection = AD_Vertical;
 
     UPROPERTY(EditAnywhere | EditInline, USkeletalMeshComponent*, SkeletalMeshComponent, = nullptr)

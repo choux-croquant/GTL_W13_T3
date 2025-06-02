@@ -4,6 +4,7 @@
 #include "Animation/AnimSequence.h"
 #include "Animation/AnimTypes.h"
 #include "Animation/AnimCustomNotify.h"
+#include "Animation/AnimSoundNotify.h"
 #include "Userinterface/Console.h"
 
 void AEnemy::PostSpawnInitialize()
@@ -28,12 +29,17 @@ void AEnemy::PostSpawnInitialize()
     Horizontal1->RemoveNotifyTrack(0);
     Horizontal2->RemoveNotifyTrack(0);
     Vertical1->RemoveNotifyTrack(0);
+    ReactionAnim->RemoveNotifyTrack(0);
 
+    // AttackNofity
     CreateAttackNotify(Horizontal1, AttackHorizontalNotify, "Attack_Horizontal", 0.3f);
     CreateAttackNotify(Horizontal2, AttackHorizontalNotify, "Attack_Horizontal", 0.3f);
     CreateAttackNotify(Vertical1, AttackVerticalNotify, "Attack_Vertical", 0.3f);
 
     BindAttackNotifies();
+
+    // Sound Notify
+    CreateSoundNotify(ReactionAnim, ReactionNotify, "Impact", "sizzle", 0.0f);
 }
     
 void AEnemy::BeginPlay()
@@ -105,6 +111,32 @@ void AEnemy::CreateAttackNotify(
         NotifyName,
         NotifyEventIndex
     );
+
+    AnimSequence->GetNotifyEvent(NotifyEventIndex)->SetAnimNotify(OutNotify);
+}
+
+void AEnemy::CreateSoundNotify(
+    UAnimSequence* AnimSequence,
+    UAnimSoundNotify*& OutNotify,
+    const FString& NotifyName,
+    const FString& SoundName,
+    float TriggerTime)
+{
+    OutNotify = FObjectFactory::ConstructObject<UAnimSoundNotify>(this);
+
+    int32 TrackIndex = INDEX_NONE;
+    AnimSequence->AddNotifyTrack(NotifyName, TrackIndex);
+
+    int32 NotifyEventIndex = INDEX_NONE;
+    AnimSequence->AddNotifyEvent(
+        TrackIndex,
+        TriggerTime,
+        0.0f,
+        NotifyName,
+        NotifyEventIndex
+    );
+    
+    OutNotify->SetSoundName(FName(SoundName));
 
     AnimSequence->GetNotifyEvent(NotifyEventIndex)->SetAnimNotify(OutNotify);
 }
