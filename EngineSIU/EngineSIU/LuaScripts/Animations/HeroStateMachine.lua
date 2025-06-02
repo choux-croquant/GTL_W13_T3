@@ -1,9 +1,10 @@
 AnimFSM = {
+    --애니메이션 이름 바꾸기 귀찮아서 애니메이션은 막을수 있는 적공격 패리라고 명명돼있음
     currentState = "Idle",
-    verticalFastParryAnimation = "Contents/Player/Armature|VerticalFastParry",
-    verticalHardParryAnimation = "Contents/Player/Armature|VerticalHardParry",
-    HorizontalFastParryAnimation = "Contents/Player/Armature|HorizontalFastParry",
-    HorizontalHardParryAnimation = "Contents/Player/Armature|HorizontalHardParry",
+    HorizontalFastParryAnimation = "Contents/Player/Armature|VerticalFastParry",
+    HorizontalHardParryAnimation = "Contents/Player/Armature|VerticalHardParry",
+    verticalFastParryAnimation = "Contents/Player/Armature|HorizontalFastParry",
+    verticalHardParryAnimation = "Contents/Player/Armature|HorizontalHardParry",
     
     reactionAnimation = "Contents/Player/Armature|DamageReact",
     dieAnimation = "Contents/Player/Armature|Die",
