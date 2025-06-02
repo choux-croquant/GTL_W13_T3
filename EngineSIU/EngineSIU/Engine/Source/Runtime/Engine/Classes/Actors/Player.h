@@ -79,7 +79,7 @@ public:
     
     AHeroPlayer() = default;
     virtual void BeginPlay() override;
-    void GetDamaged(AActor* OverlappedActor, AActor* OtherActor);
+    void GetDamaged(float Damage);
     void Parry(AActor* OverlappedActor, AActor* OtherActor);
     virtual UObject* Duplicate(UObject* InOuter) override;
     virtual void Tick(float DeltaTime) override;

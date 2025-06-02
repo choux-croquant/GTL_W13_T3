@@ -639,7 +639,6 @@ void AHeroPlayer::BeginPlay()
     OnActorBeginOverlap.AddLambda(
         [this](AActor* OverlappedActor, AActor* OtherActor)
         {
-            GetDamaged(OverlappedActor, OtherActor);
         }
     );
 
@@ -716,14 +715,9 @@ FName AHeroPlayer::GetStateMachine()
     return TEXT("Idle");
 }
 
-void AHeroPlayer::GetDamaged(AActor* OverlappedActor, AActor* OtherActor)
+void AHeroPlayer::GetDamaged(float Damage)
 {
-    if (OtherActor->IsA<AEnemy>())
-    {
-        SetHealth(Health - 1);
-
-        //경직 애니메이션 (블렌드)
-    }
+    SetHealth(Health - Damage);
 }
 
 void AHeroPlayer::Parry(AActor* OverlappedActor, AActor* OtherActor)
