@@ -1,4 +1,4 @@
-#include "SocketComponent.h"
+﻿#include "SocketComponent.h"
 
 #include "SkeletalMeshComponent.h"
 #include "Engine/Engine.h"
@@ -37,8 +37,9 @@ void USocketComponent::TickComponent(float DeltaTime)
     if (USkeletalMeshComponent* SkeletalMeshComponent = Cast<USkeletalMeshComponent>(GetAttachParent()))
     {
         const FTransform SocketTransform = SkeletalMeshComponent->GetSocketTransform(Socket);
-        SetRelativeRotation(SocketTransform.GetRotation().Rotator());
-        SetRelativeLocation(SocketTransform.GetTranslation());
+        SetRelativeRotation(SocketTransform.GetRotation().Rotator() );
+        SetRelativeLocation(SocketTransform.GetTranslation() * GetComponentScale3D());
+        SetRelativeScale3D(SocketTransform.GetScale3D());
     }
 }
 
