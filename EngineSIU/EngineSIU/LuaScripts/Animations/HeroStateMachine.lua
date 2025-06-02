@@ -49,6 +49,7 @@ AnimFSM = {
             blend = 0.2,
             loop = true, 
             rate_scale = 1.0,
+            state = self.currentState,
         }
     end,
 
@@ -77,6 +78,7 @@ AnimFSM = {
             blend = 0.1,
             loop = false,
             rate_scale = 1.0,
+            state = self.currentState,
         }
     end,
 
@@ -93,6 +95,7 @@ AnimFSM = {
             blend = 0.1,
             loop = false,
             rate_scale = 1.0,
+            state = self.currentState,
        }
     end,
 
@@ -110,6 +113,7 @@ AnimFSM = {
             blend = 0.1,
             loop = false,
             rate_scale = 1.0,
+            state = self.currentState,
       }
     end,
 
@@ -126,6 +130,7 @@ AnimFSM = {
             blend = 0.1,
             loop = false,
             rate_scale = 1.0,
+            state = self.currentState,
     }
     end,
 
@@ -140,6 +145,7 @@ AnimFSM = {
             blend = blend,
             loop = false,
             rate_scale = 1.0,
+            state = self.currentState,
       }
     end,
 }

@@ -79,13 +79,14 @@ public:
     
     AHeroPlayer() = default;
     virtual void BeginPlay() override;
-    void SetAnimState(FString InState);
     void GetDamaged(AActor* OverlappedActor, AActor* OtherActor);
     void Parry(AActor* OverlappedActor, AActor* OtherActor);
     virtual UObject* Duplicate(UObject* InOuter) override;
     virtual void Tick(float DeltaTime) override;
     virtual void PostSpawnInitialize() override;
-    
+
+    void SetAnimState(FString InState);
+    FName GetStateMachine();
     void ResetHero();
 
     FOnHealthChanged OnHealthChanged;

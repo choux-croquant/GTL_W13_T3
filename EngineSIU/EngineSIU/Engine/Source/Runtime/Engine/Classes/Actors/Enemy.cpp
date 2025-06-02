@@ -23,13 +23,13 @@ void AEnemy::PostSpawnInitialize()
     UAnimSequence* Attack2 = Cast<UAnimSequence>(UAssetManager::Get().GetAnimation(FString("Contents/GameJamEnemy/Armature|Combo_RLR")));
 
     //  일단 여기서 초기화 하도록 함
-    Attack1->RemoveNotifyTrack(0);
+    // Attack1->RemoveNotifyTrack(0);
 
-    CreateAttackNotify(Attack1, AttackHorizontalNotify, "Attack_Horizontal", 0.3f);
-    CreateAttackNotify(Attack1, AttackHorizontalNotify, "Attack_Horizontal", 0.8f);
-    CreateAttackNotify(Attack1, AttackVerticalNotify, "Attack_Vertical", 1.3f);
+    // CreateAttackNotify(Attack1, AttackHorizontalNotify, "Attack_Horizontal", 0.3f);
+    // CreateAttackNotify(Attack1, AttackHorizontalNotify, "Attack_Horizontal", 0.8f);
+    // CreateAttackNotify(Attack1, AttackVerticalNotify, "Attack_Vertical", 1.3f);
 
-    BindAttackNotifies();
+    // BindAttackNotifies();
 }
     
 void AEnemy::BeginPlay()

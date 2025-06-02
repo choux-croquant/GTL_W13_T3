@@ -661,7 +661,6 @@ void AHeroPlayer::BeginPlay()
         [this]()
         {
             UE_LOG(ELogLevel::Error,"Parry");
-            //TODO: 적이 나한테 구독해야함, 그로기 게이지 증가 등
             //TODO: 패리 사운드 실행
         }
     );
@@ -700,6 +699,21 @@ void AHeroPlayer::SetAnimState(FString InState)
         }
     }
     //State변경
+}
+
+FName AHeroPlayer::GetStateMachine()
+{
+    if (USkeletalMeshComponent* SkeletalMeshComponent = GetComponentByClass<USkeletalMeshComponent>())
+    {
+        if (ULuaScriptAnimInstance* AnimScriptInstance = Cast<ULuaScriptAnimInstance>(SkeletalMeshComponent->GetAnimInstance()))
+        {
+            if (UAnimStateMachine* StateMachine = AnimScriptInstance->GetStateMachine())
+            {
+                return StateMachine->State;
+            }
+        }
+    }
+    return TEXT("Idle");
 }
 
 void AHeroPlayer::GetDamaged(AActor* OverlappedActor, AActor* OtherActor)
@@ -742,6 +756,7 @@ void AHeroPlayer::PostSpawnInitialize()
 void AHeroPlayer::ResetHero()
 {
     Health = MaxHealth;
+    SetAnimState(FString("Idle"));
 }
 
 void AHeroPlayer::SetHealth(float InHealth)

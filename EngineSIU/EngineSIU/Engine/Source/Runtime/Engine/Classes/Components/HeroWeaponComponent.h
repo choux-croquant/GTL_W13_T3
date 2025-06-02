@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "BoxComponent.h"
+#include "Actors/Enemy.h"
 
 class UHeroWeaponComponent : public UBoxComponent
 {
@@ -8,9 +9,10 @@ public:
     UHeroWeaponComponent();
     
     virtual void BeginPlay() override;
-    void SetParryMode(bool InbIsParry);
-    void Parry(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& Hit);
+    float GetStateDamage(FName InState);
+    EAttackDirection GetParryDirection(FName InState);
+    void OnWeaponOverlapped(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& Hit);
 
-    UPROPERTY
-    (EditAnywhere, bool, bIsParrying, = 0)
+    // UPROPERTY
+    // (EditAnywhere, bool, bIsParrying, = 0)
 };
