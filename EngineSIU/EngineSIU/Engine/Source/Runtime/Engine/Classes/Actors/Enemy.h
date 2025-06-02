@@ -8,9 +8,9 @@ class UAnimSequence;
 
 enum EAttackDirection
 {
-    AD_Right,
-    AD_Left,
-    AD_Up
+    AD_None,
+    AD_Vertical,
+    AD_Horizontal,
 };
 
 class AEnemy : public AActor
@@ -32,11 +32,10 @@ public:
     void BindAttackNotifies();
 
 public:
-    UAnimCustomNotify* AttackRightNotify = nullptr;
-    UAnimCustomNotify* AttackLeftNotify = nullptr;
-    UAnimCustomNotify* AttackUpNotify = nullptr;
+    UAnimCustomNotify* AttackVerticalNotify = nullptr;
+    UAnimCustomNotify* AttackHorizontalNotify = nullptr;
 
-    EAttackDirection CurrentAttackDirection = AD_Right;
+    EAttackDirection CurrentAttackDirection = AD_Vertical;
 
     UPROPERTY(EditAnywhere | EditInline, USkeletalMeshComponent*, SkeletalMeshComponent, = nullptr)
 };

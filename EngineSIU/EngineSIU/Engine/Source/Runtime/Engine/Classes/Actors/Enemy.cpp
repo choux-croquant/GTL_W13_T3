@@ -25,9 +25,9 @@ void AEnemy::PostSpawnInitialize()
     //  일단 여기서 초기화 하도록 함
     Attack1->RemoveNotifyTrack(0);
 
-    CreateAttackNotify(Attack1, AttackRightNotify, "Attack_Right", 0.3f);
-    CreateAttackNotify(Attack1, AttackLeftNotify, "Attack_Left", 0.8f);
-    CreateAttackNotify(Attack1, AttackUpNotify, "Attack_Up", 1.3f);
+    CreateAttackNotify(Attack1, AttackHorizontalNotify, "Attack_Horizontal", 0.3f);
+    CreateAttackNotify(Attack1, AttackHorizontalNotify, "Attack_Horizontal", 0.8f);
+    CreateAttackNotify(Attack1, AttackVerticalNotify, "Attack_Vertical", 1.3f);
 
     BindAttackNotifies();
 }
@@ -56,14 +56,11 @@ void AEnemy::HandleAttackNotify(USkeletalMeshComponent* MeshComp, UAnimSequenceB
 
     switch (InAttackDirection)
     {
-    case AD_Right:
-        UE_LOG(ELogLevel::Display, TEXT("ENEMY_ATTACK_RIGHT"));
+    case AD_Vertical:
+        UE_LOG(ELogLevel::Display, TEXT("ENEMY_ATTACK_Vertical"));
         break;
-    case AD_Left:
-        UE_LOG(ELogLevel::Display, TEXT("ENEMY_ATTACK_LEFT"));
-        break;
-    case AD_Up:
-        UE_LOG(ELogLevel::Display, TEXT("ENEMY_ATTACK_UP"));
+    case AD_Horizontal:
+        UE_LOG(ELogLevel::Display, TEXT("ENEMY_ATTACK_Horizontal"));
         break;
     default:
         break;
@@ -97,29 +94,20 @@ void AEnemy::CreateAttackNotify(
 
 void AEnemy::BindAttackNotifies()
 {
-    if (AttackRightNotify)
+    if (AttackVerticalNotify)
     {
-        AttackRightNotify->OnCustomNotify.AddLambda(
+        AttackVerticalNotify->OnCustomNotify.AddLambda(
             [this](USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation) {
-                this->HandleAttackNotify(MeshComp, Animation, EAttackDirection::AD_Right);
+                this->HandleAttackNotify(MeshComp, Animation, EAttackDirection::AD_Vertical);
             }
         );
     }
 
-    if (AttackLeftNotify)
+    if (AttackHorizontalNotify)
     {
-        AttackLeftNotify->OnCustomNotify.AddLambda(
+        AttackHorizontalNotify->OnCustomNotify.AddLambda(
             [this](USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation) {
-                this->HandleAttackNotify(MeshComp, Animation, EAttackDirection::AD_Left);
-            }
-        );
-    }
-
-    if (AttackUpNotify)
-    {
-        AttackUpNotify->OnCustomNotify.AddLambda(
-            [this](USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation) {
-                this->HandleAttackNotify(MeshComp, Animation, EAttackDirection::AD_Up);
+                this->HandleAttackNotify(MeshComp, Animation, EAttackDirection::AD_Horizontal);
             }
         );
     }
