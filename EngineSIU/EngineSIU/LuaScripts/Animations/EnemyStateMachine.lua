@@ -66,10 +66,13 @@ AnimFSM = {
     HandleReactionState = function(self)
         if not self.isReacting then
             self.isReacting = true
+            self.isAttacking = false
+            self.lastAttackTime = os.clock()
             self.reactionEndTime = os.clock() + self.CurrentAnimDuration;
         end
-        
+
         if self.reactionEndTime and os.clock() > self.reactionEndTime then
+            self.isReacting = false
             self:TransitionToState("Idle")
         end
 
