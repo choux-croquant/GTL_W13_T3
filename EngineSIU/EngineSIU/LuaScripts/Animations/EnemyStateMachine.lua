@@ -3,8 +3,8 @@ AnimFSM = {
     idleAnimation = "Contents/Enemy_Idle/Armature|Enemy_Idle",
     attackAnimations = {
         "Contents/Horizontal1/Armature|Horizontal1",
-        -- "Contents/Horizontal2/Armature|Horizontal2",
-        -- "Contents/Vertical1/Armature|Vertical1",
+        "Contents/Horizontal2/Armature|Horizontal2",
+        "Contents/Vertical1/Armature|Vertical1",
     },
     reactionAnimation = "Contents/Enemy_Impact/Armature|Enemy_Impact",
     kneelAnimation = "Contents/Kneel/Armature|Kneel",
@@ -40,7 +40,7 @@ AnimFSM = {
         end
 
         return {
-            anim = idleAnimation,
+            anim = self.idleAnimation,
             blend = 0.2,
             loop = true,
             rate_scale = 1.0,
@@ -52,18 +52,19 @@ AnimFSM = {
         if not self.isAttacking then
             self.isAttacking = true
             self.selectedAttack = self.attackAnimations[math.random(#self.attackAnimations)]
-            self.attackEndTime = os.clock() + self.CurrentAnimDuration * 1.25;
+            self.attackEndTime = os.clock() + self.CurrentAnimDuration;
         end
 
         if os.clock() > self.attackEndTime then
             self.isAttacking = false
             self.lastAttackTime = os.clock()
+            print("ATK TO IDLE")
             self:TransitionToState("Idle")
         end
 
         return {
             anim = self.selectedAttack,
-            blend = 0.1,
+            blend = 0.5,
             loop = false,
             rate_scale = 0.8,
             state = self.currentState
