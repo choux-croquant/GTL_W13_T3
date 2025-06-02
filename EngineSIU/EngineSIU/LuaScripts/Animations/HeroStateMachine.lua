@@ -14,7 +14,7 @@ AnimFSM = {
     reactionEndTime = 0,
     isParrying = false,
     AnimStartTime = 0,
-    
+    parrySpeed = 1.2,
     
     TransitionToState = function(self, newState)
         self.currentState = newState
@@ -23,6 +23,7 @@ AnimFSM = {
     Update = function(self, dt)
 
         self:ParryEnd()
+        self:ParryCheck()
 
         if self.currentState == "React" then
             return self:HandleReactionState()
@@ -54,31 +55,40 @@ AnimFSM = {
         }
     end,
 
+    ChangeParryState = function(self, bIsParrying)
+        self.isParrying = bIsParrying
+    end,
 
     ParryEnd = function(self)
         if self.isParrying then
-            if os.clock() > self.AnimStartTime + self.CurrentAnimDuration then
-                print("Hello")
-                self.isParrying = false
-                self.lastAttackTime = os.clock()
+            if os.clock() > self.AnimStartTime + (self.CurrentAnimDuration / self.parrySpeed) then
                 self:TransitionToState("Idle")
             end
         end
     end,
+
+    ParryCheck = function(self)
+        if self.isParrying then
+            if os.clock() > self.AnimStartTime + (self.CurrentAnimDuration / self.parrySpeed) * 2 then
+                self:ChangeParryState(false)
+                self.lastAttackTime = os.clock()
+            end
+        end
+    end,    
 
     HandleVerticalFastParryState = function(self)
         if self.isParrying then
             return
         end
 
-        self.isParrying = true
+        self:ChangeParryState(true)
         self.AnimStartTime = os.clock()
 
         return {
             anim = self.verticalFastParryAnimation,
             blend = 0.1,
             loop = false,
-            rate_scale = 1.0,
+            rate_scale = self.parrySpeed,
             state = self.currentState,
         }
     end,
@@ -88,14 +98,14 @@ AnimFSM = {
             return
         end
 
-        self.isParrying = true
+        self:ChangeParryState(true)
         self.AnimStartTime = os.clock()
 
         return {
             anim = self.verticalHardParryAnimation,
             blend = 0.1,
             loop = false,
-            rate_scale = 1.0,
+            rate_scale = self.parrySpeed,
             state = self.currentState,
        }
     end,
@@ -106,14 +116,14 @@ AnimFSM = {
             return
         end
 
-        self.isParrying = true
+        self:ChangeParryState(true)
         self.AnimStartTime = os.clock()
 
         return {
             anim = self.HorizontalFastParryAnimation,
             blend = 0.1,
             loop = false,
-            rate_scale = 1.0,
+            rate_scale = self.parrySpeed,
             state = self.currentState,
       }
     end,
@@ -123,7 +133,7 @@ AnimFSM = {
             return
         end
 
-        self.isParrying = true
+        self:ChangeParryState(true)
         self.AnimStartTime = os.clock()
 
         return {
