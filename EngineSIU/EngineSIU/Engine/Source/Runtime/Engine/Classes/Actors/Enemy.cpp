@@ -1,4 +1,4 @@
-﻿#include "Enemy.h"
+#include "Enemy.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/SocketComponent.h"
 #include "Animation/AnimSequence.h"
@@ -19,17 +19,21 @@ void AEnemy::PostSpawnInitialize()
 
     UAnimSequence* IdleAnim = Cast<UAnimSequence>(UAssetManager::Get().GetAnimation(FString("Contents/Enemy_Idle/Armature|Enemy_Idle")));
     UAnimSequence* ReactionAnim = Cast<UAnimSequence>(UAssetManager::Get().GetAnimation(FString("Contents/Enemy_Impact/Armature|Enemy_Impact")));
-    UAnimSequence* Attack1 = Cast<UAnimSequence>(UAssetManager::Get().GetAnimation(FString("Contents/Combo_RLU/Armature|Combo_RLU")));
-    UAnimSequence* Attack2 = Cast<UAnimSequence>(UAssetManager::Get().GetAnimation(FString("Contents/GameJamEnemy/Armature|Combo_RLR")));
+    
+    UAnimSequence* Horizontal1 = Cast<UAnimSequence>(UAssetManager::Get().GetAnimation(FString("Contents/Horizontal1/Armature|Horizontal1")));
+    UAnimSequence* Horizontal2 = Cast<UAnimSequence>(UAssetManager::Get().GetAnimation(FString("Contents/Horizontal2/Armature|Horizontal2")));
+    UAnimSequence* Vertical1 = Cast<UAnimSequence>(UAssetManager::Get().GetAnimation(FString("Contents/Vertical1/Armature|Vertical1")));
 
     //  일단 여기서 초기화 하도록 함
-    // Attack1->RemoveNotifyTrack(0);
+    Horizontal1->RemoveNotifyTrack(0);
+    Horizontal2->RemoveNotifyTrack(0);
+    Vertical1->RemoveNotifyTrack(0);
 
-    // CreateAttackNotify(Attack1, AttackHorizontalNotify, "Attack_Horizontal", 0.3f);
-    // CreateAttackNotify(Attack1, AttackHorizontalNotify, "Attack_Horizontal", 0.8f);
-    // CreateAttackNotify(Attack1, AttackVerticalNotify, "Attack_Vertical", 1.3f);
+    CreateAttackNotify(Horizontal1, AttackHorizontalNotify, "Attack_Horizontal", 0.3f);
+    CreateAttackNotify(Horizontal2, AttackHorizontalNotify, "Attack_Horizontal", 0.3f);
+    CreateAttackNotify(Vertical1, AttackVerticalNotify, "Attack_Vertical", 0.3f);
 
-    // BindAttackNotifies();
+    BindAttackNotifies();
 }
     
 void AEnemy::BeginPlay()
