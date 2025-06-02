@@ -485,20 +485,21 @@ void ControlEditorPanel::CreateModifyButton(const ImVec2 ButtonSize, ImFont* Ico
                     break;
                 }
                 case OBJ_SKELETALMESH:
-                    {
-                        SpawnedActor = World->SpawnActor<ASkeletalMeshActor>();
-                        SpawnedActor->SetActorTickInEditor(true);
-                    }
+                {
+                    SpawnedActor = World->SpawnActor<ASkeletalMeshActor>();
+                    SpawnedActor->SetActorTickInEditor(true);
                     break;
+                }
                 case OBJ_ENEMY:
-                    {
-                        SpawnedActor = World->SpawnActor<AEnemy>();
-                    }
+                {
+                    SpawnedActor = World->SpawnActor<AEnemy>();
+                    break;
+                }
                 case OBJ_HERO:
                 {
                     SpawnedActor = World->SpawnActor<AHeroPlayer>();
+                    break;
                 }
-                break;
                 case OBJ_CAMERA:
                 case OBJ_PLAYER:
                 case OBJ_END:

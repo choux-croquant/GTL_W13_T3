@@ -8,10 +8,6 @@
 #include "Lua/LuaScriptManager.h"
 #include "Lua/LuaUtils/LuaTypeMacros.h"
 
-AActor::AActor()
-{
-}
-
 void AActor::PostSpawnInitialize()
 {
     InitLuaScriptComponent();
