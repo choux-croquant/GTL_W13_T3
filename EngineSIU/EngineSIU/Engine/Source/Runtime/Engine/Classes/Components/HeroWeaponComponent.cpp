@@ -40,14 +40,15 @@ float UHeroWeaponComponent::GetStateDamage(FName InState)
 
 EAttackDirection UHeroWeaponComponent::GetParryDirection(FName InState)
 {
+    //세로로 내리치니까 가로로 오는걸 막음
     if (InState == TEXT("VerticalFastParry") || InState == TEXT("VerticalHardParry"))
     {
-        return AD_Vertical;
+        return AD_Horizontal;
     }
 
     if (InState == TEXT("HorizontalFastParry") || InState == TEXT("HorizontalHardParry"))
     {
-        return AD_Horizontal;
+        return AD_Vertical;
     }
 
     return AD_None;
