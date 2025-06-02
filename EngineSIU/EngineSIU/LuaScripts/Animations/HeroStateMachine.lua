@@ -1,26 +1,35 @@
 AnimFSM = {
     --애니메이션 이름 바꾸기 귀찮아서 애니메이션은 막을수 있는 적공격 패리라고 명명돼있음
     currentState = "Idle",
-    HorizontalFastParryAnimation = "Contents/Player/Armature|VerticalFastParry",
-    HorizontalHardParryAnimation = "Contents/Player/Armature|VerticalHardParry",
-    verticalFastParryAnimation = "Contents/Player/Armature|HorizontalFastParry",
-    verticalHardParryAnimation = "Contents/Player/Armature|HorizontalHardParry",
-    
-    reactionAnimation = "Contents/Player/Armature|DamageReact",
-    dieAnimation = "Contents/Player/Armature|Die",
-    idleAnimation = "Contents/Player/Armature|Idle",
+
+    AnimMap = {
+        VerticalFastParry = "Contents/Player/Armature|VerticalFastParry",
+        VerticalHardParry = "Contents/Player/Armature|VerticalHardParry",
+        HorizontalFastParry = "Contents/Player/Armature|HorizontalFastParry",
+        HorizontalHardParry = "Contents/Player/Armature|HorizontalHardParry",
+        DamageReact = "Contents/Player/Armature|DamageReact",
+        Die = "Contents/Player/Armature|Die",
+        Idle = "Contents/Player/Armature|Idle",
+    },
     isAttacking = false,
     lastAttackTime = 0,
     reactionEndTime = 0,
     isParrying = false,
     AnimStartTime = 0,
     parrySpeed = 1.2,
+    timer = 0,
+
+    GetAnimName = function(self, InState)
+        return self.AnimMap[InState]
+    end,
     
     TransitionToState = function(self, newState)
         self.currentState = newState
     end,
 
     Update = function(self, dt)
+
+        self.timer = self.timer + dt
 
         self:ParryEnd()
         self:ParryCheck()
@@ -43,11 +52,9 @@ AnimFSM = {
     end,
 
     HandleIdleState = function(self)
-        -- 공격 쿨타임 체크
-        -- 키입력으로 체크 쿨다운도 체크해야하긴함
 
         return {
-            anim = self.idleAnimation,
+            anim = self.AnimMap["Idle"],
             blend = 0.2,
             loop = true, 
             rate_scale = 1.0,
@@ -61,7 +68,7 @@ AnimFSM = {
 
     ParryEnd = function(self)
         if self.isParrying then
-            if os.clock() > self.AnimStartTime + (self.CurrentAnimDuration / self.parrySpeed) then
+            if self.timer >= self.AnimStartTime + (self.CurrentAnimDuration / self.parrySpeed) then
                 self:TransitionToState("Idle")
             end
         end
@@ -69,9 +76,10 @@ AnimFSM = {
 
     ParryCheck = function(self)
         if self.isParrying then
-            if os.clock() > self.AnimStartTime + (self.CurrentAnimDuration / self.parrySpeed) * 2 then
+            if self.timer > self.AnimStartTime + (self.CurrentAnimDuration / self.parrySpeed) * 2 then
+                print("hi")
                 self:ChangeParryState(false)
-                self.lastAttackTime = os.clock()
+                self.lastAttackTime = self.timer
             end
         end
     end,    
@@ -82,10 +90,10 @@ AnimFSM = {
         end
 
         self:ChangeParryState(true)
-        self.AnimStartTime = os.clock()
+        self.AnimStartTime = self.timer
 
         return {
-            anim = self.verticalFastParryAnimation,
+            anim = self.AnimMap["VerticalFastParry"],
             blend = 0.1,
             loop = false,
             rate_scale = self.parrySpeed,
@@ -99,10 +107,10 @@ AnimFSM = {
         end
 
         self:ChangeParryState(true)
-        self.AnimStartTime = os.clock()
+        self.AnimStartTime = self.timer
 
         return {
-            anim = self.verticalHardParryAnimation,
+            anim = self.AnimMap["VerticalHardParry"],
             blend = 0.1,
             loop = false,
             rate_scale = self.parrySpeed,
@@ -111,16 +119,15 @@ AnimFSM = {
     end,
 
     HandleHorizontalFastParryState = function(self)
-
         if self.isParrying then
             return
         end
 
         self:ChangeParryState(true)
-        self.AnimStartTime = os.clock()
+        self.AnimStartTime = self.timer
 
         return {
-            anim = self.HorizontalFastParryAnimation,
+            anim = self.AnimMap["HorizontalFastParry"],
             blend = 0.1,
             loop = false,
             rate_scale = self.parrySpeed,
@@ -134,10 +141,10 @@ AnimFSM = {
         end
 
         self:ChangeParryState(true)
-        self.AnimStartTime = os.clock()
+        self.AnimStartTime = self.timer
 
         return {
-            anim = self.HorizontalHardParryAnimation,
+            anim = self.AnimMap["HorizontalHardParry"],
             blend = 0.1,
             loop = false,
             rate_scale = 1.0,
@@ -145,15 +152,24 @@ AnimFSM = {
     }
     end,
 
+    HandleDieState = function(self)
+        return {
+            anim = self.AnimMap["Die"],
+            blend = 0.3,
+            loop = false,
+            rate_scale = 1.0,
+            state = self.currentState,
+        }
+    end,
+
     HandleReactionState = function(self)
-        local blend = 0.3
-        if os.clock() > self.reactionEndTime then
+        if self.timer > self.reactionEndTime then
             self:TransitionToState("Idle")
         end
 
         return {
-            anim = self.reactionAnimation,
-            blend = blend,
+            anim = self.AnimMap["DamageReact"],
+            blend = 0.3,
             loop = false,
             rate_scale = 1.0,
             state = self.currentState,
