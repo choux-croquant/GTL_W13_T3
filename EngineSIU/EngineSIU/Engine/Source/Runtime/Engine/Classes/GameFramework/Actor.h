@@ -24,7 +24,7 @@ class AActor : public UObject
     DECLARE_CLASS(AActor, UObject)
 
 public:
-    AActor();
+    AActor()=default;
 
     virtual void PostSpawnInitialize();
 

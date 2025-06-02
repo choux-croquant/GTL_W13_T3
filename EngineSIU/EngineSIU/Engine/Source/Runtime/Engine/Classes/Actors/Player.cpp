@@ -749,7 +749,7 @@ void AHeroPlayer::PostSpawnInitialize()
 {
     APlayer::PostSpawnInitialize();
     
-    USkeletalMeshComponent* OriginSkeletalMeshComponent = AddComponent<USkeletalMeshComponent>();
+    USkeletalMeshComponent* OriginSkeletalMeshComponent = AddComponent<USkeletalMeshComponent>("SkeletalMeshComponent");
     OriginSkeletalMeshComponent->StateMachineFileName = "LuaScripts/Animations/HeroStateMachine.lua";
 }
 
