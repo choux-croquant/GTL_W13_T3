@@ -2,13 +2,15 @@ AnimFSM = {
     currentState = "Idle",
     attackAnimations = {
         "Contents/Horizontal1/Armature|Horizontal1",
-        "Contents/Horizontal2/Armature|Horizontal2",
-        "Contents/Vertical1/Armature|Vertical1",
+        -- "Contents/Horizontal2/Armature|Horizontal2",
+        -- "Contents/Vertical1/Armature|Vertical1",
     },
     reactionAnimation = "Contents/Enemy_Impact/Armature|Enemy_Impact",
     attackCooldown = 3.0,
     isAttacking = false,
+    isReacting = false,
     lastAttackTime = 0,
+    reactionEndTime = 0,
 
     TransitionToState = function(self, newState)
         self.currentState = newState
@@ -62,14 +64,21 @@ AnimFSM = {
     end,
 
     HandleReactionState = function(self)
-        local blend = 0.3
-        if os.clock() > self.reactionEndTime then
+        if not self.isReacting then
+            self.isReacting = true
+            self.isAttacking = false
+            self.lastAttackTime = os.clock()
+            self.reactionEndTime = os.clock() + self.CurrentAnimDuration;
+        end
+
+        if self.reactionEndTime and os.clock() > self.reactionEndTime then
+            self.isReacting = false
             self:TransitionToState("Idle")
         end
 
         return {
             anim = self.reactionAnimation,
-            blend = blend,
+            blend = 0.1,
             loop = false,
             rate_scale = 1.0,
             state = self.currentState

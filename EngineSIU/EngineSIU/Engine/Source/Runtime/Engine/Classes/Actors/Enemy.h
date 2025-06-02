@@ -4,6 +4,7 @@
 class USkeletalMeshComponent;
 class UAnimSequenceBase;
 class UAnimCustomNotify;
+class UAnimSoundNotify;
 class UAnimSequence;
 
 enum EAttackDirection
@@ -19,23 +20,29 @@ class AEnemy : public AActor
 public:
     AEnemy() = default;
     
-    void PostSpawnInitialize();
+    virtual void PostSpawnInitialize() override;
 
-    void BeginPlay();
+    virtual void BeginPlay() override;
 
+    virtual void Tick(float DeltaTime) override;
+    
     UObject* Duplicate(UObject* InOuter);
 
     void HandleAttackNotify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, EAttackDirection InAttackDirection);
 
     void CreateAttackNotify(UAnimSequence* AnimSequence, UAnimCustomNotify*& OutNotify, const FString& NotifyName, float TriggerTime);
 
+    void CreateSoundNotify(UAnimSequence* AnimSequence, UAnimSoundNotify*& OutNotify, const FString& NotifyName, const FString& SoundName, float TriggerTime);
+
     void BindAttackNotifies();
 
 public:
     UAnimCustomNotify* AttackVerticalNotify = nullptr;
     UAnimCustomNotify* AttackHorizontalNotify = nullptr;
-
+    UAnimSoundNotify* ReactionNotify = nullptr;
     EAttackDirection CurrentAttackDirection = AD_Vertical;
 
     UPROPERTY(EditAnywhere | EditInline, USkeletalMeshComponent*, SkeletalMeshComponent, = nullptr)
+
+    float ParryGauge = 0.0f;
 };
