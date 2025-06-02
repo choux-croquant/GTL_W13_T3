@@ -36,7 +36,7 @@ public:
 
     void CreateSoundNotify(UAnimSequence* AnimSequence, UAnimSoundNotify*& OutNotify, const FString& NotifyName, const FString& SoundName, float TriggerTime);
 
-    void BindAttackNotifies(AEnemy* EnemyActor);
+    void BindAttackNotifies();
 
     void ResetEnemyProperties();
 public:

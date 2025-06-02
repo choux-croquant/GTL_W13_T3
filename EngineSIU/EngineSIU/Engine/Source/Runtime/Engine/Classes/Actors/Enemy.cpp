@@ -46,7 +46,7 @@ void AEnemy::PostSpawnInitialize()
     CreateAttackNotify(Horizontal2, AttackHorizontalNotifyEnd, "Attack_Horizontal_End", Horizontal2->GetDuration() - 0.01f);
     CreateAttackNotify(Vertical1, AttackVerticalNotifyEnd, "Attack_Vertical_End", Vertical1->GetDuration() - 0.01f);
 
-    /*BindAttackNotifies();*/
+    BindAttackNotifies();
 
     // Sound Notify
     // 패링 성공 시 - 피격 시작할 때 Notify
@@ -70,7 +70,7 @@ void AEnemy::Tick(float DeltaTime)
     }
 
     //UE_LOG(ELogLevel::Warning, TEXT("PARRY %f"), ParryGauge);
-    //UE_LOG(ELogLevel::Warning, TEXT("ATTACK_DIRECTION %d"), CurrentAttackDirection);
+    UE_LOG(ELogLevel::Warning, TEXT("ATTACK_DIRECTION %d"), CurrentAttackDirection);
 }
 
 UObject* AEnemy::Duplicate(UObject* InOuter)
@@ -85,8 +85,6 @@ UObject* AEnemy::Duplicate(UObject* InOuter)
     NewActor->AttackHorizontalNotify = AttackHorizontalNotify;
     NewActor->AttackVerticalNotifyEnd = AttackVerticalNotifyEnd;
     NewActor->AttackHorizontalNotifyEnd = AttackHorizontalNotifyEnd;
-
-    BindAttackNotifies(NewActor);
 
     //NewActor->BindAttackNotifies();
 
@@ -127,6 +125,8 @@ void AEnemy::HandleAttackNotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequen
         return;
     }
 
+    UE_LOG(ELogLevel::Display, TEXT("ENEMY_ATTACK_END"));
+
     for (auto It : TObjectRange<AHeroPlayer>())
     {
         It->GetDamaged(1.0f);
@@ -139,7 +139,10 @@ void AEnemy::CreateAttackNotify(
     const FString& NotifyName,
     float TriggerTime)
 {
-    OutNotify = FObjectFactory::ConstructObject<UAnimCustomNotify>(this);
+    if (!OutNotify)
+    {
+        OutNotify = FObjectFactory::ConstructObject<UAnimCustomNotify>(this);
+    }
 
     int32 TrackIndex = INDEX_NONE;
     AnimSequence->AddNotifyTrack(NotifyName, TrackIndex);
@@ -182,13 +185,13 @@ void AEnemy::CreateSoundNotify(
     AnimSequence->GetNotifyEvent(NotifyEventIndex)->SetAnimNotify(OutNotify);
 }
 
-void AEnemy::BindAttackNotifies(AEnemy* EnemyActor)
+void AEnemy::BindAttackNotifies()
 {
     if (AttackVerticalNotify)
     {
         AttackVerticalNotify->OnCustomNotify.AddLambda(
-            [EnemyActor](USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation) {
-                EnemyActor->HandleAttackNotify(MeshComp, Animation, EAttackDirection::AD_Vertical);
+            [this](USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation) {
+                this->HandleAttackNotify(MeshComp, Animation, EAttackDirection::AD_Vertical);
             }
         );
     }
@@ -196,8 +199,8 @@ void AEnemy::BindAttackNotifies(AEnemy* EnemyActor)
     if (AttackHorizontalNotify)
     {
         AttackHorizontalNotify->OnCustomNotify.AddLambda(
-            [EnemyActor](USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation) {
-                EnemyActor->HandleAttackNotify(MeshComp, Animation, EAttackDirection::AD_Horizontal);
+            [this](USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation) {
+                this->HandleAttackNotify(MeshComp, Animation, EAttackDirection::AD_Horizontal);
             }
         );
     }
@@ -205,8 +208,8 @@ void AEnemy::BindAttackNotifies(AEnemy* EnemyActor)
     if (AttackVerticalNotifyEnd)
     {
         AttackVerticalNotifyEnd->OnCustomNotify.AddLambda(
-            [EnemyActor](USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation) {
-                EnemyActor->HandleAttackNotifyEnd(MeshComp, Animation);
+            [this](USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation) {
+                this->HandleAttackNotifyEnd(MeshComp, Animation);
             }
         );
     }
@@ -214,8 +217,8 @@ void AEnemy::BindAttackNotifies(AEnemy* EnemyActor)
     if (AttackHorizontalNotifyEnd)
     {
         AttackHorizontalNotifyEnd->OnCustomNotify.AddLambda(
-            [EnemyActor](USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation) {
-                EnemyActor->HandleAttackNotifyEnd(MeshComp, Animation);
+            [this](USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation) {
+                this->HandleAttackNotifyEnd(MeshComp, Animation);
             }
         );
     }
@@ -223,8 +226,8 @@ void AEnemy::BindAttackNotifies(AEnemy* EnemyActor)
     if (AttackToIdleNotify)
     {
         AttackToIdleNotify->OnCustomNotify.AddLambda(
-            [EnemyActor](USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation) {
-                EnemyActor->HandleAttackNotify(MeshComp, Animation, EAttackDirection::AD_None);
+            [this](USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation) {
+                this->HandleAttackNotify(MeshComp, Animation, EAttackDirection::AD_None);
             }
         );
     }
