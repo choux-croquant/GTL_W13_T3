@@ -1,26 +1,9 @@
--- AnimFSM = {
---     current = "Idle",
---     Update = function(self, dt)
-
---         -- self.current = "Contents/Enemy_Idle/Armature|Enemy_Idle"
---         -- self.current = "Contents/Enemy_Impact/Armature|Enemy_Impact"
---         -- self.current = "Contents/Combo_RLU/Armature|Combo_RLU"
---         self.current = "Contents/GameJamEnemy/Armature|Combo_RLR"
-
---         return {
---             anim = self.current,
---             blend = 5.0
---         }
---     end
--- }
-
--- return AnimFSM
-
 AnimFSM = {
     currentState = "Idle",
     attackAnimations = {
-        "Contents/Combo_RLU/Armature|Combo_RLU",
-        -- "Contents/GameJamEnemy/Armature|Combo_RLR",
+        "Contents/Horizontal1/Armature|Horizontal1",
+        "Contents/Horizontal2/Armature|Horizontal2",
+        "Contents/Vertical1/Armature|Vertical1",
     },
     reactionAnimation = "Contents/Enemy_Impact/Armature|Enemy_Impact",
     attackCooldown = 3.0,
@@ -50,8 +33,9 @@ AnimFSM = {
         return {
             anim = "Contents/Enemy_Idle/Armature|Enemy_Idle",
             blend = 0.2,
-            loop = false,
+            loop = true,
             rate_scale = 1.0,
+            state = self.currentState
         }
     end,
 
@@ -59,7 +43,6 @@ AnimFSM = {
         if not self.isAttacking then
             self.isAttacking = true
             self.selectedAttack = self.attackAnimations[math.random(#self.attackAnimations)]
-          
             self.attackEndTime = os.clock() + self.CurrentAnimDuration;
         end
 
@@ -72,8 +55,9 @@ AnimFSM = {
         return {
             anim = self.selectedAttack,
             blend = 0.1,
-            loop = true,
+            loop = false,
             rate_scale = 1.0,
+            state = self.currentState
         }
     end,
 
@@ -88,6 +72,7 @@ AnimFSM = {
             blend = blend,
             loop = false,
             rate_scale = 1.0,
+            state = self.currentState
         }
     end,
 }
