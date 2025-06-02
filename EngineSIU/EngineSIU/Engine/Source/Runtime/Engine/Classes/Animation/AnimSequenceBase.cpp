@@ -26,6 +26,15 @@ float UAnimSequenceBase::GetPlayLength() const
     return 0.f;
 }
 
+float UAnimSequenceBase::GetDuration() const
+{
+    if (DataModel)
+    {
+        return (DataModel->GetDuration());
+    }
+    return 0.f;
+}
+
 UAnimDataModel* UAnimSequenceBase::GetDataModel() const
 {
     return DataModel;

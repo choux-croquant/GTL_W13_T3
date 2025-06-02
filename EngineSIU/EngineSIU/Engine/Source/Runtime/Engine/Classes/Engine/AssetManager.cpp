@@ -63,17 +63,17 @@ void UAssetManager::ReleaseAssetManager()
         }
     }
 
-    for (auto& [Key, AssetObject] : AssetMap[EAssetType::ParticleSystem])
-    {
-        const FAssetInfo& Info = AssetRegistry->PathNameToAssetInfo[Key];
-        if (Info.AssetObject)
-        {
-            if (UParticleSystem* ParticleSystemAsset = Cast<UParticleSystem>(Info.AssetObject))
-            {
-                SaveParticleSystemAsset(Info.GetFullPath(), ParticleSystemAsset);
-            }
-        }
-    }
+    // for (auto& [Key, AssetObject] : AssetMap[EAssetType::ParticleSystem])
+    // {
+    //     const FAssetInfo& Info = AssetRegistry->PathNameToAssetInfo[Key];
+    //     if (Info.AssetObject)
+    //     {
+    //         if (UParticleSystem* ParticleSystemAsset = Cast<UParticleSystem>(Info.AssetObject))
+    //         {
+    //             SaveParticleSystemAsset(Info.GetFullPath(), ParticleSystemAsset);
+    //         }
+    //     }
+    // }
 }
 
 const TMap<FName, FAssetInfo>& UAssetManager::GetAssetRegistry()

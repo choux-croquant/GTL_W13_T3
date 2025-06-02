@@ -17,6 +17,8 @@ public:
     virtual void NativeInitializeAnimation() override;
 
     virtual void NativeUpdateAnimation(float DeltaSeconds, FPoseContext& OutPose) override;
+
+    UAnimStateMachine* GetStateMachine(){ return StateMachine; }
     
     void SetPlaying(bool bIsPlaying)
     {
@@ -50,7 +52,17 @@ public:
 
     void SetAnimation(UAnimSequence* NewAnim, float BlendingTime, float LoopAnim = false, bool ReverseAnim = false);
 
+    void SetElapsedTime(float InElapsedTime)
+    {
+        ElapsedTime = InElapsedTime;
+    }
+
+    void SetPlayRate(float Rate)
+    {
+        PlayRate = Rate;
+    }
 private:
+    float PreviousTime;
     float ElapsedTime;
     float PlayRate;
     

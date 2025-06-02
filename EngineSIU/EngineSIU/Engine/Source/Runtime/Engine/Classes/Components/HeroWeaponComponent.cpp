@@ -1,6 +1,8 @@
 ﻿#include "HeroWeaponComponent.h"
 
 #include "EnemyWeaponComponent.h"
+#include "Actors/Enemy.h"
+#include "Actors/Player.h"
 #include "UObject/Casts.h"
 
 UHeroWeaponComponent::UHeroWeaponComponent()
@@ -11,32 +13,59 @@ UHeroWeaponComponent::UHeroWeaponComponent()
 void UHeroWeaponComponent::BeginPlay()
 {
     UBoxComponent::BeginPlay();
-
-    SetParryMode(true); //이거 animnotify로 켰다껐다
     
     OnComponentBeginOverlap.AddLambda(
         [this](UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& Hit){
-            Parry(OverlappedComponent, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, Hit);
+            OnWeaponOverlapped(OverlappedComponent, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, Hit);
         }
     );
 }
 
-void UHeroWeaponComponent::SetParryMode(bool InbIsParry)
+float UHeroWeaponComponent::GetStateDamage(FName InState)
 {
-    bIsParrying = InbIsParry;
+    if (InState == TEXT("VerticalFastParry") || InState == TEXT("HorizontalFastParry"))
+    {
+        //변수로 관리
+        return 5.f;
+    }
+
+    if (InState == TEXT("VerticalHardParry") || InState == TEXT("HorizontalHardParry"))
+    {
+        //변수로 관리
+        return 8.f;
+    }
+
+    return 0.f;
 }
 
-void UHeroWeaponComponent::Parry(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& Hit)
+EAttackDirection UHeroWeaponComponent::GetParryDirection(FName InState)
 {
-    if (bIsParrying == false)
+    //세로로 내리치니까 가로로 오는걸 막음
+    if (InState == TEXT("VerticalFastParry") || InState == TEXT("VerticalHardParry"))
     {
-        return;
+        return AD_Horizontal;
     }
-    
-    // if (OtherComp->IsA<UEnemyWeaponComponent>())
-    if (UEnemyWeaponComponent* EnemyWeaponComponent = Cast<UEnemyWeaponComponent>(OtherComp))
+
+    if (InState == TEXT("HorizontalFastParry") || InState == TEXT("HorizontalHardParry"))
     {
-        EnemyWeaponComponent->GotParried();
+        return AD_Vertical;
     }
-    
+
+    return AD_None;
+}
+
+void UHeroWeaponComponent::OnWeaponOverlapped(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& Hit)
+{
+    if (AEnemy* Enemy = Cast<AEnemy>(OtherActor))
+    {
+        if (UEnemyWeaponComponent* EnemyWeaponComponent = Cast<UEnemyWeaponComponent>(OtherComp))
+        {
+            AHeroPlayer* Player = Cast<AHeroPlayer>(GetOwner());
+            
+            if (Enemy->CurrentAttackDirection == GetParryDirection(Player->GetStateMachine()))
+            {
+                EnemyWeaponComponent->GotParried(GetStateDamage(Player->GetStateMachine()));
+            }
+        }
+    }
 }

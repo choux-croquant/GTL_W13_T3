@@ -8,6 +8,23 @@ USocketComponent::USocketComponent()
 {
 }
 
+void USocketComponent::GetProperties(TMap<FString, FString>& OutProperties) const
+{
+    Super::GetProperties(OutProperties);
+    OutProperties.Add(TEXT("Socket"), Socket.ToString());
+}
+
+void USocketComponent::SetProperties(const TMap<FString, FString>& InProperties)
+{
+    Super::SetProperties(InProperties);
+    const FString* TempStr = nullptr;
+    TempStr = InProperties.Find(TEXT("Socket"));
+    if (TempStr)
+    {
+        Socket = *TempStr;
+    }
+}
+
 void USocketComponent::BeginPlay()
 {
     USceneComponent::BeginPlay();
@@ -20,8 +37,9 @@ void USocketComponent::TickComponent(float DeltaTime)
     if (USkeletalMeshComponent* SkeletalMeshComponent = Cast<USkeletalMeshComponent>(GetAttachParent()))
     {
         const FTransform SocketTransform = SkeletalMeshComponent->GetSocketTransform(Socket);
-        SetRelativeRotation(SocketTransform.GetRotation().Rotator());
-        SetRelativeLocation(SocketTransform.GetTranslation());
+        SetRelativeRotation(SocketTransform.GetRotation().Rotator() );
+        SetRelativeLocation(SocketTransform.GetTranslation() * GetComponentScale3D());
+        SetRelativeScale3D(SocketTransform.GetScale3D());
     }
 }
 

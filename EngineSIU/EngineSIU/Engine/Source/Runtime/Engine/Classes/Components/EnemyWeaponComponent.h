@@ -8,5 +8,5 @@ class UEnemyWeaponComponent : public UBoxComponent
 public:
     UEnemyWeaponComponent() = default;
 
-    void GotParried();
+    void GotParried(float InDamage);
 };

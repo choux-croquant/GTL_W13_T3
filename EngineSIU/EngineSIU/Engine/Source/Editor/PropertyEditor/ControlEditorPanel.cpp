@@ -30,6 +30,7 @@
 #include "Actors/DirectionalLightActor.h"
 #include "Actors/SpotLightActor.h"
 #include "Actors/AmbientLightActor.h"
+#include "Actors/Enemy.h"
 
 #include "Actors/CubeActor.h"
 #include "Actors/SphereActor.h"
@@ -41,6 +42,7 @@
 
 #include "Animation/SkeletalMeshActor.h"
 #include "Engine/Classes/Engine/AssetManager.h"
+#include "Particles/Emitter.h"
 #include "Particles/ParticleSystemComponent.h"
 
 
@@ -373,6 +375,8 @@ void ControlEditorPanel::CreateModifyButton(const ImVec2 ButtonSize, ImFont* Ico
             { .Label = "SphereCol",         .OBJ = OBJ_SPHERE_COLLISION },
             { .Label = "CapsuleCol",        .OBJ = OBJ_CAPSULE_COLLISION },
             { .Label = "SkeletalMeshActor", .OBJ = OBJ_SKELETALMESH },
+            { .Label = "Hero",             .OBJ = OBJ_HERO},
+            { .Label = "Enemy",             .OBJ = OBJ_ENEMY},
         };
 
         for (const auto& primitive : primitives)
@@ -437,10 +441,7 @@ void ControlEditorPanel::CreateModifyButton(const ImVec2 ButtonSize, ImFont* Ico
                 }
                 case OBJ_PARTICLESYSTEM:
                 {
-                    SpawnedActor = World->SpawnActor<AActor>();
-                    SpawnedActor->SetActorLabel(TEXT("OBJ_PARTICLESYSTEM"));
-                    UParticleSystemComponent* ParticleComponent = SpawnedActor->AddComponent<UParticleSystemComponent>();
-                    SpawnedActor->SetRootComponent(ParticleComponent);
+                    SpawnedActor = World->SpawnActor<AEmitter>();
                     SpawnedActor->SetActorTickInEditor(true);
                     break;
                 }
@@ -489,6 +490,15 @@ void ControlEditorPanel::CreateModifyButton(const ImVec2 ButtonSize, ImFont* Ico
                         SpawnedActor->SetActorTickInEditor(true);
                     }
                     break;
+                case OBJ_ENEMY:
+                    {
+                        SpawnedActor = World->SpawnActor<AEnemy>();
+                    }
+                case OBJ_HERO:
+                {
+                    SpawnedActor = World->SpawnActor<AHeroPlayer>();
+                }
+                break;
                 case OBJ_CAMERA:
                 case OBJ_PLAYER:
                 case OBJ_END:

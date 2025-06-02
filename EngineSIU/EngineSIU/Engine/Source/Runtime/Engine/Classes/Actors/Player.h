@@ -83,7 +83,10 @@ public:
     void Parry(AActor* OverlappedActor, AActor* OtherActor);
     virtual UObject* Duplicate(UObject* InOuter) override;
     virtual void Tick(float DeltaTime) override;
+    virtual void PostSpawnInitialize() override;
 
+    void SetAnimState(FString InState);
+    FName GetStateMachine();
     void ResetHero();
 
     FOnHealthChanged OnHealthChanged;
@@ -95,8 +98,11 @@ public:
     float GetHealth();
     float GetMaxHealth();
 private:
+    // UPROPERTY
+    // (EditAnywhere, USkeletalMeshComponent*, OriginSkeletalMeshComponent, = nullptr)
     UPROPERTY
     (EditAnywhere, float, MaxHealth, = 3.f);
     UPROPERTY
     (EditAnywhere, float, Health, = 3.f);
 };
+

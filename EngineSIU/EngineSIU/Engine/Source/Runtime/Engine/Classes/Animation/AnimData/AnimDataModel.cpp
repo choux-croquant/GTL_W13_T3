@@ -1,4 +1,4 @@
-﻿#include "AnimDataModel.h"
+#include "AnimDataModel.h"
 
 #include "Animation/AnimationAsset.h"
 #include "Animation/AnimSequence.h"
@@ -202,6 +202,11 @@ int32 UAnimDataModel::GetNumberOfKeys() const
 int32 UAnimDataModel::GetFrameRate() const
 {
     return FrameRate;
+}
+
+float UAnimDataModel::GetDuration() const
+{
+    return static_cast<float>(NumberOfFrames - 1) / FrameRate;
 }
 
 UAnimSequence* UAnimDataModel::GetAnimationSequence() const

@@ -15,6 +15,7 @@
 #include "UObject/UObjectIterator.h"
 #include "Engine/EditorEngine.h"
 #include "Engine/SkeletalMesh.h"
+#include "Engine/Contents/AnimInstance/LuaScriptAnimInstance.h"
 
 
 void AEditorPlayer::Tick(float DeltaTime)
@@ -660,11 +661,59 @@ void AHeroPlayer::BeginPlay()
         [this]()
         {
             UE_LOG(ELogLevel::Error,"Parry");
-            //TODO: 적이 나한테 구독해야함, 그로기 게이지 증가 등
             //TODO: 패리 사운드 실행
         }
     );
-    
+
+    if (APlayerController* PlayerController = GetWorld()->GetPlayerController())
+    { //하드하게 걍 박기 ㅋㅋ
+        PlayerController->BindAction(FString("Q"), [this](float DeltaTime)
+        {
+            SetAnimState(FString("VerticalFastParry"));
+        });
+        PlayerController->BindAction(FString("W"), [this](float DeltaTime)
+        {
+            SetAnimState(FString("VerticalHardParry"));
+        });
+        PlayerController->BindAction(FString("A"), [this](float DeltaTime)
+        {
+            SetAnimState(FString("HorizontalFastParry"));
+        });
+        PlayerController->BindAction(FString("S"), [this](float DeltaTime)
+        {
+            SetAnimState(FString("HorizontalHardParry"));
+        });
+    }
+}
+
+void AHeroPlayer::SetAnimState(FString InState)
+{
+    if (USkeletalMeshComponent* SkeletalMeshComponent = GetComponentByClass<USkeletalMeshComponent>())
+    {
+        if (ULuaScriptAnimInstance* AnimScriptInstance = Cast<ULuaScriptAnimInstance>(SkeletalMeshComponent->GetAnimInstance()))
+        {
+            if (UAnimStateMachine* StateMachine = AnimScriptInstance->GetStateMachine())
+            {
+                StateMachine->State = InState;
+            }
+        }
+    }
+    //State변경
+}
+
+FName AHeroPlayer::GetStateMachine()
+{
+    if (USkeletalMeshComponent* SkeletalMeshComponent = GetComponentByClass<USkeletalMeshComponent>())
+    {
+        if (ULuaScriptAnimInstance* AnimScriptInstance = Cast<ULuaScriptAnimInstance>(SkeletalMeshComponent->GetAnimInstance()))
+        {
+            if (UAnimStateMachine* StateMachine = AnimScriptInstance->GetStateMachine())
+            {
+                return StateMachine->State;
+            }
+        }
+    }
+    return TEXT("Idle");
 }
 
 void AHeroPlayer::GetDamaged(AActor* OverlappedActor, AActor* OtherActor)
@@ -696,9 +745,18 @@ void AHeroPlayer::Tick(float DeltaTime)
     APlayer::Tick(DeltaTime);
 }
 
+void AHeroPlayer::PostSpawnInitialize()
+{
+    APlayer::PostSpawnInitialize();
+    
+    USkeletalMeshComponent* OriginSkeletalMeshComponent = AddComponent<USkeletalMeshComponent>();
+    OriginSkeletalMeshComponent->StateMachineFileName = "LuaScripts/Animations/HeroStateMachine.lua";
+}
+
 void AHeroPlayer::ResetHero()
 {
     Health = MaxHealth;
+    SetAnimState(FString("Idle"));
 }
 
 void AHeroPlayer::SetHealth(float InHealth)

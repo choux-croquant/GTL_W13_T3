@@ -89,7 +89,10 @@ void USkeletalMeshComponent::SetProperties(const TMap<FString, FString>& InPrope
         SetAnimClass(InAnimClass);
     }
 
-    StateMachineFileName = FString(InProperties["StateMachineFileName"]);
+    if (InProperties.Contains("StateMachineFileName"))
+    {
+        StateMachineFileName = FString(InProperties["StateMachineFileName"]);
+    }
 
     if (AnimationMode == EAnimationMode::AnimationSingleNode)
     {
@@ -382,17 +385,21 @@ FTransform USkeletalMeshComponent::GetSocketTransform(FName SocketName) const
 {
     FTransform Transform = FTransform::Identity;
 
-    if (USkeleton* Skeleton = GetSkeletalMeshAsset()->GetSkeleton())
+    if (USkeletalMesh* SkeletalMesh = GetSkeletalMeshAsset())
     {
-        int32 BoneIndex = Skeleton->FindBoneIndex(SocketName);
-
-        if (BoneIndex != INDEX_NONE)
+        if (USkeleton* Skeleton = SkeletalMesh->GetSkeleton())
         {
-            TArray<FMatrix> GlobalBoneMatrices;
-            GetCurrentGlobalBoneMatrices(GlobalBoneMatrices);
-            Transform = FTransform(GlobalBoneMatrices[BoneIndex]);
+            int32 BoneIndex = Skeleton->FindBoneIndex(SocketName);
+
+            if (BoneIndex != INDEX_NONE)
+            {
+                TArray<FMatrix> GlobalBoneMatrices;
+                GetCurrentGlobalBoneMatrices(GlobalBoneMatrices);
+                Transform = FTransform(GlobalBoneMatrices[BoneIndex]);
+            }
         }
     }
+    
     return Transform;
 }
 

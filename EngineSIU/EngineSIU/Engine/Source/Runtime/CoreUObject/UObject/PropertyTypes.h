@@ -1,4 +1,4 @@
-﻿#pragma onceMore actions
+﻿#pragma once
 #include <concepts>
 #include "Container/Array.h"
 #include "Container/Map.h"

@@ -1,1 +1,163 @@
-﻿#include "Enemy.h"
+#include "Enemy.h"
+#include "Components/SkeletalMeshComponent.h"
+#include "Components/SocketComponent.h"
+#include "Animation/AnimSequence.h"
+#include "Animation/AnimTypes.h"
+#include "Animation/AnimCustomNotify.h"
+#include "Animation/AnimSoundNotify.h"
+#include "Userinterface/Console.h"
+
+void AEnemy::PostSpawnInitialize()
+{
+    Super::PostSpawnInitialize();
+
+    // SetActorTickInEditor(true);
+    SkeletalMeshComponent = AddComponent<USkeletalMeshComponent>("SkeletalMeshComponent");
+    SkeletalMeshComponent->SetSkeletalMeshAsset(UAssetManager::Get().GetSkeletalMesh(FName("Contents/GameJamEnemy/GameJamEnemy")));
+    SkeletalMeshComponent->StateMachineFileName = TEXT("LuaScripts/Animations/EnemyStateMachine.lua");
+    SkeletalMeshComponent->SetAnimationMode(EAnimationMode::AnimationBlueprint);
+    SkeletalMeshComponent->SetAnimClass(UClass::FindClass(FName("ULuaScriptAnimInstance")));
+
+    UAnimSequence* IdleAnim = Cast<UAnimSequence>(UAssetManager::Get().GetAnimation(FString("Contents/Enemy_Idle/Armature|Enemy_Idle")));
+    UAnimSequence* ReactionAnim = Cast<UAnimSequence>(UAssetManager::Get().GetAnimation(FString("Contents/Enemy_Impact/Armature|Enemy_Impact")));
+    
+    UAnimSequence* Horizontal1 = Cast<UAnimSequence>(UAssetManager::Get().GetAnimation(FString("Contents/Horizontal1/Armature|Horizontal1")));
+    UAnimSequence* Horizontal2 = Cast<UAnimSequence>(UAssetManager::Get().GetAnimation(FString("Contents/Horizontal2/Armature|Horizontal2")));
+    UAnimSequence* Vertical1 = Cast<UAnimSequence>(UAssetManager::Get().GetAnimation(FString("Contents/Vertical1/Armature|Vertical1")));
+
+    //  일단 여기서 초기화 하도록 함
+    Horizontal1->RemoveNotifyTrack(0);
+    Horizontal2->RemoveNotifyTrack(0);
+    Vertical1->RemoveNotifyTrack(0);
+    ReactionAnim->RemoveNotifyTrack(0);
+
+    // AttackNofity
+    CreateAttackNotify(Horizontal1, AttackHorizontalNotify, "Attack_Horizontal", 0.3f);
+    CreateAttackNotify(Horizontal2, AttackHorizontalNotify, "Attack_Horizontal", 0.3f);
+    CreateAttackNotify(Vertical1, AttackVerticalNotify, "Attack_Vertical", 0.3f);
+
+    BindAttackNotifies();
+
+    // Sound Notify
+    CreateSoundNotify(ReactionAnim, ReactionNotify, "Impact", "sizzle", 0.0f);
+}
+    
+void AEnemy::BeginPlay()
+{
+    Super::BeginPlay();
+}
+
+void AEnemy::Tick(float DeltaTime)
+{
+    Super::Tick(DeltaTime);
+
+    if (ParryGauge < 100.0f)
+    {
+        ParryGauge = FMath::Max(0.0f, ParryGauge - DeltaTime * 0.1f);
+    }
+
+    //UE_LOG(ELogLevel::Warning, TEXT("PARRY %f"), ParryGauge);
+}
+
+UObject* AEnemy::Duplicate(UObject* InOuter)
+{
+    AEnemy* NewActor = Cast<AEnemy>(Super::Duplicate(InOuter));
+
+    NewActor->SkeletalMeshComponent = NewActor->GetComponentByClass<USkeletalMeshComponent>();
+    NewActor->ParryGauge = 0.0f;
+
+    return NewActor;
+}
+
+void AEnemy::HandleAttackNotify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, EAttackDirection InAttackDirection)
+{
+    if (!MeshComp || !Animation)
+    {
+        UE_LOG(ELogLevel::Error, TEXT("Invalid MeshComp or Animation in HandleAttackNotify"));
+        return;
+    }
+
+    switch (InAttackDirection)
+    {
+    case AD_Vertical:
+        UE_LOG(ELogLevel::Display, TEXT("ENEMY_ATTACK_Vertical"));
+        break;
+    case AD_Horizontal:
+        UE_LOG(ELogLevel::Display, TEXT("ENEMY_ATTACK_Horizontal"));
+        break;
+    default:
+        break;
+    }
+
+    CurrentAttackDirection = InAttackDirection;
+}
+
+void AEnemy::CreateAttackNotify(
+    UAnimSequence* AnimSequence,
+    UAnimCustomNotify*& OutNotify,
+    const FString& NotifyName,
+    float TriggerTime)
+{
+    OutNotify = FObjectFactory::ConstructObject<UAnimCustomNotify>(this);
+
+    int32 TrackIndex = INDEX_NONE;
+    AnimSequence->AddNotifyTrack(NotifyName, TrackIndex);
+
+    int32 NotifyEventIndex = INDEX_NONE;
+    AnimSequence->AddNotifyEvent(
+        TrackIndex,
+        TriggerTime,
+        0.0f,
+        NotifyName,
+        NotifyEventIndex
+    );
+
+    AnimSequence->GetNotifyEvent(NotifyEventIndex)->SetAnimNotify(OutNotify);
+}
+
+void AEnemy::CreateSoundNotify(
+    UAnimSequence* AnimSequence,
+    UAnimSoundNotify*& OutNotify,
+    const FString& NotifyName,
+    const FString& SoundName,
+    float TriggerTime)
+{
+    OutNotify = FObjectFactory::ConstructObject<UAnimSoundNotify>(this);
+
+    int32 TrackIndex = INDEX_NONE;
+    AnimSequence->AddNotifyTrack(NotifyName, TrackIndex);
+
+    int32 NotifyEventIndex = INDEX_NONE;
+    AnimSequence->AddNotifyEvent(
+        TrackIndex,
+        TriggerTime,
+        0.0f,
+        NotifyName,
+        NotifyEventIndex
+    );
+    
+    OutNotify->SetSoundName(FName(SoundName));
+
+    AnimSequence->GetNotifyEvent(NotifyEventIndex)->SetAnimNotify(OutNotify);
+}
+
+void AEnemy::BindAttackNotifies()
+{
+    if (AttackVerticalNotify)
+    {
+        AttackVerticalNotify->OnCustomNotify.AddLambda(
+            [this](USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation) {
+                this->HandleAttackNotify(MeshComp, Animation, EAttackDirection::AD_Vertical);
+            }
+        );
+    }
+
+    if (AttackHorizontalNotify)
+    {
+        AttackHorizontalNotify->OnCustomNotify.AddLambda(
+            [this](USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation) {
+                this->HandleAttackNotify(MeshComp, Animation, EAttackDirection::AD_Horizontal);
+            }
+        );
+    }
+}
