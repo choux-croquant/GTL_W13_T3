@@ -5,6 +5,9 @@
 #include "Animation/AnimTypes.h"
 #include "Animation/AnimCustomNotify.h"
 #include "Animation/AnimSoundNotify.h"
+#include "Engine/Contents/AnimInstance/LuaScriptAnimInstance.h"
+#include "Actors/Player.h"
+#include "UObject/UObjectIterator.h"
 #include "Userinterface/Console.h"
 
 void AEnemy::PostSpawnInitialize()
@@ -26,25 +29,34 @@ void AEnemy::PostSpawnInitialize()
     UAnimSequence* Vertical1 = Cast<UAnimSequence>(UAssetManager::Get().GetAnimation(FString("Contents/Vertical1/Armature|Vertical1")));
 
     //  일단 여기서 초기화 하도록 함
+    IdleAnim->RemoveNotifyTrack(0);
     Horizontal1->RemoveNotifyTrack(0);
     Horizontal2->RemoveNotifyTrack(0);
     Vertical1->RemoveNotifyTrack(0);
     ReactionAnim->RemoveNotifyTrack(0);
 
-    // AttackNofity
-    CreateAttackNotify(Horizontal1, AttackHorizontalNotify, "Attack_Horizontal", 0.3f);
-    CreateAttackNotify(Horizontal2, AttackHorizontalNotify, "Attack_Horizontal", 0.3f);
-    CreateAttackNotify(Vertical1, AttackVerticalNotify, "Attack_Vertical", 0.3f);
+    // AttackNofity - Start
+    CreateAttackNotify(IdleAnim, AttackToIdleNotify, "Attack_To_Idle", 0.0f);
+    CreateAttackNotify(ReactionAnim, AttackToIdleNotify, "Attack_To_Idle", 0.0f);
+    CreateAttackNotify(Horizontal1, AttackHorizontalNotify, "Attack_Horizontal", 0.0f);
+    CreateAttackNotify(Horizontal2, AttackHorizontalNotify, "Attack_Horizontal", 0.0f);
+    CreateAttackNotify(Vertical1, AttackVerticalNotify, "Attack_Vertical", 0.0f);
 
-    BindAttackNotifies();
+    CreateAttackNotify(Horizontal1, AttackHorizontalNotifyEnd, "Attack_Horizontal_End", Horizontal1->GetDuration() - 0.01f);
+    CreateAttackNotify(Horizontal2, AttackHorizontalNotifyEnd, "Attack_Horizontal_End", Horizontal2->GetDuration() - 0.01f);
+    CreateAttackNotify(Vertical1, AttackVerticalNotifyEnd, "Attack_Vertical_End", Vertical1->GetDuration() - 0.01f);
 
     // Sound Notify
+    // 패링 성공 시 - 피격 시작할 때 Notify
     CreateSoundNotify(ReactionAnim, ReactionNotify, "Impact", "shield", 0.0f);
+    // 공격 시도 시 사운드
+    CreateSoundNotify(Horizontal1, PlayerHitNotify, "Hit", "sizzle", 0.0f);
 }
     
 void AEnemy::BeginPlay()
 {
     Super::BeginPlay();
+    BindAttackNotifies();
 }
 
 void AEnemy::Tick(float DeltaTime)
@@ -57,6 +69,7 @@ void AEnemy::Tick(float DeltaTime)
     }
 
     //UE_LOG(ELogLevel::Warning, TEXT("PARRY %f"), ParryGauge);
+    UE_LOG(ELogLevel::Warning, TEXT("ATTACK_DIRECTION %d"), CurrentAttackDirection);
 }
 
 UObject* AEnemy::Duplicate(UObject* InOuter)
@@ -65,6 +78,14 @@ UObject* AEnemy::Duplicate(UObject* InOuter)
 
     NewActor->SkeletalMeshComponent = NewActor->GetComponentByClass<USkeletalMeshComponent>();
     NewActor->ParryGauge = 0.0f;
+    
+    NewActor->AttackToIdleNotify = AttackToIdleNotify;
+    NewActor->AttackVerticalNotify = AttackVerticalNotify;
+    NewActor->AttackHorizontalNotify = AttackHorizontalNotify;
+    NewActor->AttackVerticalNotifyEnd = AttackVerticalNotifyEnd;
+    NewActor->AttackHorizontalNotifyEnd = AttackHorizontalNotifyEnd;
+
+    //NewActor->BindAttackNotifies();
 
     return NewActor;
 }
@@ -85,11 +106,30 @@ void AEnemy::HandleAttackNotify(USkeletalMeshComponent* MeshComp, UAnimSequenceB
     case AD_Horizontal:
         UE_LOG(ELogLevel::Display, TEXT("ENEMY_ATTACK_Horizontal"));
         break;
+    case AD_None:
+        UE_LOG(ELogLevel::Display, TEXT("ATTACK_TO_IDLE"));
+        break;
     default:
         break;
     }
 
     CurrentAttackDirection = InAttackDirection;
+}
+
+void AEnemy::HandleAttackNotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation)
+{
+    if (!MeshComp || !Animation)
+    {
+        UE_LOG(ELogLevel::Error, TEXT("Invalid MeshComp or Animation in HandleAttackNotify"));
+        return;
+    }
+
+    UE_LOG(ELogLevel::Display, TEXT("ENEMY_ATTACK_END"));
+
+    for (auto It : TObjectRange<AHeroPlayer>())
+    {
+        It->GetDamaged(1.0f);
+    }
 }
 
 void AEnemy::CreateAttackNotify(
@@ -98,7 +138,10 @@ void AEnemy::CreateAttackNotify(
     const FString& NotifyName,
     float TriggerTime)
 {
-    OutNotify = FObjectFactory::ConstructObject<UAnimCustomNotify>(this);
+    if (!OutNotify)
+    {
+        OutNotify = FObjectFactory::ConstructObject<UAnimCustomNotify>(this);
+    }
 
     int32 TrackIndex = INDEX_NONE;
     AnimSequence->AddNotifyTrack(NotifyName, TrackIndex);
@@ -160,4 +203,39 @@ void AEnemy::BindAttackNotifies()
             }
         );
     }
+
+    if (AttackVerticalNotifyEnd)
+    {
+        AttackVerticalNotifyEnd->OnCustomNotify.AddLambda(
+            [this](USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation) {
+                this->HandleAttackNotifyEnd(MeshComp, Animation);
+            }
+        );
+    }
+
+    if (AttackHorizontalNotifyEnd)
+    {
+        AttackHorizontalNotifyEnd->OnCustomNotify.AddLambda(
+            [this](USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation) {
+                this->HandleAttackNotifyEnd(MeshComp, Animation);
+            }
+        );
+    }
+
+    if (AttackToIdleNotify)
+    {
+        AttackToIdleNotify->OnCustomNotify.AddLambda(
+            [this](USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation) {
+                this->HandleAttackNotify(MeshComp, Animation, EAttackDirection::AD_None);
+            }
+        );
+    }
+}
+
+void AEnemy::ResetEnemyProperties()
+{
+    ParryGauge = 0.0f;
+    CurrentAttackDirection = AD_None;
+    ULuaScriptAnimInstance* AnimInstance = Cast<ULuaScriptAnimInstance>(SkeletalMeshComponent->GetAnimInstance());
+    AnimInstance->GetStateMachine()->State = FString("Idle");
 }
