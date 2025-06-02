@@ -46,8 +46,6 @@ void AEnemy::PostSpawnInitialize()
     CreateAttackNotify(Horizontal2, AttackHorizontalNotifyEnd, "Attack_Horizontal_End", Horizontal2->GetDuration() - 0.01f);
     CreateAttackNotify(Vertical1, AttackVerticalNotifyEnd, "Attack_Vertical_End", Vertical1->GetDuration() - 0.01f);
 
-    BindAttackNotifies();
-
     // Sound Notify
     // 패링 성공 시 - 피격 시작할 때 Notify
     CreateSoundNotify(ReactionAnim, ReactionNotify, "Impact", "shield", 0.0f);
@@ -58,6 +56,7 @@ void AEnemy::PostSpawnInitialize()
 void AEnemy::BeginPlay()
 {
     Super::BeginPlay();
+    BindAttackNotifies();
 }
 
 void AEnemy::Tick(float DeltaTime)
