@@ -24,7 +24,16 @@ void UAnimSequence::GetBonePose(FPoseContext& OutPoseContext, const FAnimExtract
     int32 NumBones = OutPoseContext.Pose.GetNumBones();
     
     float TargetKeyFrame = static_cast<float>(ExtractionContext.CurrentTime) * static_cast<float>(FrameRate);
-    const int32 CurrentFrame = static_cast<int32>(TargetKeyFrame) % (NumberOfFrames - 1);
+    int32 CurrentFrame = 0;
+    if (ExtractionContext.bLooping)
+    {
+        CurrentFrame = static_cast<int32>(TargetKeyFrame) % (NumberOfFrames - 1);
+    }
+    else
+    {
+        CurrentFrame = FMath::Clamp(static_cast<int32>(TargetKeyFrame), 0, NumberOfFrames - 2);
+    }
+    
     float Alpha = TargetKeyFrame - static_cast<float>(static_cast<int32>(TargetKeyFrame));
     
     FFrameTime FrameTime(CurrentFrame, Alpha);

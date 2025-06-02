@@ -652,6 +652,7 @@ void AHeroPlayer::BeginPlay()
     OnHeroDied.AddLambda(
         [this](bool bDieByHealth)
         {
+            SetAnimState(FString("Die")); 
             //TODO: 게임오버 이벤트, RagDoll 전환?
         }
     );
@@ -693,7 +694,7 @@ void AHeroPlayer::SetAnimState(FString InState)
         {
             if (UAnimStateMachine* StateMachine = AnimScriptInstance->GetStateMachine())
             {
-                StateMachine->State = InState;
+                StateMachine->ChangeStateMachineLua(InState);
             }
         }
     }
@@ -708,7 +709,7 @@ FName AHeroPlayer::GetStateMachine()
         {
             if (UAnimStateMachine* StateMachine = AnimScriptInstance->GetStateMachine())
             {
-                return StateMachine->State;
+                return StateMachine->GetState();
             }
         }
     }
@@ -718,6 +719,7 @@ FName AHeroPlayer::GetStateMachine()
 void AHeroPlayer::GetDamaged(float Damage)
 {
     SetHealth(Health - Damage);
+    SetAnimState(FString("React"));
 }
 
 void AHeroPlayer::Parry(AActor* OverlappedActor, AActor* OtherActor)
@@ -759,7 +761,7 @@ void AHeroPlayer::SetHealth(float InHealth)
 
     OnHealthChanged.Broadcast(GetHealth(), GetMaxHealth());
 
-    if (IsDead() <= 0)
+    if (IsDead())
     {
         OnHeroDied.Broadcast(true);
     }

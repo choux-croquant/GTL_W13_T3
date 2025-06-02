@@ -46,7 +46,7 @@ void ULuaScriptAnimInstance::NativeInitializeAnimation()
 void ULuaScriptAnimInstance::NativeUpdateAnimation(float DeltaSeconds, FPoseContext& OutPose)
 {
     UAnimInstance::NativeUpdateAnimation(DeltaSeconds, OutPose);
-    StateMachine->ProcessState();
+    StateMachine->ProcessState(DeltaSeconds);
     
 #pragma region MyAnim
     USkeletalMeshComponent* SkeletalMeshComp = GetSkelMeshComponent();
@@ -57,6 +57,7 @@ void ULuaScriptAnimInstance::NativeUpdateAnimation(float DeltaSeconds, FPoseCont
     }
 
     PreviousTime = ElapsedTime;
+    PreElapsedTime += DeltaSeconds * PrePlayRate;
     ElapsedTime += DeltaSeconds * PlayRate;
 
     CurrAnim->EvaluateAnimNotifies(CurrAnim->Notifies, ElapsedTime, PreviousTime, DeltaSeconds, SkeletalMeshComp, CurrAnim, bLooping);
@@ -72,7 +73,7 @@ void ULuaScriptAnimInstance::NativeUpdateAnimation(float DeltaSeconds, FPoseCont
         );
     }
 
-    if (bIsBlending)
+    if (bIsBlending && PreElapsedTime <= PrevAnim->GetDuration())
     {
         float BlendElapsed = ElapsedTime - BlendStartTime;
         BlendAlpha = FMath::Clamp(BlendElapsed / BlendDuration, 0.f, 1.f);
@@ -107,8 +108,8 @@ void ULuaScriptAnimInstance::NativeUpdateAnimation(float DeltaSeconds, FPoseCont
         CurrPose.Pose[BoneIdx] = RefSkeleton.RawRefBonePose[BoneIdx];
     }
     
-    FAnimExtractContext ExtractA(ElapsedTime, false);
-    FAnimExtractContext ExtractB(ElapsedTime, false);
+    FAnimExtractContext ExtractA(PreElapsedTime, bPrevLooping);
+    FAnimExtractContext ExtractB(ElapsedTime, bLooping);
 
     PrevAnim->GetAnimationPose(PrevPose, ExtractA);
     CurrAnim->GetAnimationPose(CurrPose, ExtractB);
@@ -135,13 +136,16 @@ void ULuaScriptAnimInstance::SetAnimation(UAnimSequence* NewAnim, float Blending
     }
     else if (CurrAnim)
     {
+        PreElapsedTime = ElapsedTime;
         ElapsedTime = 0.0f; // 현재 애니메이션이 있으면 시간 초기화.
         PrevAnim = CurrAnim; // 현재 애니메이션이 있으면 현재를 이전으로 설정.
     }
 
+    bPrevLooping = bLooping;
+    bLooping = LoopAnim;
+    
     CurrAnim = NewAnim;
     BlendDuration = BlendingTime;
-    bLooping = LoopAnim;
     bReverse = ReverseAnim;
     
     //ElapsedTime = 0.0f;

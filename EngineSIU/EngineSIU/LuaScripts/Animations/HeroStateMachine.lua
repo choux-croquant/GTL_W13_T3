@@ -55,7 +55,7 @@ AnimFSM = {
 
         return {
             anim = self.AnimMap["Idle"],
-            blend = 0.2,
+            blend = 1.0,
             loop = true, 
             rate_scale = 1.0,
             state = self.currentState,

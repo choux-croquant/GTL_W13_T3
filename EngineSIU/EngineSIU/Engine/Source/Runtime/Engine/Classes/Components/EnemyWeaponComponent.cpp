@@ -14,6 +14,6 @@ void UEnemyWeaponComponent::GotParried(float InDamage)
 
     if (UAnimStateMachine* StateMachine = AnimInstance->GetStateMachine())
     {
-        StateMachine->State = FString("Reacting");
+        StateMachine->ChangeStateMachineLua(FString("Reacting"));
     }
 }

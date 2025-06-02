@@ -17,8 +17,10 @@ public:
     virtual ~UAnimStateMachine() override = default;
 
     virtual void Initialize(USkeletalMeshComponent* InOwner, ULuaScriptAnimInstance* InAnimInstance);
+    void ChangeStateMachineLua(FString InState);
+    FString GetState();
 
-    void ProcessState();
+    void ProcessState(float DeltaTime);
     
     void InitLuaStateMachine();
     
@@ -26,9 +28,10 @@ public:
 
     USkeletalMeshComponent* OwningComponent;
     ULuaScriptAnimInstance* OwningAnimInstance;
-    
-    UPROPERTY(EditAnywhere, FString, State, =TEXT("Idle"))
+
+    FString PreState = TEXT("");
 private:
+    UPROPERTY(EditAnywhere, FString, State, =TEXT("Idle"))
     UPROPERTY(EditAnywhere, FString, LuaScriptName, = TEXT(""))
     sol::table LuaTable = {};
 };

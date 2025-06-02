@@ -59,14 +59,18 @@ public:
 
     void SetPlayRate(float Rate)
     {
+        PrePlayRate = PlayRate;
         PlayRate = Rate;
     }
 private:
     float PreviousTime;
+    float PreElapsedTime;
     float ElapsedTime;
+    float PrePlayRate;
     float PlayRate;
     
     bool bLooping;
+    bool bPrevLooping;
     bool bPlaying;
     bool bReverse;
 
@@ -78,8 +82,9 @@ private:
     
     UAnimSequence* PrevAnim;
     UAnimSequence* CurrAnim;
-    
+
     float BlendAlpha;
+    float PreBlendStartTime;
     float BlendStartTime;
     float BlendDuration;
     
