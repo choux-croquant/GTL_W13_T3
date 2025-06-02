@@ -8,6 +8,7 @@ void UEnemyWeaponComponent::GotParried(float InDamage)
 {
     UE_LOG(ELogLevel::Error,"GotParried");
     AEnemy* EnemyActor = Cast<AEnemy>(GetOwner());
+    EnemyActor->ParryGauge += 10.0f;
 
     ULuaScriptAnimInstance* AnimInstance = Cast<ULuaScriptAnimInstance>(EnemyActor->SkeletalMeshComponent->GetAnimInstance());
 

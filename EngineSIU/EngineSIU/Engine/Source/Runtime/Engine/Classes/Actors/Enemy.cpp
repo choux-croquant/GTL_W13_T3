@@ -41,11 +41,24 @@ void AEnemy::BeginPlay()
     Super::BeginPlay();
 }
 
+void AEnemy::Tick(float DeltaTime)
+{
+    Super::Tick(DeltaTime);
+
+    if (ParryGauge < 100.0f)
+    {
+        ParryGauge = FMath::Max(0.0f, ParryGauge - DeltaTime * 0.1f);
+    }
+
+    //UE_LOG(ELogLevel::Warning, TEXT("PARRY %f"), ParryGauge);
+}
+
 UObject* AEnemy::Duplicate(UObject* InOuter)
 {
     AEnemy* NewActor = Cast<AEnemy>(Super::Duplicate(InOuter));
 
     NewActor->SkeletalMeshComponent = NewActor->GetComponentByClass<USkeletalMeshComponent>();
+    NewActor->ParryGauge = 0.0f;
 
     return NewActor;
 }

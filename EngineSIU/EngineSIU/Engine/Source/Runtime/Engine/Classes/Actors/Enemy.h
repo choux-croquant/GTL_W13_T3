@@ -19,10 +19,12 @@ class AEnemy : public AActor
 public:
     AEnemy() = default;
     
-    void PostSpawnInitialize();
+    virtual void PostSpawnInitialize() override;
 
-    void BeginPlay();
+    virtual void BeginPlay() override;
 
+    virtual void Tick(float DeltaTime) override;
+    
     UObject* Duplicate(UObject* InOuter);
 
     void HandleAttackNotify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, EAttackDirection InAttackDirection);
@@ -38,4 +40,6 @@ public:
     EAttackDirection CurrentAttackDirection = AD_Vertical;
 
     UPROPERTY(EditAnywhere | EditInline, USkeletalMeshComponent*, SkeletalMeshComponent, = nullptr)
+
+    float ParryGauge = 0.0f;
 };
