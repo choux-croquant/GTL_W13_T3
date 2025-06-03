@@ -52,9 +52,9 @@ void AEnemy::PostSpawnInitialize()
     CreateAttackNotify(Horizontal2, AttackHorizontalNotify, "Attack_Horizontal", 0.0f);
     CreateAttackNotify(Vertical1, AttackVerticalNotify, "Attack_Vertical", 0.0f);
 
-    CreateAttackNotify(Horizontal1, AttackHorizontalNotifyEnd, "Attack_Horizontal_End", Horizontal1->GetDuration() - 0.3f);
-    CreateAttackNotify(Horizontal2, AttackHorizontalNotifyEnd, "Attack_Horizontal_End", Horizontal2->GetDuration() - 0.3f);
-    CreateAttackNotify(Vertical1, AttackVerticalNotifyEnd, "Attack_Vertical_End", Vertical1->GetDuration() - 0.3f);
+    CreateAttackNotify(Horizontal1, AttackHorizontalNotifyEnd, "Attack_Horizontal_End", Horizontal1->GetDuration() - 0.5f);
+    CreateAttackNotify(Horizontal2, AttackHorizontalNotifyEnd, "Attack_Horizontal_End", Horizontal2->GetDuration() - 0.5f);
+    CreateAttackNotify(Vertical1, AttackVerticalNotifyEnd, "Attack_Vertical_End", Vertical1->GetDuration() - 1.f);
 
     // Sound Notify
     // 패링 성공 시 - 피격 시작할 때 Notify
