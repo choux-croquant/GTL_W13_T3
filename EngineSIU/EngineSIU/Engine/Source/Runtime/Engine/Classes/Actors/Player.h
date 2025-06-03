@@ -90,6 +90,7 @@ public:
     void SetAnimState(FString InState);
     FName GetStateMachine();
     void ResetHero();
+    void OnFinalScene();
     void OnHeroDie();
 
     FOnHealthChanged OnHealthChanged;

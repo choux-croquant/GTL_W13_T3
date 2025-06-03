@@ -875,6 +875,11 @@ void AHeroPlayer::ResetHero()
     SetAnimState(FString("Idle"));
 }
 
+void AHeroPlayer::OnFinalScene()
+{
+    SetAnimState(FString("FinalAttack"));
+}
+
 void AHeroPlayer::OnHeroDie()
 {
     SetAnimState(FString("Die"));
