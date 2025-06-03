@@ -7,7 +7,7 @@ AnimFSM = {
         "Contents/Vertical1/Armature|Vertical1",
     },
     reactionAnimation = "Contents/Enemy_Impact/Armature|Enemy_Impact",
-    kneelAnimation = "Contents/Kneel/Armature|Kneel",
+    kneelAnimation = "Contents/Injured_Idle/Armature|Injured_Idle",
     kneelIdleAnimation = "Contents/Kneel_Idle/Armature|Kneel_Idle",
     attackCooldown = 2.5,
     isAttacking = false,
@@ -141,7 +141,7 @@ AnimFSM = {
                 return {
                     anim = self.kneelAnimation,
                     blend = 0.0,
-                    loop = false,
+                    loop = true,
                     rate_scale = 1.0,
                     state = self.currentState
                 }
