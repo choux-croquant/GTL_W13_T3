@@ -57,6 +57,7 @@ AnimFSM = {
     end,
 
     HandleFinalAttackState = function(self)
+
         return{
             anim = self.AnimMap["FinalAttack"],
             blend = 0.1,
@@ -109,6 +110,7 @@ AnimFSM = {
         end
 
         self:ChangeParryState(true)
+        self.isReacting = false
         self.AnimStartTime = self.timer
         self.parrySpeed = 1.2
 
@@ -127,6 +129,7 @@ AnimFSM = {
         end
 
         self:ChangeParryState(true)
+        self.isReacting = false
         self.AnimStartTime = self.timer
         self.parrySpeed = 1.2
 
@@ -145,6 +148,7 @@ AnimFSM = {
         end
 
         self:ChangeParryState(true)
+        self.isReacting = false
         self.AnimStartTime = self.timer
         self.parrySpeed = 1.2
 
@@ -163,6 +167,7 @@ AnimFSM = {
         end
 
         self:ChangeParryState(true)
+        self.isReacting = false
         self.AnimStartTime = self.timer
         self.parrySpeed = 1.2
 
