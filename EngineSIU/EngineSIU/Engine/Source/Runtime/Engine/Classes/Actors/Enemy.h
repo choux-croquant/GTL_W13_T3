@@ -39,6 +39,8 @@ public:
     void BindAttackNotifies();
 
     void ResetEnemyProperties();
+
+    void OnFinalScene();
 public:
     FTransform InitialTransform;
 
