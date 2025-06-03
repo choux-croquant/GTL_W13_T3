@@ -170,6 +170,8 @@ void ABehellaGameMode::RestartMatch()
 {
     ResetValue(); //Player 체력 값이나 Enemy 게이지 값 초기화
 
+    GetWorld()->GetPlayerController()->PlayerCameraManager->StartLetterBoxAnimation(0.0f, 1.2f, 2.0f);
+
     GameState = EBehellaGameState::Play;
     HeroPlayer->SetCameraMoveCounter(3);
     CloseScreen(CurScreenUI);
@@ -235,7 +237,7 @@ void ABehellaGameMode::EndMatch(bool bIsWin)    // 현재는 bIsWin이 쓰이진
 {
     GameState = EBehellaGameState::GameOver;
 
-    GetWorld()->GetPlayerController()->PlayerCameraManager->StartLetterBoxAnimation(1.7f, 20.7f, 5.0f);
+    GetWorld()->GetPlayerController()->PlayerCameraManager->StartLetterBoxAnimation(1.2f, 0.0f, 2.0f);
 
     // 게임 End 화면 UI 켜기
     CloseScreen(CurScreenUI);
