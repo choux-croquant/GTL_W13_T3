@@ -34,16 +34,21 @@ public:
     LuaImageUI* LogoImage;
     LuaImageUI* PressKeyImage;
 
+    float FadeAlpha = 0.0f;
+    float LogoAlpha = 0.0f;
+    float KeyAlpha = 0.0f;
+
     float FadeContinueTime = 1.0f;
     float FadeOutTime = 1.0f;
     float LogoFadeTime = 1.0f;
-    float PressKeyRevealTime = 1.5f;
-    float PressKeyLoopTime = 4.0f;
+    float PressKeyRevealTime = 0.5f;
+    float PressKeyLoopTime = 1.5f;
 };
 
 
 class FBehellaGamePlayScreenUI : public FBehellaScreenUI
 {
+public:
     virtual void InitScreen() override;
 
     virtual void TickScreen(float DeltaTime) override;
@@ -53,10 +58,15 @@ class FBehellaGamePlayScreenUI : public FBehellaScreenUI
     virtual void EndScreen() override;
 
     LuaTextUI* ScreenName;
+    LuaSliderUI* ParryGaugeSlider;
+    float ParryRatio = 0.0f; // 0~1
+
+    float FadeInTime = 3.75f;
 };
 
 class FBehellaGameDeadScreenUI : public FBehellaScreenUI
 {
+public:
     virtual void InitScreen() override;
 
     virtual void TickScreen(float DeltaTime) override;
@@ -70,6 +80,7 @@ class FBehellaGameDeadScreenUI : public FBehellaScreenUI
 
 class FBehellaGameOverScreenUI : public FBehellaScreenUI
 {
+public:
     virtual void InitScreen() override;
 
     virtual void TickScreen(float DeltaTime) override;
