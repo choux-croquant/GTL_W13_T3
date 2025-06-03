@@ -5,7 +5,7 @@
 
 enum class EBehellaGameState 
 {
-    Prepare,
+    Ready,
     PrepareToPlay,
     Play,
     PlayToDead,
@@ -22,6 +22,8 @@ class FBehellaGamePlayScreenUI;
 class FBehellaGameDeadScreenUI;
 class FBehellaGameOverScreenUI;
 
+class AHeroPlayer;
+class AEnemy;
 
 class ABehellaGameMode : public AGameMode 
 {
@@ -33,10 +35,17 @@ public:
 
     virtual void PostSpawnInitialize() override;
 
+    virtual void BeginPlay() override;
+
     virtual UObject* Duplicate(UObject* InOuter) override;
+
+    void CloseScreen(FBehellaScreenUI* Screen);
 
     // 게임 모드 초기화
     virtual void InitGame() override;
+
+    // 게임 시작 넘어가는 순간
+    virtual void PrepareMatch();
 
     // 게임 시작
     virtual void StartMatch() override;
@@ -50,17 +59,28 @@ public:
     // 게임 종료
     virtual void EndMatch(bool bIsWin) override;
 
+    void ResetValue();
+
+    void CheckFatality();
+
     virtual void Tick(float DeltaTime) override;
 
     
-    EBehellaGameState GameState;
+    static EBehellaGameState GameState;
   
     float StepTimer = 0.0f;
 
-    FBehellaScreenUI* CurScreenUI;
+    FBehellaScreenUI* CurScreenUI = nullptr;
+    FBehellaScreenUI* ClosingScreenUI = nullptr;
 
     FBehellaGameInitScreenUI InitScreenUI;
     FBehellaGamePlayScreenUI PlayScreenUI;
     FBehellaGameDeadScreenUI DeadScreenUI;
     FBehellaGameOverScreenUI GameOverScreenUI;
+
+    AHeroPlayer* HeroPlayer = nullptr;
+    AEnemy* Enemy = nullptr;
+
+    const float MaxParryGauge = 100.f;
+    const float ClosingUITime = 1.0f;
 };
