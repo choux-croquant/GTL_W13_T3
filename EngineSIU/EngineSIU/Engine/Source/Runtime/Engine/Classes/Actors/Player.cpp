@@ -704,28 +704,28 @@ void AHeroPlayer::BeginPlay()
     { //하드하게 걍 박기 ㅋㅋ
         PlayerController->BindAction(FString("Q"), [this](float DeltaTime)
         {
-            if (!IsDead() && (int)ABehellaGameMode::GameState > 1) 
+            if (!IsDead() && ((int)ABehellaGameMode::GameState > 1 || (int)ABehellaGameMode::GameState == 4))
             {
                 SetAnimState(FString("VerticalFastParry"));
             }
         });
         PlayerController->BindAction(FString("W"), [this](float DeltaTime)
         {
-            if (!IsDead() && (int)ABehellaGameMode::GameState > 1)
+            if (!IsDead() && ((int)ABehellaGameMode::GameState > 1 || (int)ABehellaGameMode::GameState == 4))
             {
                 SetAnimState(FString("VerticalHardParry"));
             }
         });
         PlayerController->BindAction(FString("A"), [this](float DeltaTime)
         {
-            if (!IsDead() && (int)ABehellaGameMode::GameState > 1)
+            if (!IsDead() && ((int)ABehellaGameMode::GameState > 1 || (int)ABehellaGameMode::GameState == 4))
             {
                 SetAnimState(FString("HorizontalFastParry"));
             }
         });
         PlayerController->BindAction(FString("S"), [this](float DeltaTime)
         {
-            if (!IsDead() && (int)ABehellaGameMode::GameState > 1)
+            if (!IsDead() && ((int)ABehellaGameMode::GameState > 1 || (int)ABehellaGameMode::GameState == 4))
             {
                 SetAnimState(FString("HorizontalHardParry"));
             }
@@ -910,5 +910,10 @@ float AHeroPlayer::GetHealth()
 float AHeroPlayer::GetMaxHealth()
 {
     return MaxHealth;
+}
+
+void AHeroPlayer::SetCameraMoveCounter(int32 InCameraMoveCounter)
+{
+    CameraMoveCounter = InCameraMoveCounter;
 }
 

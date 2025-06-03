@@ -106,6 +106,8 @@ public:
     bool bWaitingStart = true;
 
     bool bIsParrying = false;
+
+    void SetCameraMoveCounter(int32 InCameraMoveCounter);
 private:
     // UPROPERTY
     // (EditAnywhere, USkeletalMeshComponent*, OriginSkeletalMeshComponent, = nullptr)
