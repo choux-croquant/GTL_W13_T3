@@ -1,12 +1,12 @@
 #include "LuaTextUI.h"
 
 LuaTextUI::LuaTextUI(FName InName)
-    :LuaUI(InName), Text(FString("Default Text")), FontSytle(ImGui::GetFont()), FontSize(18.0f), FontColor(FLinearColor(1.0f))
+    :LuaUI(InName), Text(FString("Default Text")), FontStyle(ImGui::GetFont()), FontSize(18.0f), FontColor(FLinearColor(1.0f))
 {
 }
 
 LuaTextUI::LuaTextUI(FName InName, RectTransform InRectTransform, FString& InText, int InSortOrder, ImFont* InFontStyle, float InFontSize, FLinearColor InFontColor)
-    :LuaUI(InName), Text(InText), FontSytle(InFontStyle), FontSize(InFontSize), FontColor(InFontColor)
+    :LuaUI(InName), Text(InText), FontStyle(InFontStyle), FontSize(InFontSize), FontColor(InFontColor)
 {
     Visible = true;
     Rect = InRectTransform;
@@ -19,9 +19,10 @@ void LuaTextUI::DrawImGuiUI()
         return;
 
     RectTransform worldRect = GetWorldRectTransform();
-    ImVec2 textPos = ImVec2(worldRect.Position.X, worldRect.Position.Y);
+    ImVec2 textSize = ImGui::CalcTextSize(*Text);
+    ImVec2 textPos = worldRect.GetAlignedPosition(textSize);
 
-    ImFont* fontToUse = (FontSytle != nullptr) ? FontSytle : ImGui::GetFont();
+    ImFont* fontToUse = (FontStyle != nullptr) ? FontStyle : ImGui::GetFont();
     float sizeToUse = (FontSize > 0.0f) ? FontSize : ImGui::GetFontSize();
     
     ImU32 textColor = ImGui::GetColorU32(ImVec4(FontColor.R, FontColor.G, FontColor.B, FontColor.A));
@@ -38,7 +39,7 @@ void LuaTextUI::SetText(FString& InText)
 
 void LuaTextUI::SetFont(ImFont* InFontStyle)
 {
-    FontSytle = InFontStyle;
+    FontStyle = InFontStyle;
 }
 
 void LuaTextUI::SetFontSize(float InFontSize)

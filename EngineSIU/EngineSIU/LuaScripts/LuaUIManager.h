@@ -24,10 +24,10 @@ public:
 
     void CreateUI(FName InName);
     // Text의 경우 크기는 FontSize에만 따라가도록 일단 구현
-    void CreateText(FName InName, RectTransform InRectTransform, int InSortOrder, FString InText, FName FontStyleName, float InFontSize, FLinearColor InFontColor);
-    void CreateImage(FName InName, RectTransform InRectTransform, int InSortOrder, FName TextureName, FLinearColor InTextureColor);
-    void CreateButton(FName InName, RectTransform InRectTransform, int InSortOrder, FString LuaFunctionName);
-    void CreateSlider(FName InName, RectTransform InRectTransform, int InSortOrder
+    LuaTextUI* CreateText(FName InName, RectTransform InRectTransform, int InSortOrder, FString InText, FName FontStyleName, float InFontSize, FLinearColor InFontColor);
+    LuaImageUI* CreateImage(FName InName, RectTransform InRectTransform, int InSortOrder, FName TextureName, FLinearColor InTextureColor);
+    LuaButtonUI* CreateButton(FName InName, RectTransform InRectTransform, int InSortOrder, FString LuaFunctionName);
+    LuaSliderUI* CreateSlider(FName InName, RectTransform InRectTransform, int InSortOrder
             , FName InBackgroundTexture, FLinearColor InBackgroundColor
             , FName InFillTexture, FLinearColor InFillColor
             , float InMarginTop, float InMarginBottom, float InMarginLeft, float InMarginRight);

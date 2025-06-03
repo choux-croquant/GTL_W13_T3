@@ -4,6 +4,7 @@
 #include "Engine/Contents/AnimInstance/LuaScriptAnimInstance.h"
 #include "Lua/LuaScriptManager.h"
 #include "Animation/AnimSequence.h"
+#include "Engine/Classes/Actors/BehellaGameMode.h"
 
 UAnimStateMachine::UAnimStateMachine()
 {
@@ -43,6 +44,8 @@ void UAnimStateMachine::ProcessState(float DeltaTime)
     if (!LuaTable.valid())
         return;
     
+    LuaTable["GameState"] = (int)ABehellaGameMode::GameState;
+
     sol::function UpdateFunc = LuaTable["Update"];
     if (!UpdateFunc.valid())
     {

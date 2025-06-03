@@ -82,7 +82,7 @@ void AGameMode::Tick(float DeltaTime)
 
     if (bGameRunning && !bGameEnded)
     {
-        // TODO: 아래 코드에서 DeltaTime을 2로 나누는 이유가?
+        // 이거 시간이 2배정도 빠른데 원인은 파악 아직 안함
         GameInfo.ElapsedGameTime += DeltaTime / 2.0f;
     }
 }

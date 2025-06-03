@@ -50,7 +50,7 @@ public:
 
     FGameInfo GameInfo;
     
-private:
+protected:
     bool bGameRunning = false; // 내부 
     bool bGameEnded = true;
 

@@ -15,9 +15,11 @@
 #include "UnrealEd/EditorViewportClient.h"
 #include "UObject/UObjectIterator.h"
 #include "Engine/EditorEngine.h"
+#include "Engine/TimerManager.h"
 #include "Engine/Contents/AnimInstance/LuaScriptAnimInstance.h"
 #include "Particles/Emitter.h"
 #include "Particles/ParticleSystem.h"
+#include "Engine/Classes/Actors/BehellaGameMode.h"
 
 
 void AEditorPlayer::Tick(float DeltaTime)
@@ -638,6 +640,20 @@ void AHeroPlayer::BeginPlay()
     APlayer::BeginPlay();
 
     ResetHero();
+
+    // Spawn할 파티클
+    TArray<UObject*> ChildObjects;
+    GetObjectsOfClass(UClass::FindClass(FName("UParticleSystem")), ChildObjects, true);
+    for (UObject* ChildObject : ChildObjects) {
+        if (ChildObject->GetFName() == FName("spark"))
+        {
+            SparkParticle = Cast<UParticleSystem>(ChildObject);
+        }
+        if (ChildObject->GetFName() == FName("fog"))
+        {
+            FogParticle = Cast<UParticleSystem>(ChildObject);
+        }
+    }
     
     //기본적으로 제공되는 BeginOverlap. Component에서 불림
     OnActorBeginOverlap.AddLambda(
@@ -665,6 +681,17 @@ void AHeroPlayer::BeginPlay()
         [this]()
         {
             UE_LOG(ELogLevel::Error,"Parry");
+            AEmitter* ParticleActor = GetWorld()->SpawnActor<AEmitter>();
+            ParticleActor->SetActorTickInEditor(true);
+            ParticleActor->SetActorLocation(FVector(14.0f, -15.0f, 30.0f));
+            ParticleActor->ParticleSystemComponent->SetParticleSystem(SparkParticle);
+
+            TWeakObjectPtr<AEmitter> WeakParticleActor(ParticleActor); // 약한 참조
+            FTimerManager::GetInstance().AddTimer(1.0f, [WeakParticleActor]() {
+                if (WeakParticleActor.IsValid()) { // 유효성 확인
+                    WeakParticleActor->Destroy();
+                }
+            });
             //TODO: 패리 사운드 실행
         }
     );
@@ -673,33 +700,40 @@ void AHeroPlayer::BeginPlay()
     { //하드하게 걍 박기 ㅋㅋ
         PlayerController->BindAction(FString("Q"), [this](float DeltaTime)
         {
-            if (!IsDead())
+            if (!IsDead() && (int)ABehellaGameMode::GameState > 1) 
             {
                 SetAnimState(FString("VerticalFastParry"));
             }
         });
         PlayerController->BindAction(FString("W"), [this](float DeltaTime)
         {
-            if (!IsDead())
+            if (!IsDead() && (int)ABehellaGameMode::GameState > 1)
             {
                 SetAnimState(FString("VerticalHardParry"));
             }
         });
         PlayerController->BindAction(FString("A"), [this](float DeltaTime)
         {
-            if (!IsDead())
+            if (!IsDead() && (int)ABehellaGameMode::GameState > 1)
             {
                 SetAnimState(FString("HorizontalFastParry"));
             }
         });
         PlayerController->BindAction(FString("S"), [this](float DeltaTime)
         {
-            if (!IsDead())
+            if (!IsDead() && (int)ABehellaGameMode::GameState > 1)
             {
                 SetAnimState(FString("HorizontalHardParry"));
             }
         });
     }
+}
+
+void AHeroPlayer::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+    APlayer::EndPlay(EndPlayReason);
+    FSoundManager::GetInstance().StopAllSounds();
+    FTimerManager::GetInstance().ClearAllTimers();
 }
 
 void AHeroPlayer::SetAnimState(FString InState)
@@ -760,6 +794,8 @@ void AHeroPlayer::Tick(float DeltaTime)
 {
     APlayer::Tick(DeltaTime);
 
+    if (bWaitingStart) return;
+
     // 개 레전드 하드 코딩 카메라 이동
     if (CameraMoveCounter == 0)
     {
@@ -806,16 +842,7 @@ void AHeroPlayer::Tick(float DeltaTime)
             GEngine->ActiveWorld->GetPlayerController()->SetViewTarget(TargetActor, Params);
             AEmitter* ParticleActor = GetWorld()->SpawnActor<AEmitter>();
             ParticleActor->SetActorTickInEditor(true);
-            TArray<UObject*> ChildObjects;
-            GetObjectsOfClass(UClass::FindClass(FName("UParticleSystem")), ChildObjects, true);
-            for (UObject* ChildObject : ChildObjects)
-            {
-                if (ChildObject->GetFName() == FName("fog"))
-                {
-                    ParticleActor->ParticleSystemComponent->SetParticleSystem(Cast<UParticleSystem>(ChildObject));
-                    break;
-                }
-            }
+            ParticleActor->ParticleSystemComponent->SetParticleSystem(FogParticle);
             CameraMoveCounter++;
         });
         CameraMoveCounter++;
@@ -824,6 +851,8 @@ void AHeroPlayer::Tick(float DeltaTime)
     if (CameraMoveCounter == 5)
     {
         GEngine->ActiveWorld->GetPlayerController()->PlayerCameraManager->OnBlendCompleteEvent.Clear();
+        OnCinematicFinish.Broadcast();
+        CameraMoveCounter++;
     }
 }
 

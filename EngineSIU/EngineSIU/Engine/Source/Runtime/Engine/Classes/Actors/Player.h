@@ -3,7 +3,7 @@
 #include "GameFramework/Actor.h"
 #include "UObject/ObjectMacros.h"
 #include "UObject/ObjectTypes.h"
-
+#include "Particles/ParticleSystem.h"
 
 class USkeletalMeshComponent;
 class UCameraComponent;
@@ -70,6 +70,7 @@ public:
 DECLARE_MULTICAST_DELEGATE_TwoParams(FOnHealthChanged, int32 /* CurrentHealth */, int32 /* MaxHealth */);
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnHeroDied, bool /* DieByHealth */);
 DECLARE_MULTICAST_DELEGATE(FOnParry);
+DECLARE_MULTICAST_DELEGATE(FOnCinematicFinish);
 // DECLARE_MULTICAST_DELEGATE_
 
 class AHeroPlayer : public APlayer
@@ -79,6 +80,7 @@ public:
     
     AHeroPlayer() = default;
     virtual void BeginPlay() override;
+    virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
     void GetDamaged(float Damage);
     void Parry(AActor* OverlappedActor, AActor* OtherActor);
     virtual UObject* Duplicate(UObject* InOuter) override;
@@ -93,11 +95,14 @@ public:
     FOnHealthChanged OnHealthChanged;
     FOnHeroDied OnHeroDied;
     FOnParry OnParry;
+    FOnCinematicFinish OnCinematicFinish;
 
     void SetHealth(float InHealth);
     bool IsDead();
     float GetHealth();
     float GetMaxHealth();
+
+    bool bWaitingStart = true;
 
     bool bIsParrying = false;
 private:
@@ -108,5 +113,8 @@ private:
     UPROPERTY
     (EditAnywhere, float, Health, = 3.f);
     int32 CameraMoveCounter = 0;
+
+    UParticleSystem* SparkParticle = nullptr;
+    UParticleSystem* FogParticle = nullptr;
 };
 
