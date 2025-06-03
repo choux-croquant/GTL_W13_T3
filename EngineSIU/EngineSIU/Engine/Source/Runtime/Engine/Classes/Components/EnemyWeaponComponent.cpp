@@ -3,6 +3,7 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Engine/Contents/AnimInstance/LuaScriptAnimInstance.h"
 #include "Animation/AnimStateMachine.h"
+#include "SoundManager.h"
 
 void UEnemyWeaponComponent::GotParried(float InDamage)
 {
@@ -17,6 +18,7 @@ void UEnemyWeaponComponent::GotParried(float InDamage)
     {
         if (UAnimStateMachine* StateMachine = AnimInstance->GetStateMachine())
         {
+            FSoundManager::GetInstance().PlaySound("Parry");
             StateMachine->ChangeStateMachineLua(FString("Defeat"));
             //EnemyActor->SkeletalMeshComponent->ChangeRigidBodyFlag(ERigidBodyType::DYNAMIC);
             //EnemyActor->SkeletalMeshComponent->bSimulate = true;

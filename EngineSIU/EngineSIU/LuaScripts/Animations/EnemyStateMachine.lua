@@ -73,10 +73,6 @@ AnimFSM = {
         -- print("ATTACK DURATION")
         -- print(self.CurrentAnimDuration)
         if self.timer > self.attackStartTime + self.CurrentAnimDuration / 0.8 then
-            print("CATCH")
-            print(self.timer)
-            print(self.attackStartTime)
-            print(self.CurrentAnimDuration)
             self.isAttacking = false
             self.lastAttackTime = self.timer
             self:TransitionToState("Idle")
