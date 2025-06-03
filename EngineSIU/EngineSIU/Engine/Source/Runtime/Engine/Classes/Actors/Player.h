@@ -3,7 +3,7 @@
 #include "GameFramework/Actor.h"
 #include "UObject/ObjectMacros.h"
 #include "UObject/ObjectTypes.h"
-
+#include "Particles/ParticleSystem.h"
 
 class USkeletalMeshComponent;
 class UCameraComponent;
@@ -80,6 +80,7 @@ public:
     
     AHeroPlayer() = default;
     virtual void BeginPlay() override;
+    virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
     void GetDamaged(float Damage);
     void Parry(AActor* OverlappedActor, AActor* OtherActor);
     virtual UObject* Duplicate(UObject* InOuter) override;
@@ -89,6 +90,7 @@ public:
     void SetAnimState(FString InState);
     FName GetStateMachine();
     void ResetHero();
+    void OnFinalScene();
     void OnHeroDie();
 
     FOnHealthChanged OnHealthChanged;
@@ -114,5 +116,10 @@ private:
     UPROPERTY
     (EditAnywhere, float, Health, = 3.f);
     int32 CameraMoveCounter = 0;
+
+    FTransform InitialActorTransform;
+
+    UParticleSystem* SparkParticle = nullptr;
+    UParticleSystem* FogParticle = nullptr;
 };
 

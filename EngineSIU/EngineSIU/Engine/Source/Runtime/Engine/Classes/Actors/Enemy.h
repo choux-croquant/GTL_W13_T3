@@ -40,6 +40,8 @@ public:
 
     void ResetEnemyProperties();
 public:
+    FTransform InitialTransform;
+
     UAnimCustomNotify* AttackToIdleNotify = nullptr;
     UAnimCustomNotify* AttackVerticalNotify = nullptr;
     UAnimCustomNotify* AttackHorizontalNotify = nullptr;

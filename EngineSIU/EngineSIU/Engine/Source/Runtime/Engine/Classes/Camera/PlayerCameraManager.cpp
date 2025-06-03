@@ -79,6 +79,17 @@ void APlayerCameraManager::PostSpawnInitialize()
 
     CachedCameraShakeMod = new UCameraModifier_CameraShake();
     ModifierList.Add(CachedCameraShakeMod);
+
+    TArray<UObject*> ChildObjects;
+    GetObjectsOfClass(UClass::FindClass(FName("UParticleSystem")), ChildObjects, true);
+    for (UObject* ChildObject : ChildObjects)
+    {
+        if (ChildObject->GetFName() == FName("fire"))
+        {
+            FireParticle = Cast<UParticleSystem>(ChildObject);
+            break;
+        }
+    }
 }
 
 void APlayerCameraManager::InitializeFor(APlayerController* PC)
@@ -189,11 +200,11 @@ void APlayerCameraManager::StopAllInstancesOfCameraShake(UClass* ShakeClass, boo
 void APlayerCameraManager::DoUpdateCamera(float DeltaTime)
 {
     //Progress가 진행중이 아니면
-    // if (PendingViewTarget.Target == nullptr)
-    // {
-    //     ViewTarget.CheckViewTarget(PCOwner);
-    //     UpdateViewTarget(ViewTarget, DeltaTime);
-    // }
+    if (PendingViewTarget.Target == nullptr && ViewTarget.Target != nullptr)
+    {
+        //ViewTarget.CheckViewTarget(PCOwner);
+        UpdateViewTarget(ViewTarget, DeltaTime);
+    }
 
     FMinimalViewInfo NewPOV = ViewTarget.POV;
     
@@ -240,7 +251,7 @@ void APlayerCameraManager::DoUpdateCamera(float DeltaTime)
             NewPOV.BlendViewInfo(PendingViewTarget.POV, BlendPct);
 
             // 개 레전드 하드코딩 2
-            if (bFire1 == false && NewPOV.Location.X > -950)
+            if (bFire1 == false && NewPOV.Location.X > -875)
             {
                 AEmitter* ParticleActor1 = GetWorld()->SpawnActor<AEmitter>();
                 ParticleActor1->SetActorTickInEditor(true);
@@ -249,21 +260,12 @@ void APlayerCameraManager::DoUpdateCamera(float DeltaTime)
                 AEmitter* ParticleActor2 = GetWorld()->SpawnActor<AEmitter>();
                 ParticleActor2->SetActorTickInEditor(true);
                 ParticleActor2->SetActorLocation(FVector(-755, -35, 51));
-                TArray<UObject*> ChildObjects;
-                GetObjectsOfClass(UClass::FindClass(FName("UParticleSystem")), ChildObjects, true);
-                for (UObject* ChildObject : ChildObjects)
-                {
-                    if (ChildObject->GetFName() == FName("fire"))
-                    {
-                        ParticleActor1->ParticleSystemComponent->SetParticleSystem(Cast<UParticleSystem>(ChildObject));
-                        ParticleActor2->ParticleSystemComponent->SetParticleSystem(Cast<UParticleSystem>(ChildObject));
-                        break;
-                    }
-                }
-                FSoundManager::GetInstance().PlaySoundWithDelay("FireOn", 1.0f, 2.0f);
+                ParticleActor1->ParticleSystemComponent->SetParticleSystem(FireParticle);
+                ParticleActor2->ParticleSystemComponent->SetParticleSystem(FireParticle);
+                FSoundManager::GetInstance().PlaySound("FireOn", 2.0f);
                 bFire1 = true;
             }
-            else if (bFire2 == false && NewPOV.Location.X > -850)
+            else if (bFire2 == false && NewPOV.Location.X > -742)
             {
                 AEmitter* ParticleActor1 = GetWorld()->SpawnActor<AEmitter>();
                 ParticleActor1->SetActorTickInEditor(true);
@@ -272,21 +274,12 @@ void APlayerCameraManager::DoUpdateCamera(float DeltaTime)
                 AEmitter* ParticleActor2 = GetWorld()->SpawnActor<AEmitter>();
                 ParticleActor2->SetActorTickInEditor(true);
                 ParticleActor2->SetActorLocation(FVector(-622, -35, 51));
-                TArray<UObject*> ChildObjects;
-                GetObjectsOfClass(UClass::FindClass(FName("UParticleSystem")), ChildObjects, true);
-                for (UObject* ChildObject : ChildObjects)
-                {
-                    if (ChildObject->GetFName() == FName("fire"))
-                    {
-                        ParticleActor1->ParticleSystemComponent->SetParticleSystem(Cast<UParticleSystem>(ChildObject));
-                        ParticleActor2->ParticleSystemComponent->SetParticleSystem(Cast<UParticleSystem>(ChildObject));
-                        break;
-                    }
-                }
-                FSoundManager::GetInstance().PlaySoundWithDelay("FireOn", 1.0f, 2.0f);
+                ParticleActor1->ParticleSystemComponent->SetParticleSystem(FireParticle);
+                ParticleActor2->ParticleSystemComponent->SetParticleSystem(FireParticle);
+                FSoundManager::GetInstance().PlaySound("FireOn", 2.0f);
                 bFire2 = true;
             }
-            else if (bFire3 == false && NewPOV.Location.X > -800)
+            else if (bFire3 == false && NewPOV.Location.X > -592)
             {
                 AEmitter* ParticleActor1 = GetWorld()->SpawnActor<AEmitter>();
                 ParticleActor1->SetActorTickInEditor(true);
@@ -295,21 +288,12 @@ void APlayerCameraManager::DoUpdateCamera(float DeltaTime)
                 AEmitter* ParticleActor2 = GetWorld()->SpawnActor<AEmitter>();
                 ParticleActor2->SetActorTickInEditor(true);
                 ParticleActor2->SetActorLocation(FVector(-472, -35, 51));
-                TArray<UObject*> ChildObjects;
-                GetObjectsOfClass(UClass::FindClass(FName("UParticleSystem")), ChildObjects, true);
-                for (UObject* ChildObject : ChildObjects)
-                {
-                    if (ChildObject->GetFName() == FName("fire"))
-                    {
-                        ParticleActor1->ParticleSystemComponent->SetParticleSystem(Cast<UParticleSystem>(ChildObject));
-                        ParticleActor2->ParticleSystemComponent->SetParticleSystem(Cast<UParticleSystem>(ChildObject));
-                        break;
-                    }
-                }
-                FSoundManager::GetInstance().PlaySoundWithDelay("FireOn", 1.0f, 2.0f);
+                ParticleActor1->ParticleSystemComponent->SetParticleSystem(FireParticle);
+                ParticleActor2->ParticleSystemComponent->SetParticleSystem(FireParticle);
+                FSoundManager::GetInstance().PlaySound("FireOn", 2.0f);
                 bFire3 = true;
             }
-            else if (bFire4 == false && NewPOV.Location.X > -700)
+            else if (bFire4 == false && NewPOV.Location.X > -444)
             {
                 AEmitter* ParticleActor1 = GetWorld()->SpawnActor<AEmitter>();
                 ParticleActor1->SetActorTickInEditor(true);
@@ -318,21 +302,12 @@ void APlayerCameraManager::DoUpdateCamera(float DeltaTime)
                 AEmitter* ParticleActor2 = GetWorld()->SpawnActor<AEmitter>();
                 ParticleActor2->SetActorTickInEditor(true);
                 ParticleActor2->SetActorLocation(FVector(-324, -35, 51));
-                TArray<UObject*> ChildObjects;
-                GetObjectsOfClass(UClass::FindClass(FName("UParticleSystem")), ChildObjects, true);
-                for (UObject* ChildObject : ChildObjects)
-                {
-                    if (ChildObject->GetFName() == FName("fire"))
-                    {
-                        ParticleActor1->ParticleSystemComponent->SetParticleSystem(Cast<UParticleSystem>(ChildObject));
-                        ParticleActor2->ParticleSystemComponent->SetParticleSystem(Cast<UParticleSystem>(ChildObject));
-                        break;
-                    }
-                }
-                FSoundManager::GetInstance().PlaySoundWithDelay("FireOn", 1.0f, 2.0f);
+                ParticleActor1->ParticleSystemComponent->SetParticleSystem(FireParticle);
+                ParticleActor2->ParticleSystemComponent->SetParticleSystem(FireParticle);
+                FSoundManager::GetInstance().PlaySound("FireOn", 2.0f);
                 bFire4 = true;
             }
-            else if (bFire5 == false && NewPOV.Location.X > -600)
+            else if (bFire5 == false && NewPOV.Location.X > -320)
             {
                 AEmitter* ParticleActor1 = GetWorld()->SpawnActor<AEmitter>();
                 ParticleActor1->SetActorTickInEditor(true);
@@ -341,18 +316,9 @@ void APlayerCameraManager::DoUpdateCamera(float DeltaTime)
                 AEmitter* ParticleActor2 = GetWorld()->SpawnActor<AEmitter>();
                 ParticleActor2->SetActorTickInEditor(true);
                 ParticleActor2->SetActorLocation(FVector(-200, -35, 51));
-                TArray<UObject*> ChildObjects;
-                GetObjectsOfClass(UClass::FindClass(FName("UParticleSystem")), ChildObjects, true);
-                for (UObject* ChildObject : ChildObjects)
-                {
-                    if (ChildObject->GetFName() == FName("fire"))
-                    {
-                        ParticleActor1->ParticleSystemComponent->SetParticleSystem(Cast<UParticleSystem>(ChildObject));
-                        ParticleActor2->ParticleSystemComponent->SetParticleSystem(Cast<UParticleSystem>(ChildObject));
-                        break;
-                    }
-                }
-                FSoundManager::GetInstance().PlaySoundWithDelay("FireOn", 1.0f, 2.0f);
+                ParticleActor1->ParticleSystemComponent->SetParticleSystem(FireParticle);
+                ParticleActor2->ParticleSystemComponent->SetParticleSystem(FireParticle);
+                FSoundManager::GetInstance().PlaySound("FireOn", 2.0f);
                 bFire5 = true;
             }
             UE_LOG(ELogLevel::Error, TEXT("%.2f %.2f %.2f"), NewPOV.Location.X, NewPOV.Location.Y, NewPOV.Location.Z);

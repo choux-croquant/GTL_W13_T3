@@ -15,10 +15,12 @@
 #include "UnrealEd/EditorViewportClient.h"
 #include "UObject/UObjectIterator.h"
 #include "Engine/EditorEngine.h"
+#include "Engine/TimerManager.h"
 #include "Engine/Contents/AnimInstance/LuaScriptAnimInstance.h"
 #include "Particles/Emitter.h"
 #include "Particles/ParticleSystem.h"
 #include "Engine/Classes/Actors/BehellaGameMode.h"
+#include "Engine/Contents/Objects/DamageCameraShake.h"
 
 
 void AEditorPlayer::Tick(float DeltaTime)
@@ -638,7 +640,23 @@ void AHeroPlayer::BeginPlay()
 {
     APlayer::BeginPlay();
 
+    InitialActorTransform = GetRootComponent()->GetComponentTransform();
+    
     ResetHero();
+
+    // Spawn할 파티클
+    TArray<UObject*> ChildObjects;
+    GetObjectsOfClass(UClass::FindClass(FName("UParticleSystem")), ChildObjects, true);
+    for (UObject* ChildObject : ChildObjects) {
+        if (ChildObject->GetFName() == FName("spark"))
+        {
+            SparkParticle = Cast<UParticleSystem>(ChildObject);
+        }
+        if (ChildObject->GetFName() == FName("fog"))
+        {
+            FogParticle = Cast<UParticleSystem>(ChildObject);
+        }
+    }
     
     //기본적으로 제공되는 BeginOverlap. Component에서 불림
     OnActorBeginOverlap.AddLambda(
@@ -650,7 +668,8 @@ void AHeroPlayer::BeginPlay()
     OnHealthChanged.AddLambda(
         [this](int32 InHealth, int32 InMaxHealth)
         {
-            //딱히 뭐 필요없을수도
+            GetWorld()->GetPlayerController()->PlayerCameraManager->VignetteColor = FLinearColor(1.0f, 0.0f, 0.0f, 1.0f);
+            GetWorld()->GetPlayerController()->PlayerCameraManager->StartVignetteAnimation(1.0f, 0.0f, 0.3f);
         }
     );
 
@@ -666,6 +685,17 @@ void AHeroPlayer::BeginPlay()
         [this]()
         {
             UE_LOG(ELogLevel::Error,"Parry");
+            AEmitter* ParticleActor = GetWorld()->SpawnActor<AEmitter>();
+            ParticleActor->SetActorTickInEditor(true);
+            ParticleActor->SetActorLocation(FVector(14.0f, -15.0f, 30.0f));
+            ParticleActor->ParticleSystemComponent->SetParticleSystem(SparkParticle);
+            GetWorld()->GetPlayerController()->ClientStartCameraShake(UDamageCameraShake::StaticClass());
+            TWeakObjectPtr<AEmitter> WeakParticleActor(ParticleActor); // 약한 참조
+            FTimerManager::GetInstance().AddTimer(1.0f, [WeakParticleActor]() {
+                if (WeakParticleActor.IsValid()) { // 유효성 확인
+                    WeakParticleActor->Destroy();
+                }
+            });
             //TODO: 패리 사운드 실행
         }
     );
@@ -701,6 +731,13 @@ void AHeroPlayer::BeginPlay()
             }
         });
     }
+}
+
+void AHeroPlayer::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+    APlayer::EndPlay(EndPlayReason);
+    FSoundManager::GetInstance().StopAllSounds();
+    FTimerManager::GetInstance().ClearAllTimers();
 }
 
 void AHeroPlayer::SetAnimState(FString InState)
@@ -809,16 +846,7 @@ void AHeroPlayer::Tick(float DeltaTime)
             GEngine->ActiveWorld->GetPlayerController()->SetViewTarget(TargetActor, Params);
             AEmitter* ParticleActor = GetWorld()->SpawnActor<AEmitter>();
             ParticleActor->SetActorTickInEditor(true);
-            TArray<UObject*> ChildObjects;
-            GetObjectsOfClass(UClass::FindClass(FName("UParticleSystem")), ChildObjects, true);
-            for (UObject* ChildObject : ChildObjects)
-            {
-                if (ChildObject->GetFName() == FName("fog"))
-                {
-                    ParticleActor->ParticleSystemComponent->SetParticleSystem(Cast<UParticleSystem>(ChildObject));
-                    break;
-                }
-            }
+            ParticleActor->ParticleSystemComponent->SetParticleSystem(FogParticle);
             CameraMoveCounter++;
         });
         CameraMoveCounter++;
@@ -842,8 +870,14 @@ void AHeroPlayer::PostSpawnInitialize()
 
 void AHeroPlayer::ResetHero()
 {
+    GetRootComponent()->SetWorldTransform(InitialActorTransform);
     Health = MaxHealth;
     SetAnimState(FString("Idle"));
+}
+
+void AHeroPlayer::OnFinalScene()
+{
+    SetAnimState(FString("FinalAttack"));
 }
 
 void AHeroPlayer::OnHeroDie()

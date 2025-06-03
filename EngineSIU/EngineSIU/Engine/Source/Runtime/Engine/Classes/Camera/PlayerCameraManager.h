@@ -1,6 +1,7 @@
 #pragma once
 #include "CameraTypes.h"
 #include "GameFramework/Actor.h"
+#include "Particles/ParticleSystem.h"
 
 class UCameraShakeBase;
 class UCameraComponent;
@@ -230,5 +231,6 @@ private:
     bool bFire3 = false;
     bool bFire4 = false;
     bool bFire5 = false;
+    UParticleSystem* FireParticle;
 };
 

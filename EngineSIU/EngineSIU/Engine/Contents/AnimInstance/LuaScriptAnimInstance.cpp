@@ -73,7 +73,7 @@ void ULuaScriptAnimInstance::NativeUpdateAnimation(float DeltaSeconds, FPoseCont
         );
     }
 
-    if (bIsBlending && PreElapsedTime <= PrevAnim->GetDuration())
+    if (bIsBlending)
     {
         float BlendElapsed = ElapsedTime - BlendStartTime;
         BlendAlpha = FMath::Clamp(BlendElapsed / BlendDuration, 0.f, 1.f);
@@ -125,25 +125,23 @@ void ULuaScriptAnimInstance::SetAnimation(UAnimSequence* NewAnim, float Blending
         return; // 이미 같은 애니메이션이 설정되어 있다면 아무 작업도 하지 않음.
     }
 
-    if (!PrevAnim && !CurrAnim)
+    if (!CurrAnim)
     {
-        PrevAnim = NewAnim;
         CurrAnim = NewAnim;
     }
-    else if (PrevAnim == nullptr)
+
+    if (!PrevAnim)
     {
         PrevAnim = CurrAnim; // 이전 애니메이션이 없으면 현재 애니메이션을 이전으로 설정.
     }
-    else if (CurrAnim)
-    {
-        PreElapsedTime = ElapsedTime;
-        ElapsedTime = 0.0f; // 현재 애니메이션이 있으면 시간 초기화.
-        PrevAnim = CurrAnim; // 현재 애니메이션이 있으면 현재를 이전으로 설정.
-    }
+
+    PreElapsedTime = ElapsedTime;
+    ElapsedTime = 0.0f; // 현재 애니메이션이 있으면 시간 초기화.
 
     bPrevLooping = bLooping;
     bLooping = LoopAnim;
     
+    PrevAnim = CurrAnim; // 현재 애니메이션이 있으면 현재를 이전으로 설정.
     CurrAnim = NewAnim;
     BlendDuration = BlendingTime;
     bReverse = ReverseAnim;

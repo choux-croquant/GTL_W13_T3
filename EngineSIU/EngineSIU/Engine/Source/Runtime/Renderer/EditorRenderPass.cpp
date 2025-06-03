@@ -275,30 +275,30 @@ void FEditorRenderPass::BindBuffers(const FDebugPrimitiveData& InPrimitiveData) 
 void FEditorRenderPass::PrepareRenderArr()
 {
     const EWorldType WorldType = GEngine->ActiveWorld->WorldType;
-    if (WorldType != EWorldType::Editor && WorldType != EWorldType::PhysicsAssetViewer)
-    {
-        return;
-    }
+    // if (WorldType != EWorldType::Editor && WorldType != EWorldType::PhysicsAssetViewer)
+    // {
+    //     return;
+    // }
     
     for (const auto* Actor : TObjectRange<AActor>())
     {
         for (const auto* Component : Actor->GetComponents())
         {
-            if (WorldType == EWorldType::PhysicsAssetViewer)
-            {
-                if (USkeletalMeshComponent* SkelMeshComp = Cast<USkeletalMeshComponent>(Component))
-                {
-                    if (USkeletalMesh* SkelMesh = SkelMeshComp->GetSkeletalMeshAsset())
-                    {
-                        if (SkelMesh->GetPhysicsAsset())
-                        {
-                            PreviewMesh.Add(SkelMeshComp);
-                        }
-                    }
-                }
-            }
-            else
-            {
+            // if (WorldType == EWorldType::PhysicsAssetViewer)
+            // {
+            //     if (USkeletalMeshComponent* SkelMeshComp = Cast<USkeletalMeshComponent>(Component))
+            //     {
+            //         if (USkeletalMesh* SkelMesh = SkelMeshComp->GetSkeletalMeshAsset())
+            //         {
+            //             if (SkelMesh->GetPhysicsAsset())
+            //             {
+            //                 PreviewMesh.Add(SkelMeshComp);
+            //             }
+            //         }
+            //     }
+            // }
+            // else
+            // {
                 // AABB용 static mesh component
                 if (UStaticMeshComponent* StaticMesh = Cast<UStaticMeshComponent>(Component))
                 {
@@ -334,7 +334,7 @@ void FEditorRenderPass::PrepareRenderArr()
                 {
                     Resources.Components.CapsuleComponents.Add(CapsuleComponent);
                 }
-            }
+            // }
         }
     }
 }
