@@ -175,9 +175,9 @@ void LuaUIManager::DrawLuaUIs()
 
 void LuaUIManager::TestCODE()
 {
-    CreateText("TestTEXT", RectTransform(0, 0, 100, 100, AnchorDirection::MiddleCenter), 10, FString("Chan GOOOD!"), FName("Default"), 30, FLinearColor(1, 0, 0, 1));
-    CreateImage("TestImage", RectTransform(-100, -100, 200, 200, AnchorDirection::MiddleCenter), 3, FName("ExplosionColor"), FLinearColor(1, 1, 1, 1));
-    CreateButton("TestButton", RectTransform(-100, -100, 200, 200, AnchorDirection::MiddleCenter), 15, FString("TEstbutonFUn"));
+    CreateText("TestTEXT", RectTransform(0, 0, 100, 100, AnchorDirection::MiddleCenter, AnchorDirection::MiddleCenter), 10, FString("Chan GOOOD!"), FName("Default"), 30, FLinearColor(1, 0, 0, 1));
+    CreateImage("TestImage", RectTransform(-100, -100, 200, 200, AnchorDirection::MiddleCenter, AnchorDirection::MiddleCenter), 3, FName("ExplosionColor"), FLinearColor(1, 1, 1, 1));
+    CreateButton("TestButton", RectTransform(-100, -100, 200, 200, AnchorDirection::MiddleCenter, AnchorDirection::MiddleCenter), 15, FString("TEstbutonFUn"));
 
     auto GotsText = GetTextUI("TestTEXT");
     auto GotsImage = GetImageUI("TestImage");

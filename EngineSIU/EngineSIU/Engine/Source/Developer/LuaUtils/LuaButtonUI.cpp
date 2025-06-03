@@ -23,7 +23,7 @@ void LuaButtonUI::DrawImGuiUI()
         return;
 
     RectTransform worldRect = GetWorldRectTransform();
-    ImVec2 screenPos = ImVec2(worldRect.Position.X, worldRect.Position.Y);
+    ImVec2 screenPos = worldRect.GetAlignedPosition();
     ImVec2 size = ImVec2(worldRect.Size.X, worldRect.Size.Y);
 
     ImGui::SetCursorScreenPos(screenPos);
