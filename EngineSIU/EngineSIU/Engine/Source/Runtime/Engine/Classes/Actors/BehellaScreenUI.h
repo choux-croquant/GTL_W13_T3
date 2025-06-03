@@ -95,4 +95,17 @@ public:
     virtual void EndScreen() override;
 
     LuaTextUI* ScreenName;
+
+    LuaImageUI* LogoImage;
+    LuaImageUI* PressKeyImage;
+
+    float FadeAlpha = 0.0f;
+    float LogoAlpha = 0.0f;
+    float KeyAlpha = 0.0f;
+
+    float FadeContinueTime = 1.0f;
+    float FadeOutTime = 1.0f;
+    float LogoFadeTime = 1.0f;
+    float PressKeyRevealTime = 0.5f;
+    float PressKeyLoopTime = 1.5f;
 };
