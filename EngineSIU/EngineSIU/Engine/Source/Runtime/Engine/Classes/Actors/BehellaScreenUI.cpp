@@ -28,17 +28,17 @@ void FBehellaGameInitScreenUI::InitScreen()
 
     // Fade Image 처음에는 Black
     FadeImage = LuaUIManager::Get().CreateImage(FName("FadeBG")
-        , RectTransform(0.0f, 0.0f, 2500.0f, 2500.0f, AnchorDirection::TopLeft)
+        , RectTransform(0.0f, 0.0f, 50000.0f, 50000.0f, AnchorDirection::TopLeft, AnchorDirection::TopLeft)
         , -1, "WhiteBox", FLinearColor(0.0f, 0.0f, 0.0f, 1.0f));
     
     // 로고와 PressAnyKey 생성 처음 투명도는 0.0f;
     LogoImage = LuaUIManager::Get().CreateImage(FName("BehellaLogo")
-        , RectTransform(0.0f, 0.0f, 512.0f, 512.0f, AnchorDirection::MiddleCenter)
+        , RectTransform(0.0f, 0.0f, 512.0f, 512.0f, AnchorDirection::MiddleCenter, AnchorDirection::MiddleCenter)
         , 5, "BehellaLogo", FLinearColor(1.0f, 1.0f, 1.0f, 0.0f));
 
 
     PressKeyImage = LuaUIManager::Get().CreateImage(FName("PressSpace")
-        , RectTransform(0.0f, 400.0f, 256.0f, 256.0f, AnchorDirection::MiddleCenter)
+        , RectTransform(0.0f, 400.0f, 256.0f, 256.0f, AnchorDirection::MiddleCenter, AnchorDirection::MiddleCenter)
         , 5, "PressSpace", FLinearColor(1.0f, 1.0f, 1.0f, 0.0f));
 }
 
