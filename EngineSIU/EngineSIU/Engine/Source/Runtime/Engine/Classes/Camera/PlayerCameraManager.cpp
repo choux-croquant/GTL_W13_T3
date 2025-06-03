@@ -102,6 +102,7 @@ void APlayerCameraManager::InitializeFor(APlayerController* PC)
     VignetteIntensity = 0.0f;
     LetterBoxWidth = 2.0f;
     LetterBoxHeight = 1.0f;
+    LetterBoxRatio = 2.0f;
 }
 
 AActor* APlayerCameraManager::GetViewTarget() const
@@ -369,6 +370,21 @@ void APlayerCameraManager::DoUpdateCamera(float DeltaTime)
             bAnimateVignette = false;
         }
     }
+
+    if (bAnimateLetterBox)
+    {
+        LetterBoxTimeRemaining = FMath::Max(LetterBoxTimeRemaining - DeltaTime, 0.0f);
+        if (LetterBoxTime > 0.0f)
+        {
+            LetterBoxRatio = LetterBoxStartRatio + ((1.f - LetterBoxTimeRemaining / LetterBoxTime) * (LetterBoxEndRatio - LetterBoxStartRatio));
+        }
+
+        if (LetterBoxTimeRemaining <= 0.0f)
+        {
+            LetterBoxRatio = LetterBoxEndRatio;
+            bAnimateLetterBox = false;
+        }
+    }
     
     LastFrameViewTarget.POV = NewPOV;
 }
@@ -486,6 +502,15 @@ void APlayerCameraManager::AssignViewTarget(AActor* NewTarget, FTViewTarget& VT,
 
 }
 
+void APlayerCameraManager::StartLetterBoxAnimation(float FromRatio, float ToRatio, float Duration)
+{
+    bAnimateLetterBox = true;
+    LetterBoxStartRatio= FromRatio;
+    LetterBoxEndRatio = ToRatio;
+    LetterBoxTime = Duration;
+    LetterBoxTimeRemaining = Duration;
+}
+
 void APlayerCameraManager::StartVignetteAnimation(float FromIntensity, float ToIntensity, float Duration)
 {
     bAnimateVignette = true;
@@ -497,5 +522,5 @@ void APlayerCameraManager::StartVignetteAnimation(float FromIntensity, float ToI
 
 float APlayerCameraManager::GetLetterBoxRatio()
 {
-    return LetterBoxWidth / LetterBoxHeight;
+    return LetterBoxRatio;
 }
