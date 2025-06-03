@@ -2,6 +2,7 @@
 
 #include "Camera.h"
 #include "Enemy.h"
+#include "SoundManager.h"
 #include "UnrealClient.h"
 #include "World/World.h"
 #include "BaseGizmos/GizmoArrowComponent.h"
@@ -769,6 +770,7 @@ void AHeroPlayer::Tick(float DeltaTime)
         TargetActor->SetActorLocation(FVector(-1000, 0, 30));
         GEngine->ActiveWorld->GetPlayerController()->SetViewTarget(TargetActor, Params);
         CameraMoveCounter++;
+        FSoundManager::GetInstance().PlaySound("GameBGM", 0.1f);
     }
 
     if (CameraMoveCounter == 1)

@@ -58,21 +58,22 @@ public:
         return true;
     }
 
-    void PlaySound(const std::string& name) {
+    void PlaySound(const std::string& name, float Volume = 1.0f) {
         auto it = soundMap.find(name);
         if (it != soundMap.end()) {
             FMOD::Channel* newChannel = nullptr;
             system->playSound(it->second, nullptr, false, &newChannel);
             if (newChannel) {
+                newChannel->setVolume(Volume);
                 activeChannels.push_back(newChannel);
             }
         }
     }
 
-    void PlaySoundWithDelay(const std::string& name, float delaySeconds) {
+    void PlaySoundWithDelay(const std::string& name, float delaySeconds, float Volume = 1.0f) {
         std::thread([=]() {
             std::this_thread::sleep_for(std::chrono::duration<float>(delaySeconds));
-            PlaySound(name);
+            PlaySound(name, Volume);
         }).detach();
     }
 
