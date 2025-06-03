@@ -137,6 +137,10 @@ int32 FParticleEmitterInstance::CalculateSpawnCount(float DeltaTime)
             SpawnCount = SpawnModule->BurstCount;
             CurrentTimeForBurst = 0.f;
         }
+        else if (CurrentTimeForBurst == DeltaTime)
+        {
+            SpawnCount = SpawnModule->BurstCount;
+        }
     }
     else
     {
