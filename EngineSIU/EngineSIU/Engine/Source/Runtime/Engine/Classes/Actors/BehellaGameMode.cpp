@@ -198,6 +198,8 @@ void ABehellaGameMode::PlayerWin()
             CameraManager->StartCameraFade(1.0f, 0.0f, 3.0f, FLinearColor::Black, false);
             HeroPlayer->OnFinalScene();
             Enemy->OnFinalScene();
+        
+            // 타이머 대신 처형버튼 으로 수정
             FTimerManager::GetInstance().AddTimer(3.0f, [this]()
             {
                 HeroPlayer->SetAnimState(FString("FinalAttack"));
