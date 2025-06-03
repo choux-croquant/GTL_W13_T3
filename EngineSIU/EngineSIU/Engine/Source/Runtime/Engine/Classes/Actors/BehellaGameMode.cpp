@@ -235,6 +235,8 @@ void ABehellaGameMode::EndMatch(bool bIsWin)    // 현재는 bIsWin이 쓰이진
 {
     GameState = EBehellaGameState::GameOver;
 
+    GetWorld()->GetPlayerController()->PlayerCameraManager->StartLetterBoxAnimation(1.7f, 20.7f, 5.0f);
+
     // 게임 End 화면 UI 켜기
     CloseScreen(CurScreenUI);
     // 지금 Fade로 Closing하는게 잘 안됨 일단 시간 없어서 아래처럼 바로 끄기로
