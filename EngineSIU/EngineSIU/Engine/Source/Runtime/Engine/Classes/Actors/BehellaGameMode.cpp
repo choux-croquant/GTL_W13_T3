@@ -148,7 +148,7 @@ void ABehellaGameMode::PrepareMatch()
 
     CloseScreen(CurScreenUI);
 
-    GetWorld()->GetPlayerController()->PlayerCameraManager->StartLetterBoxAnimation(8.0f, 1.7f, 5.0f);
+    GetWorld()->GetPlayerController()->PlayerCameraManager->StartLetterBoxAnimation(0.0f, 1.2f, 5.0f);
     // 카메라 무빙 시키기
     HeroPlayer->bWaitingStart = false;
 }

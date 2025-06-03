@@ -380,12 +380,14 @@ void APlayerCameraManager::DoUpdateCamera(float DeltaTime)
         LetterBoxTimeRemaining = FMath::Max(LetterBoxTimeRemaining - DeltaTime, 0.0f);
         if (LetterBoxTime > 0.0f)
         {
-            LetterBoxRatio = LetterBoxStartRatio + ((1.f - LetterBoxTimeRemaining / LetterBoxTime) * (LetterBoxEndRatio - LetterBoxStartRatio));
+            LetterBoxHeight = LetterBoxStartRatio + ((1.f - LetterBoxTimeRemaining / LetterBoxTime) * (LetterBoxEndRatio - LetterBoxStartRatio));
+            LetterBoxRatio =  LetterBoxWidth / LetterBoxHeight;
         }
 
         if (LetterBoxTimeRemaining <= 0.0f)
         {
-            LetterBoxRatio = LetterBoxEndRatio;
+            LetterBoxHeight = LetterBoxEndRatio;
+            LetterBoxRatio = LetterBoxWidth / LetterBoxHeight;
             bAnimateLetterBox = false;
         }
     }
