@@ -39,8 +39,8 @@ void AEnemy::PostSpawnInitialize()
     BindAttackNotifies();
 
     // Sound Notify
-    CreateSoundNotify(ReactionAnim, ReactionNotify, "Impact", "shield", 0.0f);
-}
+    CreateSoundNotify(ReactionAnim, ReactionNotify, "Impact", "SwordsClash", 0.0f);
+}    
     
 void AEnemy::BeginPlay()
 {

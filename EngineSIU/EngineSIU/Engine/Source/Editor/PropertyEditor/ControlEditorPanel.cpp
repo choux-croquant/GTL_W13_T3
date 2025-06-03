@@ -40,6 +40,7 @@
 #include "Renderer/CompositingPass.h"
 #include <Engine/FbxLoader.h>
 
+#include "Actors/Camera.h"
 #include "Animation/SkeletalMeshActor.h"
 #include "Engine/Classes/Engine/AssetManager.h"
 #include "Particles/Emitter.h"
@@ -377,6 +378,7 @@ void ControlEditorPanel::CreateModifyButton(const ImVec2 ButtonSize, ImFont* Ico
             { .Label = "SkeletalMeshActor", .OBJ = OBJ_SKELETALMESH },
             { .Label = "Hero",             .OBJ = OBJ_HERO},
             { .Label = "Enemy",             .OBJ = OBJ_ENEMY},
+            { .Label = "Camera",           .OBJ = OBJ_CAMERA},
         };
 
         for (const auto& primitive : primitives)
@@ -501,11 +503,14 @@ void ControlEditorPanel::CreateModifyButton(const ImVec2 ButtonSize, ImFont* Ico
                     break;
                 }
                 case OBJ_CAMERA:
+                {
+                    SpawnedActor = World->SpawnActor<ACamera>();
+                    break;
+                }
                 case OBJ_PLAYER:
                 case OBJ_END:
                     break;
                 }
-
                 if (SpawnedActor)
                 {
                     UEditorEngine* Engine = Cast<UEditorEngine>(GEngine);
