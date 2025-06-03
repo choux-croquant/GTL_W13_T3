@@ -10,7 +10,7 @@ void UEnemyWeaponComponent::GotParried(float InDamage)
     UE_LOG(ELogLevel::Error,"GotParried");
     AEnemy* EnemyActor = Cast<AEnemy>(GetOwner());
     // 데미지 조정 필요 시 Player속성으로 가지도록 이동
-    EnemyActor->ParryGauge += 35.0f;
+    EnemyActor->ParryGauge += 305.0f;
 
     ULuaScriptAnimInstance* AnimInstance = Cast<ULuaScriptAnimInstance>(EnemyActor->SkeletalMeshComponent->GetAnimInstance());
 

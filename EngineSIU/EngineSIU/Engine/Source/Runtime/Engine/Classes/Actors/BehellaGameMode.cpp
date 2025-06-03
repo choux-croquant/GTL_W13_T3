@@ -5,7 +5,7 @@
 #include "Engine/Engine.h"
 #include "Engine/World/World.h"
 #include "Engine/Classes/Actors/BehellaGameMode.h"
-
+#include "Physics/PhysicsManager.h"
 #include "SoundManager.h"
 #include "Engine/TimerManager.h"
 
@@ -215,6 +215,10 @@ void ABehellaGameMode::PlayerWin()
                 HeroPlayer->SetAnimState(FString("FinalAttack"));
                 FTimerManager::GetInstance().AddTimer(2.0f, [this]()
                 {
+                    Enemy->SkeletalMeshComponent->ChangeRigidBodyFlag(ERigidBodyType::DYNAMIC);
+                    Enemy->SkeletalMeshComponent->bSimulate = true;
+                    GEngine->PhysicsManager->GetScene(GetWorld())->fetchResults(true);
+                    Enemy->SkeletalMeshComponent->AddImpulseToBones(FVector(-1.0f, 0.0f, 1.0f), 100000.0f);
                     FSoundManager::GetInstance().PlaySound("Roar");
                 });
             });

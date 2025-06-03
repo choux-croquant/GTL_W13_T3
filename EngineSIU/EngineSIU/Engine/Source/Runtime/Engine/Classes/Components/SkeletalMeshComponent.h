@@ -107,6 +107,8 @@ public:
     void UpdateBoneTransformToPhysScene();
 
     void ChangeRigidBodyFlag(ERigidBodyType InType);
+
+    void AddImpulseToBones(const FVector& Direction, float ImpulseScale);
     
     bool bIsAnimationEnabled() const { return bPlayAnimation; }
     

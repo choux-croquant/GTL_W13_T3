@@ -1061,3 +1061,19 @@ void USkeletalMeshComponent::ChangeRigidBodyFlag(ERigidBodyType InType)
         }
     }
 }
+
+void USkeletalMeshComponent::AddImpulseToBones(const FVector& Direction, float ImpulseScale)
+{
+    if (Bodies.Num() <= 0)
+    {
+        return;
+    }
+        for (auto& Body : Bodies)
+        {
+            if (Body->BIGameObject && Body->BIGameObject->DynamicRigidBody)
+            {
+                PxVec3 Impulse = PxVec3(Direction.X, Direction.Y, Direction.Z) * ImpulseScale;
+                Body->BIGameObject->DynamicRigidBody->addForce(Impulse, PxForceMode::eIMPULSE);
+            }
+        }
+}
