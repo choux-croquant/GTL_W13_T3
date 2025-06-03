@@ -237,4 +237,9 @@ public:
 			Delegate(Params...);
 		}
 	}
+
+    void Clear()
+    {
+        DelegateHandles.Empty();
+    }
 };

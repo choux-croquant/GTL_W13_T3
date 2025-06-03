@@ -44,6 +44,7 @@ public:
 
     bool AddNotifyTrack(const FName& TrackName, int32& OutNewTrackIndex);
     bool RemoveNotifyTrack(int32 TrackIndexToRemove);
+    bool RemoveAllNotifyTracks();
     bool RenameNotifyTrack(int32 TrackIndex, const FName& NewTrackName);
     int32 FindNotifyTrackIndex(const FName& TrackName) const;
 

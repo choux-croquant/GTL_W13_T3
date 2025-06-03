@@ -1,8 +1,11 @@
 #include "PlayerCameraManager.h"
 
 #include "CameraModifier.h"
+#include "SoundManager.h"
 #include "GameFramework/PlayerController.h"
 #include "Camera/CameraModifier_CameraShake.h"
+#include "Particles/Emitter.h"
+#include "Particles/ParticleSystem.h"
 #include "World/World.h"
 
 bool FTViewTarget::Equal(const FTViewTarget& OtherTarget) const
@@ -186,11 +189,11 @@ void APlayerCameraManager::StopAllInstancesOfCameraShake(UClass* ShakeClass, boo
 void APlayerCameraManager::DoUpdateCamera(float DeltaTime)
 {
     //Progress가 진행중이 아니면
-    if (PendingViewTarget.Target == nullptr)
-    {
-        ViewTarget.CheckViewTarget(PCOwner);
-        UpdateViewTarget(ViewTarget, DeltaTime);
-    }
+    // if (PendingViewTarget.Target == nullptr)
+    // {
+    //     ViewTarget.CheckViewTarget(PCOwner);
+    //     UpdateViewTarget(ViewTarget, DeltaTime);
+    // }
 
     FMinimalViewInfo NewPOV = ViewTarget.POV;
     
@@ -235,11 +238,128 @@ void APlayerCameraManager::DoUpdateCamera(float DeltaTime)
             NewPOV = ViewTarget.POV;
             //@TODO: CAMERA: Make sure the sense is correct!  BlendViewTargets(ViewTarget, PendingViewTarget, BlendPct);
             NewPOV.BlendViewInfo(PendingViewTarget.POV, BlendPct);
-            
+
+            // 개 레전드 하드코딩 2
+            if (bFire1 == false && NewPOV.Location.X > -950)
+            {
+                AEmitter* ParticleActor1 = GetWorld()->SpawnActor<AEmitter>();
+                ParticleActor1->SetActorTickInEditor(true);
+                ParticleActor1->SetActorLocation(FVector(-755, 35, 51));
+                
+                AEmitter* ParticleActor2 = GetWorld()->SpawnActor<AEmitter>();
+                ParticleActor2->SetActorTickInEditor(true);
+                ParticleActor2->SetActorLocation(FVector(-755, -35, 51));
+                TArray<UObject*> ChildObjects;
+                GetObjectsOfClass(UClass::FindClass(FName("UParticleSystem")), ChildObjects, true);
+                for (UObject* ChildObject : ChildObjects)
+                {
+                    if (ChildObject->GetFName() == FName("fire"))
+                    {
+                        ParticleActor1->ParticleSystemComponent->SetParticleSystem(Cast<UParticleSystem>(ChildObject));
+                        ParticleActor2->ParticleSystemComponent->SetParticleSystem(Cast<UParticleSystem>(ChildObject));
+                        break;
+                    }
+                }
+                FSoundManager::GetInstance().PlaySoundWithDelay("FireOn", 1.0f);
+                bFire1 = true;
+            }
+            else if (bFire2 == false && NewPOV.Location.X > -850)
+            {
+                AEmitter* ParticleActor1 = GetWorld()->SpawnActor<AEmitter>();
+                ParticleActor1->SetActorTickInEditor(true);
+                ParticleActor1->SetActorLocation(FVector(-622, 35, 51));
+                
+                AEmitter* ParticleActor2 = GetWorld()->SpawnActor<AEmitter>();
+                ParticleActor2->SetActorTickInEditor(true);
+                ParticleActor2->SetActorLocation(FVector(-622, -35, 51));
+                TArray<UObject*> ChildObjects;
+                GetObjectsOfClass(UClass::FindClass(FName("UParticleSystem")), ChildObjects, true);
+                for (UObject* ChildObject : ChildObjects)
+                {
+                    if (ChildObject->GetFName() == FName("fire"))
+                    {
+                        ParticleActor1->ParticleSystemComponent->SetParticleSystem(Cast<UParticleSystem>(ChildObject));
+                        ParticleActor2->ParticleSystemComponent->SetParticleSystem(Cast<UParticleSystem>(ChildObject));
+                        break;
+                    }
+                }
+                FSoundManager::GetInstance().PlaySoundWithDelay("FireOn", 1.0f);
+                bFire2 = true;
+            }
+            else if (bFire3 == false && NewPOV.Location.X > -800)
+            {
+                AEmitter* ParticleActor1 = GetWorld()->SpawnActor<AEmitter>();
+                ParticleActor1->SetActorTickInEditor(true);
+                ParticleActor1->SetActorLocation(FVector(-472, 35, 51));
+                
+                AEmitter* ParticleActor2 = GetWorld()->SpawnActor<AEmitter>();
+                ParticleActor2->SetActorTickInEditor(true);
+                ParticleActor2->SetActorLocation(FVector(-472, -35, 51));
+                TArray<UObject*> ChildObjects;
+                GetObjectsOfClass(UClass::FindClass(FName("UParticleSystem")), ChildObjects, true);
+                for (UObject* ChildObject : ChildObjects)
+                {
+                    if (ChildObject->GetFName() == FName("fire"))
+                    {
+                        ParticleActor1->ParticleSystemComponent->SetParticleSystem(Cast<UParticleSystem>(ChildObject));
+                        ParticleActor2->ParticleSystemComponent->SetParticleSystem(Cast<UParticleSystem>(ChildObject));
+                        break;
+                    }
+                }
+                FSoundManager::GetInstance().PlaySoundWithDelay("FireOn", 1.0f);
+                bFire3 = true;
+            }
+            else if (bFire4 == false && NewPOV.Location.X > -700)
+            {
+                AEmitter* ParticleActor1 = GetWorld()->SpawnActor<AEmitter>();
+                ParticleActor1->SetActorTickInEditor(true);
+                ParticleActor1->SetActorLocation(FVector(-324, 35, 51));
+                
+                AEmitter* ParticleActor2 = GetWorld()->SpawnActor<AEmitter>();
+                ParticleActor2->SetActorTickInEditor(true);
+                ParticleActor2->SetActorLocation(FVector(-324, -35, 51));
+                TArray<UObject*> ChildObjects;
+                GetObjectsOfClass(UClass::FindClass(FName("UParticleSystem")), ChildObjects, true);
+                for (UObject* ChildObject : ChildObjects)
+                {
+                    if (ChildObject->GetFName() == FName("fire"))
+                    {
+                        ParticleActor1->ParticleSystemComponent->SetParticleSystem(Cast<UParticleSystem>(ChildObject));
+                        ParticleActor2->ParticleSystemComponent->SetParticleSystem(Cast<UParticleSystem>(ChildObject));
+                        break;
+                    }
+                }
+                FSoundManager::GetInstance().PlaySoundWithDelay("FireOn", 1.0f);
+                bFire4 = true;
+            }
+            else if (bFire5 == false && NewPOV.Location.X > -600)
+            {
+                AEmitter* ParticleActor1 = GetWorld()->SpawnActor<AEmitter>();
+                ParticleActor1->SetActorTickInEditor(true);
+                ParticleActor1->SetActorLocation(FVector(-200, 35, 51));
+                
+                AEmitter* ParticleActor2 = GetWorld()->SpawnActor<AEmitter>();
+                ParticleActor2->SetActorTickInEditor(true);
+                ParticleActor2->SetActorLocation(FVector(-200, -35, 51));
+                TArray<UObject*> ChildObjects;
+                GetObjectsOfClass(UClass::FindClass(FName("UParticleSystem")), ChildObjects, true);
+                for (UObject* ChildObject : ChildObjects)
+                {
+                    if (ChildObject->GetFName() == FName("fire"))
+                    {
+                        ParticleActor1->ParticleSystemComponent->SetParticleSystem(Cast<UParticleSystem>(ChildObject));
+                        ParticleActor2->ParticleSystemComponent->SetParticleSystem(Cast<UParticleSystem>(ChildObject));
+                        break;
+                    }
+                }
+                FSoundManager::GetInstance().PlaySoundWithDelay("FireOn", 1.0f);
+                bFire5 = true;
+            }
             UE_LOG(ELogLevel::Error, TEXT("%.2f %.2f %.2f"), NewPOV.Location.X, NewPOV.Location.Y, NewPOV.Location.Z);
         }
         else
         {
+            ViewTarget = PendingViewTarget;
             PendingViewTarget.Target = nullptr;
 
             BlendTimeToGo = 0;
@@ -300,7 +420,7 @@ void APlayerCameraManager::SetViewTarget(class AActor* NewTarget, struct FViewTa
         return;
     }
     
-	if (TransitionParams.BlendTime > 0)
+	if (TransitionParams.BlendTime >= 0)
 	{
 
 		BlendTimeToGo = TransitionParams.BlendTime;

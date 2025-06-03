@@ -52,27 +52,6 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
-                    "ComponentClass": "UDirectionalLightComponent",
-                    "ComponentID": "UDirectionalLightComponent_0",
-                    "Properties": {
-                        "AABB_Max": "X=1.000 Y=1.000 Z=0.100",
-                        "AABB_Min": "X=-1.000 Y=-1.000 Z=-0.100",
-                        "AttachParentID": "UBillboardComponent_0",
-                        "ComponentClass": "UDirectionalLightComponent",
-                        "ComponentName": "UDirectionalLightComponent_0",
-                        "ComponentOwner": "ADirectionalLight_332",
-                        "ComponentOwnerClass": "ADirectionalLight",
-                        "Direction": "X=-1.000 Y=-0.000 Z=-0.000",
-                        "Intensity": "2.000000",
-                        "LightColor": "R=1.000 G=1.000 B=1.000 A=1.000",
-                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
-                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
                     "ComponentClass": "UBillboardComponent",
                     "ComponentID": "UBillboardComponent_0",
                     "Properties": {
@@ -95,6 +74,27 @@
                         "bIsActive": "true",
                         "bSimulate": "false",
                         "m_Type": "UBillboardComponent"
+                    }
+                },
+                {
+                    "ComponentClass": "UDirectionalLightComponent",
+                    "ComponentID": "UDirectionalLightComponent_0",
+                    "Properties": {
+                        "AABB_Max": "X=1.000 Y=1.000 Z=0.100",
+                        "AABB_Min": "X=-1.000 Y=-1.000 Z=-0.100",
+                        "AttachParentID": "UBillboardComponent_0",
+                        "ComponentClass": "UDirectionalLightComponent",
+                        "ComponentName": "UDirectionalLightComponent_0",
+                        "ComponentOwner": "ADirectionalLight_332",
+                        "ComponentOwnerClass": "ADirectionalLight",
+                        "Direction": "X=-1.000 Y=-0.000 Z=-0.000",
+                        "Intensity": "2.000000",
+                        "LightColor": "R=1.000 G=1.000 B=1.000 A=1.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
                     }
                 },
                 {
@@ -170,19 +170,6 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
-                        "ComponentOwner": "AEnemy_732",
-                        "ComponentOwnerClass": "AEnemy",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
                     "ComponentClass": "USocketComponent",
                     "ComponentID": "USocketComponent_1170",
                     "Properties": {
@@ -197,6 +184,45 @@
                         "Socket": "mixamorig:Sword_joint",
                         "bAutoActive": "true",
                         "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "AEnemy_732",
+                        "ComponentOwnerClass": "AEnemy",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "USkeletalMeshComponent",
+                    "ComponentID": "SkeletalMeshComponent",
+                    "Properties": {
+                        "AABB_max": "X=75.223 Y=94.646 Z=172.545",
+                        "AABB_min": "X=-44.583 Y=-85.198 Z=-0.002",
+                        "AnimClass": "ULuaScriptAnimInstance",
+                        "AnimationMode": "0",
+                        "AttachParentID": "nullptr",
+                        "ComponentClass": "USkeletalMeshComponent",
+                        "ComponentName": "SkeletalMeshComponent",
+                        "ComponentOwner": "AEnemy_732",
+                        "ComponentOwnerClass": "AEnemy",
+                        "RelativeLocation": "X=30.000 Y=0.000 Z=-9.634",
+                        "RelativeRotation": "Pitch=0.000 Yaw=-180.000 Roll=-0.000",
+                        "RelativeScale3D": "X=0.300 Y=0.300 Z=0.300",
+                        "RigidBodyType": "1",
+                        "SkeletalMeshKey": "Contents/GameJamEnemy/GameJamEnemy",
+                        "StateMachineFileName": "LuaScripts/Animations/EnemyStateMachine.lua",
+                        "bApplyGravity": "false",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "bSimulate": "false",
+                        "m_Type": ""
                     }
                 },
                 {
@@ -215,32 +241,6 @@
                         "RelativeRotation": "Pitch=75.278 Yaw=-15.475 Roll=-15.972",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
-                        "bApplyGravity": "false",
-                        "bAutoActive": "true",
-                        "bIsActive": "true",
-                        "bSimulate": "false",
-                        "m_Type": ""
-                    }
-                },
-                {
-                    "ComponentClass": "USkeletalMeshComponent",
-                    "ComponentID": "SkeletalMeshComponent",
-                    "Properties": {
-                        "AABB_max": "X=75.223 Y=94.646 Z=172.545",
-                        "AABB_min": "X=-44.583 Y=-85.198 Z=-0.002",
-                        "AnimClass": "ULuaScriptAnimInstance",
-                        "AnimationMode": "0",
-                        "AttachParentID": "nullptr",
-                        "ComponentClass": "USkeletalMeshComponent",
-                        "ComponentName": "SkeletalMeshComponent",
-                        "ComponentOwner": "AEnemy_732",
-                        "ComponentOwnerClass": "AEnemy",
-                        "RelativeLocation": "X=30.000 Y=0.000 Z=-9.634",
-                        "RelativeRotation": "Pitch=0.000 Yaw=180.000 Roll=-0.000",
-                        "RelativeScale3D": "X=0.300 Y=0.300 Z=0.300",
-                        "RigidBodyType": "1",
-                        "SkeletalMeshKey": "Contents/GameJamEnemy/GameJamEnemy",
-                        "StateMachineFileName": "LuaScripts/Animations/EnemyStateMachine.lua",
                         "bApplyGravity": "false",
                         "bAutoActive": "true",
                         "bIsActive": "true",
@@ -266,6 +266,23 @@
                         "ComponentOwner": "AHeroPlayer_752",
                         "ComponentOwnerClass": "AHeroPlayer",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "USocketComponent",
+                    "ComponentID": "USocketComponent_1171",
+                    "Properties": {
+                        "AttachParentID": "SkeletalMeshComponent",
+                        "ComponentClass": "USocketComponent",
+                        "ComponentName": "USocketComponent_1171",
+                        "ComponentOwner": "AHeroPlayer_752",
+                        "ComponentOwnerClass": "AHeroPlayer",
+                        "RelativeLocation": "X=-2.454 Y=19.502 Z=33.764",
+                        "RelativeRotation": "Pitch=3.042 Yaw=107.934 Roll=-92.238",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "Socket": "mixamorig:Weapon",
                         "bAutoActive": "true",
                         "bIsActive": "true"
                     }
@@ -297,23 +314,6 @@
                     }
                 },
                 {
-                    "ComponentClass": "USocketComponent",
-                    "ComponentID": "USocketComponent_1171",
-                    "Properties": {
-                        "AttachParentID": "SkeletalMeshComponent",
-                        "ComponentClass": "USocketComponent",
-                        "ComponentName": "USocketComponent_1171",
-                        "ComponentOwner": "AHeroPlayer_752",
-                        "ComponentOwnerClass": "AHeroPlayer",
-                        "RelativeLocation": "X=-2.454 Y=19.502 Z=33.764",
-                        "RelativeRotation": "Pitch=3.042 Yaw=107.934 Roll=-92.238",
-                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "Socket": "mixamorig:Weapon",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
                     "ComponentClass": "UHeroWeaponComponent",
                     "ComponentID": "UHeroWeaponComponent_1174",
                     "Properties": {
@@ -338,112 +338,6 @@
                 }
             ],
             "RootComponentID": "SkeletalMeshComponent"
-        },
-        {
-            "ActorClass": "ACube",
-            "ActorID": "ACube_715",
-            "ActorLabel": "OBJ_CUBE_715",
-            "ActorTickInEditor": "false",
-            "Components": [
-                {
-                    "ComponentClass": "UCameraComponent",
-                    "ComponentID": "UCameraComponent_719",
-                    "Properties": {
-                        "AttachParentID": "StaticMeshComponent_0",
-                        "ComponentClass": "UCameraComponent",
-                        "ComponentName": "UCameraComponent_719",
-                        "ComponentOwner": "ACube_715",
-                        "ComponentOwnerClass": "ACube",
-                        "RelativeLocation": "X=0.000 Y=0.039 Z=0.000",
-                        "RelativeRotation": "Pitch=-40.353 Yaw=-89.999 Roll=-0.000",
-                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
-                        "ComponentOwner": "ACube_715",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "UStaticMeshComponent",
-                    "ComponentID": "StaticMeshComponent_0",
-                    "Properties": {
-                        "AABB_max": "X=1.287 Y=1.199 Z=2.555",
-                        "AABB_min": "X=-1.287 Y=-1.199 Z=-0.000",
-                        "AttachParentID": "nullptr",
-                        "ComponentClass": "UStaticMeshComponent",
-                        "ComponentName": "StaticMeshComponent_0",
-                        "ComponentOwner": "ACube_715",
-                        "ComponentOwnerClass": "ACube",
-                        "RelativeLocation": "X=0.000 Y=52.084 Z=64.539",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
-                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "RigidBodyType": "1",
-                        "StaticMeshPath": "Contents/Reference/Reference.obj",
-                        "bApplyGravity": "false",
-                        "bAutoActive": "true",
-                        "bIsActive": "true",
-                        "bSimulate": "false",
-                        "m_Type": ""
-                    }
-                }
-            ],
-            "RootComponentID": "StaticMeshComponent_0"
-        },
-        {
-            "ActorClass": "AEmitter",
-            "ActorID": "AEmitter_1330",
-            "ActorLabel": "AEmitter1330",
-            "ActorTickInEditor": "true",
-            "Components": [
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
-                        "ComponentOwner": "AEmitter_1330",
-                        "ComponentOwnerClass": "AEmitter",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "UParticleSystemComponent",
-                    "ComponentID": "ParticleSystemComponent",
-                    "Properties": {
-                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
-                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
-                        "AttachParentID": "nullptr",
-                        "ComponentClass": "UParticleSystemComponent",
-                        "ComponentName": "ParticleSystemComponent",
-                        "ComponentOwner": "AEmitter_1330",
-                        "ComponentOwnerClass": "AEmitter",
-                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
-                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "RigidBodyType": "1",
-                        "TemplateKey": "Contents/ParticleSystem/fog",
-                        "bApplyGravity": "false",
-                        "bAutoActive": "true",
-                        "bIsActive": "true",
-                        "bSimulate": "false",
-                        "m_Type": ""
-                    }
-                }
-            ],
-            "RootComponentID": "ParticleSystemComponent"
         }
     ],
     "NextUUID": 0,

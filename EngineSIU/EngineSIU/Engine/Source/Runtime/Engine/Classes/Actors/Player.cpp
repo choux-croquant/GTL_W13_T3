@@ -1,5 +1,6 @@
 #include "Player.h"
 
+#include "Camera.h"
 #include "Enemy.h"
 #include "UnrealClient.h"
 #include "World/World.h"
@@ -9,13 +10,13 @@
 #include "Components/Light/LightComponent.h"
 #include "LevelEditor/SLevelEditor.h"
 #include "Math/JungleMath.h"
-#include "Math/MathUtility.h"
 #include "PropertyEditor/ShowFlags.h"
 #include "UnrealEd/EditorViewportClient.h"
 #include "UObject/UObjectIterator.h"
 #include "Engine/EditorEngine.h"
-#include "Engine/SkeletalMesh.h"
 #include "Engine/Contents/AnimInstance/LuaScriptAnimInstance.h"
+#include "Particles/Emitter.h"
+#include "Particles/ParticleSystem.h"
 
 
 void AEditorPlayer::Tick(float DeltaTime)
@@ -739,6 +740,71 @@ UObject* AHeroPlayer::Duplicate(UObject* InOuter)
 void AHeroPlayer::Tick(float DeltaTime)
 {
     APlayer::Tick(DeltaTime);
+
+    // 개 레전드 하드 코딩 카메라 이동
+    if (CameraMoveCounter == 0)
+    {
+        FViewTargetTransitionParams Params;
+        Params.BlendTime = 0.0f;
+                
+        AActor* TargetActor = GEngine->ActiveWorld->SpawnActor<AActor>();
+        TargetActor->SetActorLocation(FVector(-1000, 0, 30));
+        GEngine->ActiveWorld->GetPlayerController()->SetViewTarget(TargetActor, Params);
+        CameraMoveCounter++;
+    }
+
+    if (CameraMoveCounter == 1)
+    {
+        GEngine->ActiveWorld->GetPlayerController()->PlayerCameraManager->OnBlendCompleteEvent.AddLambda([this]()
+        {
+            FViewTargetTransitionParams Params;
+            Params.BlendTime = 10.0f;
+            Params.BlendFunction = VTBlend_EaseInOut;
+            Params.BlendExp = 3.f;
+
+            AActor* TargetActor = GEngine->ActiveWorld->SpawnActor<AActor>();
+            TargetActor->SetActorLocation(FVector(-50, 0, 30));
+            GEngine->ActiveWorld->GetPlayerController()->SetViewTarget(TargetActor, Params);
+            CameraMoveCounter++;
+        });
+        CameraMoveCounter++;
+    }
+
+    if (CameraMoveCounter == 3)
+    {
+        GEngine->ActiveWorld->GetPlayerController()->PlayerCameraManager->OnBlendCompleteEvent.Clear();
+        GEngine->ActiveWorld->GetPlayerController()->PlayerCameraManager->OnBlendCompleteEvent.AddLambda([this]()
+        {
+            FViewTargetTransitionParams Params;
+            Params.BlendTime = 2.0f;
+            Params.BlendFunction = VTBlend_EaseInOut;
+            Params.BlendExp = 3.f;
+
+            AActor* TargetActor = GEngine->ActiveWorld->SpawnActor<AActor>();
+            TargetActor->SetActorLocation(FVector(-41, 13.5, 32));
+            TargetActor->SetActorRotation(FRotator(0.f, -27.34f, -9.36f));
+            GEngine->ActiveWorld->GetPlayerController()->SetViewTarget(TargetActor, Params);
+            AEmitter* ParticleActor = GetWorld()->SpawnActor<AEmitter>();
+            ParticleActor->SetActorTickInEditor(true);
+            TArray<UObject*> ChildObjects;
+            GetObjectsOfClass(UClass::FindClass(FName("UParticleSystem")), ChildObjects, true);
+            for (UObject* ChildObject : ChildObjects)
+            {
+                if (ChildObject->GetFName() == FName("fog"))
+                {
+                    ParticleActor->ParticleSystemComponent->SetParticleSystem(Cast<UParticleSystem>(ChildObject));
+                    break;
+                }
+            }
+            CameraMoveCounter++;
+        });
+        CameraMoveCounter++;
+    }
+
+    if (CameraMoveCounter == 5)
+    {
+        GEngine->ActiveWorld->GetPlayerController()->PlayerCameraManager->OnBlendCompleteEvent.Clear();
+    }
 }
 
 void AHeroPlayer::PostSpawnInitialize()
