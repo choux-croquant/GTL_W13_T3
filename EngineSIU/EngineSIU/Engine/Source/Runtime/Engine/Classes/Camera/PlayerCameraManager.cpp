@@ -200,11 +200,11 @@ void APlayerCameraManager::StopAllInstancesOfCameraShake(UClass* ShakeClass, boo
 void APlayerCameraManager::DoUpdateCamera(float DeltaTime)
 {
     //Progress가 진행중이 아니면
-    // if (PendingViewTarget.Target == nullptr)
-    // {
-    //     ViewTarget.CheckViewTarget(PCOwner);
-    //     UpdateViewTarget(ViewTarget, DeltaTime);
-    // }
+    if (PendingViewTarget.Target == nullptr && ViewTarget.Target != nullptr)
+    {
+        //ViewTarget.CheckViewTarget(PCOwner);
+        UpdateViewTarget(ViewTarget, DeltaTime);
+    }
 
     FMinimalViewInfo NewPOV = ViewTarget.POV;
     

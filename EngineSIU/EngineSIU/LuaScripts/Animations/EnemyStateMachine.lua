@@ -57,7 +57,7 @@ AnimFSM = {
 
         return {
             anim = self.idleAnimation,
-            blend = 0.0,
+            blend = 0.2,
             loop = true,
             rate_scale = 1.0,
             state = self.currentState
@@ -84,7 +84,7 @@ AnimFSM = {
 
         return {
             anim = self.selectedAttack,
-            blend = 1.0,
+            blend = 0.2,
             loop = false,
             rate_scale = 0.8,
             state = self.currentState
