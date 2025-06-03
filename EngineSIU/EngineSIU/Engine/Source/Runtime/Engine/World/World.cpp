@@ -79,6 +79,7 @@ void UWorld::BeginPlay()
 
         GameMode->InitGame();
     }
+
     for (AActor* Actor : ActiveLevel->Actors)
     {
         if (Actor->GetWorld() == this)

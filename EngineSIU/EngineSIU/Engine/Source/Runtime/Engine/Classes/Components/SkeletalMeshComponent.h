@@ -107,6 +107,7 @@ public:
     void UpdateBoneTransformToPhysScene();
 
     void ChangeRigidBodyFlag(ERigidBodyType InType);
+    void SetMassAndInertia();
 
     void AddImpulseToBones(const FVector& Direction, float ImpulseScale);
     

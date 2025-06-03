@@ -1080,6 +1080,21 @@ void USkeletalMeshComponent::ChangeRigidBodyFlag(ERigidBodyType InType)
     }
 }
 
+void USkeletalMeshComponent::SetMassAndInertia()
+{
+    if (Bodies.Num() <= 0)
+        return;
+
+    for (auto& Body : Bodies)
+    {
+        if (Body->BIGameObject && Body->BIGameObject->DynamicRigidBody)
+        {
+            PxRigidBodyExt::updateMassAndInertia(*Body->BIGameObject->DynamicRigidBody, 10);
+            Body->BIGameObject->DynamicRigidBody->wakeUp();
+        }
+    }
+}
+
 void USkeletalMeshComponent::AddImpulseToBones(const FVector& Direction, float ImpulseScale)
 {
     if (Bodies.Num() <= 0)

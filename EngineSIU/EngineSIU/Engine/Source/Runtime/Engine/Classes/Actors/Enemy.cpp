@@ -250,8 +250,8 @@ void AEnemy::BindAttackNotifies()
 
 void AEnemy::ResetEnemyProperties()
 {
-    SkeletalMeshComponent->ChangeRigidBodyFlag(ERigidBodyType::KINEMATIC);
-    SkeletalMeshComponent->bSimulate = false;
+    GetComponentByClass<USkeletalMeshComponent>()->ChangeRigidBodyFlag(ERigidBodyType::KINEMATIC);
+    GetComponentByClass<USkeletalMeshComponent>()->bSimulate = false;
     GEngine->PhysicsManager->GetScene(GetWorld())->fetchResults(true);
     
     ParryGauge = 0.0f;
