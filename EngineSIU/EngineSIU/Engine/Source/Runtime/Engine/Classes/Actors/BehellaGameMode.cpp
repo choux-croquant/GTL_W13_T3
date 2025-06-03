@@ -213,7 +213,7 @@ void ABehellaGameMode::PlayerWin()
             FTimerManager::GetInstance().AddTimer(2.0f, [this]()
             {
                 HeroPlayer->SetAnimState(FString("FinalAttack"));
-                FTimerManager::GetInstance().AddTimer(3.0f, [this]()
+                FTimerManager::GetInstance().AddTimer(2.0f, [this]()
                 {
                     FSoundManager::GetInstance().PlaySound("Roar");
                 });
