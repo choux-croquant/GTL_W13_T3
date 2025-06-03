@@ -148,6 +148,7 @@ void ABehellaGameMode::PrepareMatch()
 
     CloseScreen(CurScreenUI);
 
+    GetWorld()->GetPlayerController()->PlayerCameraManager->StartLetterBoxAnimation(8.0f, 1.7f, 5.0f);
     // 카메라 무빙 시키기
     HeroPlayer->bWaitingStart = false;
 }
@@ -198,6 +199,7 @@ void ABehellaGameMode::PlayerWin()
             FTimerManager::GetInstance().AddTimer(3.0f, [this]()
             {
                 HeroPlayer->OnFinalScene();
+                Enemy->OnFinalScene();
             });
         }
     );
