@@ -96,6 +96,21 @@ bool UAnimSequenceBase::RemoveNotifyTrack(int32 TrackIndexToRemove)
     return true;
 }
 
+bool UAnimSequenceBase::RemoveAllNotifyTracks()
+{
+    if (AnimNotifyTracks.Num() == 0)
+    {
+        return false;
+    }
+
+    for (int32 TrackIndex = AnimNotifyTracks.Num() - 1; TrackIndex >= 0; --TrackIndex)
+    {
+        RemoveNotifyTrack(TrackIndex);
+    }
+
+    return true;
+}
+
 bool UAnimSequenceBase::RenameNotifyTrack(int32 TrackIndex, const FName& NewTrackName)
 {
     if (!AnimNotifyTracks.IsValidIndex(TrackIndex))

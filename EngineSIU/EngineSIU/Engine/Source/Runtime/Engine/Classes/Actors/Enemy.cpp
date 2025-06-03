@@ -29,11 +29,11 @@ void AEnemy::PostSpawnInitialize()
     UAnimSequence* Vertical1 = Cast<UAnimSequence>(UAssetManager::Get().GetAnimation(FString("Contents/Vertical1/Armature|Vertical1")));
 
     //  일단 여기서 초기화 하도록 함
-    IdleAnim->RemoveNotifyTrack(0);
-    Horizontal1->RemoveNotifyTrack(0);
-    Horizontal2->RemoveNotifyTrack(0);
-    Vertical1->RemoveNotifyTrack(0);
-    ReactionAnim->RemoveNotifyTrack(0);
+    IdleAnim->RemoveAllNotifyTracks();
+    Horizontal1->RemoveAllNotifyTracks();
+    Horizontal2->RemoveAllNotifyTracks();
+    Vertical1->RemoveAllNotifyTracks();
+    ReactionAnim->RemoveAllNotifyTracks();
 
     // AttackNofity - Start
     CreateAttackNotify(IdleAnim, AttackToIdleNotify, "Attack_To_Idle", 0.0f);
