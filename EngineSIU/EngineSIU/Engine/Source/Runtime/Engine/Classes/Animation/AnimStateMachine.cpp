@@ -77,7 +77,6 @@ void UAnimStateMachine::ProcessState(float DeltaTime)
                 OwningAnimInstance->SetAnimation(NewAnim, Blend, bLoop, false);
                 OwningAnimInstance->SetPlayRate(RateScale);
                 LuaTable["CurrentAnimDuration"] = NewAnim->GetDuration();
-                float f = NewAnim->GetDuration();
             }
         }
     }
