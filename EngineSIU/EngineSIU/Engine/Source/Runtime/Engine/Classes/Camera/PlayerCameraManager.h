@@ -97,7 +97,7 @@ class APlayerCameraManager : public AActor
     DECLARE_CLASS(APlayerCameraManager, AActor)
 
     APlayerController* PCOwner;
-    
+
 public:
     APlayerCameraManager();
 
@@ -223,5 +223,12 @@ public:
     float FocalDistance = 0.f; // cm
 
     float GetFocalLength() const;
+
+private:
+    bool bFire1 = false;
+    bool bFire2 = false;
+    bool bFire3 = false;
+    bool bFire4 = false;
+    bool bFire5 = false;
 };
 
