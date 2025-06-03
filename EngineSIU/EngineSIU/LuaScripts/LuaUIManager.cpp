@@ -282,6 +282,8 @@ void LuaUIManager::GenerateResource()
     TextureMap.Add(FName("WhiteBox"), FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/WhiteBox.png"));
     TextureMap.Add(FName("BehellaLogo"), FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/BehellaLogo.png"));
     TextureMap.Add(FName("PressSpace"), FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/PressSpace.png"));
+    TextureMap.Add(FName("YouDied"), FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/YouDied.png"));
+    TextureMap.Add(FName("WhiteGradient"), FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/WhiteGradient.png"));
 
 }
 

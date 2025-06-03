@@ -279,5 +279,7 @@ void ABehellaGameMode::Tick(float DeltaTime)
 
     CurScreenUI->TickScreen(DeltaTime);
 
+    PlayScreenUI.ParryRatio = Enemy->ParryGauge / MaxParryGauge;
+
     StepTimer += DeltaTime;
 }

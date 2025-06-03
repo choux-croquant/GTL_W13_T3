@@ -5,6 +5,8 @@
 #include "Engine/Source/Developer/LuaUtils/LuaButtonUI.h"
 #include "Engine/Source/Developer/LuaUtils/LuaSliderUI.h"
 
+#include "BehellaGameMode.h"
+
 #include <cmath>
 
 void FBehellaScreenUI::InitScreen()
@@ -45,12 +47,12 @@ void FBehellaGameInitScreenUI::InitScreen()
     
     // 로고와 PressAnyKey 생성 처음 투명도는 0.0f;
     LogoImage = LuaUIManager::Get().CreateImage(FName("BehellaLogo")
-        , RectTransform(0.0f, 0.0f, 512.0f, 512.0f, AnchorDirection::MiddleCenter, AnchorDirection::MiddleCenter)
+        , RectTransform(0.0f, 0.0f, 700.0f, 700.0f, AnchorDirection::MiddleCenter, AnchorDirection::MiddleCenter)
         , 5, "BehellaLogo", FLinearColor(1.0f, 1.0f, 1.0f, 0.0f));
 
 
     PressKeyImage = LuaUIManager::Get().CreateImage(FName("PressSpace")
-        , RectTransform(0.0f, 400.0f, 256.0f, 256.0f, AnchorDirection::MiddleCenter, AnchorDirection::MiddleCenter)
+        , RectTransform(0.0f, 200.0f, 256.0f, 256.0f, AnchorDirection::MiddleCenter, AnchorDirection::MiddleCenter)
         , 5, "PressSpace", FLinearColor(1.0f, 1.0f, 1.0f, 0.0f));
 }
 
@@ -120,7 +122,11 @@ void FBehellaGameInitScreenUI::TickScreen(float DeltaTime)
     }
     else // Closing UI인 경우
     {
-
+        float alpha = std::sin((ClosingTimer / ClosingTime) * (PI / 2.0f));
+        FadeImage->SetColor(FLinearColor(0.0f, 0.0f, 0.0f, (1.0f - alpha) * FadeAlpha));
+        LogoImage->SetColor(FLinearColor(1.0f, 1.0f, 1.0f, (1.0f - alpha) * LogoAlpha));
+        // PressKey는 아직 투명
+        PressKeyImage->SetColor(FLinearColor(1.0f, 1.0f, 1.0f, (1.0f - alpha) * KeyAlpha));
     }
 
     
@@ -129,6 +135,9 @@ void FBehellaGameInitScreenUI::TickScreen(float DeltaTime)
 void FBehellaGameInitScreenUI::CloseScreen(float InClosingTime)
 {
     FBehellaScreenUI::CloseScreen(InClosingTime);
+    FadeAlpha = FadeImage->Color.A;
+    LogoAlpha = LogoImage->Color.A;
+    KeyAlpha = PressKeyImage->Color.A;
 }
 
 void FBehellaGameInitScreenUI::EndScreen()
@@ -145,17 +154,38 @@ void FBehellaGamePlayScreenUI::InitScreen()
 {
     FBehellaScreenUI::InitScreen();
 
-    ScreenName = LuaUIManager::Get().CreateText(FName("PlayScreen")
+    /*ScreenName = LuaUIManager::Get().CreateText(FName("PlayScreen")
         , RectTransform(0.0f, 400.0f, 256.0f, 256.0f, AnchorDirection::MiddleCenter, AnchorDirection::MiddleCenter)
-        , 5, FString("PlayScreenUI"), FName("Default"), 50.0f, FLinearColor(1.0f, 0.0f, 0.0f, 1.0f));
+        , 5, FString("PlayScreenUI"), FName("Default"), 50.0f, FLinearColor(1.0f, 0.0f, 0.0f, 1.0f));*/
+
+    ParryGaugeSlider = LuaUIManager::Get().CreateSlider(FName("ParryGauge")
+        , RectTransform(0.0f, 300.0f, 512.0f, 16.0f, AnchorDirection::TopCenter, AnchorDirection::MiddleCenter)
+        , 5, FName("WhiteBox"), FLinearColor(0.3f, 0.3f, 0.3f, 0.0f)
+        , FName("WhiteBox"), FLinearColor(0.9960f, 0.36328f, 0.003906f, 0.0f)
+        , 2.0f, 2.0f, 2.0f, 2.0f);
 }
 
 void FBehellaGamePlayScreenUI::TickScreen(float DeltaTime)
 {
     FBehellaScreenUI::TickScreen(DeltaTime);
 
+    if (UIStepTimer < FadeInTime) 
+    {
+        float alpha = std::sin((UIStepTimer / FadeInTime) * (PI / 2.0f));
+
+        ParryGaugeSlider->BackgroundColor.A = alpha * 0.3f;
+        ParryGaugeSlider->FillColor.A = alpha * 1.0f;
+        
+        return;
+    }
+
+    ParryGaugeSlider->BackgroundColor.A = 0.3f;
+    ParryGaugeSlider->FillColor.A = 1.0f;
+    ParryGaugeSlider->SetValue(ParryRatio);
+
     if (!bClosing)
     {
+
     }
 }
 
@@ -166,7 +196,8 @@ void FBehellaGamePlayScreenUI::CloseScreen(float InClosingTime)
 
 void FBehellaGamePlayScreenUI::EndScreen()
 {
-    LuaUIManager::Get().DeleteUI(ScreenName->GetName());
+    //LuaUIManager::Get().DeleteUI(ScreenName->GetName());
+    LuaUIManager::Get().DeleteUI(ParryGaugeSlider->GetName());
     FBehellaScreenUI::EndScreen();
 }
 
@@ -174,14 +205,54 @@ void FBehellaGameDeadScreenUI::InitScreen()
 {
     FBehellaScreenUI::InitScreen();
 
-    ScreenName = LuaUIManager::Get().CreateText(FName("DeadScreen")
+    /*ScreenName = LuaUIManager::Get().CreateText(FName("DeadScreen")
         , RectTransform(0.0f, 400.0f, 256.0f, 256.0f, AnchorDirection::MiddleCenter, AnchorDirection::MiddleCenter)
-        , 5, FString("DeadScreenUI"), FName("Default"), 50.0f, FLinearColor(1.0f, 0.0f, 0.0f, 1.0f));
+        , 5, FString("DeadScreenUI"), FName("Default"), 50.0f, FLinearColor(1.0f, 0.0f, 0.0f, 1.0f));*/
+
+        // 로고와 PressAnyKey 생성 처음 투명도는 0.0f;
+
+    BGImage = LuaUIManager::Get().CreateImage(FName("BlackBG")
+        , RectTransform(0.0f, 0.0f, 50000.f, 300.0f, AnchorDirection::MiddleCenter, AnchorDirection::MiddleCenter)
+        , 5, "WhiteGradient", FLinearColor(0.0f, 0.0f, 0.0f, 0.0f));
+
+    DiedImage = LuaUIManager::Get().CreateImage(FName("YouDied")
+        , RectTransform(0.0f, 0.0f, 700.0f, 700.0f, AnchorDirection::MiddleCenter, AnchorDirection::MiddleCenter)
+        , 10, "YouDied", FLinearColor(1.0f, 1.0f, 1.0f, 0.0f));
 }
 
 void FBehellaGameDeadScreenUI::TickScreen(float DeltaTime)
 {
     FBehellaScreenUI::TickScreen(DeltaTime);
+
+
+    if (UIStepTimer < BGFadeInTime)
+    {
+        float alpha = std::sin((UIStepTimer / BGFadeInTime) * (PI / 2.0f));
+
+
+        BGImage->Color.A = alpha;
+        DiedImage->Color.A = 0.0f;
+
+        return;
+    }
+
+    if (UIStepTimer < BGFadeInTime + DiedFadeInTime) 
+    {
+        float alpha = std::sin(((UIStepTimer -BGFadeInTime) / DiedFadeInTime) * (PI / 2.0f));
+
+        BGImage->Color.A = 1.0f;
+        DiedImage->Color.A = alpha;
+
+        return;
+    }
+
+    BGImage->Color.A = 1.0f;
+    DiedImage->Color.A = 1.0f;
+
+    if (!bClosing)
+    {
+
+    }
 }
 
 void FBehellaGameDeadScreenUI::CloseScreen(float InClosingTime)
@@ -192,7 +263,10 @@ void FBehellaGameDeadScreenUI::CloseScreen(float InClosingTime)
 void FBehellaGameDeadScreenUI::EndScreen()
 {
 
-    LuaUIManager::Get().DeleteUI(ScreenName->GetName());
+    //LuaUIManager::Get().DeleteUI(ScreenName->GetName());
+    LuaUIManager::Get().DeleteUI(BGImage->GetName());
+    LuaUIManager::Get().DeleteUI(DiedImage->GetName());
+
     FBehellaScreenUI::EndScreen();
 }
 
