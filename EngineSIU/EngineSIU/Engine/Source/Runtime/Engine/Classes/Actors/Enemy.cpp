@@ -79,7 +79,7 @@ void AEnemy::Tick(float DeltaTime)
 
     if (ParryGauge < 100.0f)
     {
-        ParryGauge = FMath::Max(0.0f, ParryGauge - DeltaTime * 0.1f);
+        ParryGauge = FMath::Max(0.0f, ParryGauge - DeltaTime * 2.0f);
     }
 
     //UE_LOG(ELogLevel::Warning, TEXT("PARRY %f"), ParryGauge);
