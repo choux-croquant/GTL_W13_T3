@@ -17,7 +17,7 @@ void LuaUIManager::CreateUI(FName InName)
     UpdateUIArrayForSort();
 }
 
-void LuaUIManager::CreateText(FName InName, RectTransform InRectTransform, int InSortOrder, FString InText, FName FontStyleName, float InFontSize, FLinearColor InFontColor)
+LuaTextUI* LuaUIManager::CreateText(FName InName, RectTransform InRectTransform, int InSortOrder, FString InText, FName FontStyleName, float InFontSize, FLinearColor InFontColor)
 {
     ImFont* FindFont = GetFontStyleByName(FontStyleName);
 
@@ -25,9 +25,10 @@ void LuaUIManager::CreateText(FName InName, RectTransform InRectTransform, int I
 
     UIMap.Add(InName, NewTextUI);
     UpdateUIArrayForSort();
+    return NewTextUI;
 }
 
-void LuaUIManager::CreateImage(FName InName, RectTransform InRectTransform, int InSortOrder, FName TextureName, FLinearColor InTextureColor)
+LuaImageUI* LuaUIManager::CreateImage(FName InName, RectTransform InRectTransform, int InSortOrder, FName TextureName, FLinearColor InTextureColor)
 {
     FTexture* FindTexture = GetTextureByName(TextureName);
     
@@ -35,17 +36,21 @@ void LuaUIManager::CreateImage(FName InName, RectTransform InRectTransform, int 
 
     UIMap.Add(InName, NewImageUI);
     UpdateUIArrayForSort();
+
+    return NewImageUI;
 }
 
-void LuaUIManager::CreateButton(FName InName,  RectTransform InRectTransform, int InSortOrder, FString LuaFunctionName)
+LuaButtonUI* LuaUIManager::CreateButton(FName InName,  RectTransform InRectTransform, int InSortOrder, FString LuaFunctionName)
 {
     LuaButtonUI* NewButtonUI = new LuaButtonUI(InName, InRectTransform, InSortOrder, LuaFunctionName);
 
     UIMap.Add(InName, NewButtonUI);
     UpdateUIArrayForSort();
+
+    return NewButtonUI;
 }
 
-void LuaUIManager::CreateSlider(FName InName, RectTransform InRectTransform, int InSortOrder, FName InBackgroundTexture, FLinearColor InBackgroundColor, FName InFillTexture, FLinearColor InFillColor, float InMarginTop, float InMarginBottom, float InMarginLeft, float InMarginRight)
+LuaSliderUI* LuaUIManager::CreateSlider(FName InName, RectTransform InRectTransform, int InSortOrder, FName InBackgroundTexture, FLinearColor InBackgroundColor, FName InFillTexture, FLinearColor InFillColor, float InMarginTop, float InMarginBottom, float InMarginLeft, float InMarginRight)
 {
     FTexture* FindBackgroundTexture = GetTextureByName(InBackgroundTexture);
     FTexture* FindFillTexture = GetTextureByName(InFillTexture);
@@ -54,6 +59,8 @@ void LuaUIManager::CreateSlider(FName InName, RectTransform InRectTransform, int
 
     UIMap.Add(InName, NewSliderUI);
     UpdateUIArrayForSort();
+
+    return NewSliderUI;
 }
 
 void LuaUIManager::DeleteUI(FName InName)
