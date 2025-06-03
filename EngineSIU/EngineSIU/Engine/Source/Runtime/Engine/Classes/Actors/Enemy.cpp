@@ -130,6 +130,8 @@ void AEnemy::HandleAttackNotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequen
     {
         It->GetDamaged(1.0f);
     }
+
+    CurrentAttackDirection = AD_None;
 }
 
 void AEnemy::CreateAttackNotify(

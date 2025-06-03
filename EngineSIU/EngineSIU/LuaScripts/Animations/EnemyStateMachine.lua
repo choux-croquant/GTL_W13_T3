@@ -9,19 +9,23 @@ AnimFSM = {
     reactionAnimation = "Contents/Enemy_Impact/Armature|Enemy_Impact",
     kneelAnimation = "Contents/Kneel/Armature|Kneel",
     kneelIdleAnimation = "Contents/Kneel_Idle/Armature|Kneel_Idle",
-    attackCooldown = 3.0,
+    attackCooldown = 2.0,
     isAttacking = false,
     isReacting = false,
     isDefeated = false,
     lastAttackTime = 0,
-    reactionEndTime = 0,
+    reactionStartTime = 0,
+    attackStartTime = 0,
     defeatStartTime = 0,
+    timer = 0,
 
     TransitionToState = function(self, newState)
         self.currentState = newState
     end,
 
     Update = function(self, dt)
+        self.timer = self.timer + dt
+
         if self.currentState == "Reacting" then
             return self:HandleReactionState()
         elseif self.currentState == "Attacking" then
@@ -35,7 +39,7 @@ AnimFSM = {
 
     HandleIdleState = function(self, dt)
         -- 공격 쿨타임 체크
-        if os.clock() - self.lastAttackTime > self.attackCooldown then
+        if self.timer - self.lastAttackTime > self.attackCooldown then
             self:TransitionToState("Attacking")
         end
 
@@ -52,13 +56,12 @@ AnimFSM = {
         if not self.isAttacking then
             self.isAttacking = true
             self.selectedAttack = self.attackAnimations[math.random(#self.attackAnimations)]
-            self.attackEndTime = os.clock() + self.CurrentAnimDuration;
+            self.attackStartTime = self.timer;
         end
 
-        if os.clock() > self.attackEndTime then
+        if self.timer > self.attackStartTime + self.CurrentAnimDuration / 0.8 then
             self.isAttacking = false
-            self.lastAttackTime = os.clock()
-            print("ATK TO IDLE")
+            self.lastAttackTime = self.timer
             self:TransitionToState("Idle")
         end
 
@@ -75,11 +78,11 @@ AnimFSM = {
         if not self.isReacting then
             self.isReacting = true
             self.isAttacking = false
-            self.lastAttackTime = os.clock()
-            self.reactionEndTime = os.clock() + self.CurrentAnimDuration;
+            self.lastAttackTime = self.timer
+            self.reactionStartTime = self.timer;
         end
 
-        if self.reactionEndTime and os.clock() > self.reactionEndTime then
+        if self.reactionStartTime and self.timer > self.reactionStartTime + self.CurrentAnimDuration then
             self.isReacting = false
             self:TransitionToState("Idle")
         end
@@ -95,9 +98,9 @@ AnimFSM = {
 
     HandleDefeatState = function(self)
         if not self.isDefeated then
-            -- 최초 진입 시 Kneel 애니메이션 실행
+            -- 적 패배 진입 시 Kneel 애니메이션 실행
             self.isDefeated = true
-            self.defeatStartTime = os.clock()
+            self.defeatStartTime = self.timer
             return {
                 anim = self.kneelAnimation,
                 blend = 0.3,
@@ -108,7 +111,7 @@ AnimFSM = {
         else
             local kneelDuration = self.CurrentAnimDuration
             -- local kneelDuration = 0.4 
-            -- if os.clock() > self.defeatStartTime + kneelDuration then
+            -- if self.timer > self.defeatStartTime + kneelDuration then
             --     return {
             --         anim = self.kneelIdleAnimation,
             --         blend = 4.0,
@@ -116,7 +119,7 @@ AnimFSM = {
             --         rate_scale = 1.0,
             --         state = self.currentState
             --     }
-            if os.clock() > self.defeatStartTime + kneelDuration then
+            if self.timer > self.defeatStartTime + kneelDuration then
                 return {
                     anim = self.kneelAnimation,
                     blend = 0.0,
@@ -136,10 +139,5 @@ AnimFSM = {
         end
     end,
 }
-
--- 플레이어 블록 성공 시뮬레이션
--- function TestPlayerBlock()
---     AnimFSM:TriggerReaction()
--- end
 
 return AnimFSM
