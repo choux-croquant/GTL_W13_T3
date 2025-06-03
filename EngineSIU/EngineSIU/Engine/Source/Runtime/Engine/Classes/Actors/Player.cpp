@@ -21,6 +21,7 @@
 #include "Particles/ParticleSystem.h"
 #include "Engine/Classes/Actors/BehellaGameMode.h"
 #include "Engine/Contents/Objects/DamageCameraShake.h"
+#include "Components/SocketComponent.h"
 
 
 void AEditorPlayer::Tick(float DeltaTime)
@@ -873,11 +874,36 @@ void AHeroPlayer::ResetHero()
     GetRootComponent()->SetWorldTransform(InitialActorTransform);
     Health = MaxHealth;
     SetAnimState(FString("Idle"));
+
+    if (CameraSocketComponent)
+    {
+        TArray<USceneComponent*> SocketChildren = CameraSocketComponent->GetAttachChildren();
+        for (USceneComponent* Child : SocketChildren)
+        {
+            Child->DestroyComponent();
+        }
+        CameraSocketComponent->DestroyComponent();
+        CameraSocketComponent = nullptr;
+    }
 }
 
 void AHeroPlayer::OnFinalScene()
 {
+    if (CameraSocketComponent)
+    {
+        return;
+    }
+    
     SetAnimState(FString("FinalAttack"));
+    CameraSocketComponent = AddComponent<USocketComponent>();
+    CameraSocketComponent->Socket = "mixamorig:Head";
+    CameraSocketComponent->SetupAttachment(RootComponent);
+
+    UCameraComponent* CameraComponent = AddComponent<UCameraComponent>();
+    CameraComponent->SetupAttachment(CameraSocketComponent);
+    // FTransform CameraTransform();
+    CameraComponent->SetRelativeLocation(FVector(0, 2.f, 5.3f));
+    CameraComponent->SetRelativeRotation(FRotator(85.f, 90.f, 180.f));
 }
 
 void AHeroPlayer::OnHeroDie()
