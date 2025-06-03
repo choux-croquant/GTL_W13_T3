@@ -215,10 +215,11 @@ void ABehellaGameMode::PlayerWin()
                 HeroPlayer->SetAnimState(FString("FinalAttack"));
                 FTimerManager::GetInstance().AddTimer(2.0f, [this]()
                 {
-                    Enemy->SkeletalMeshComponent->ChangeRigidBodyFlag(ERigidBodyType::DYNAMIC);
-                    Enemy->SkeletalMeshComponent->bSimulate = true;
+                    Enemy->GetComponentByClass<USkeletalMeshComponent>()->ChangeRigidBodyFlag(ERigidBodyType::DYNAMIC);
+                    Enemy->GetComponentByClass<USkeletalMeshComponent>()->bSimulate = true;
+                    GEngine->PhysicsManager->GetScene(GetWorld())->simulate(FLT_MIN);
                     GEngine->PhysicsManager->GetScene(GetWorld())->fetchResults(true);
-                    Enemy->SkeletalMeshComponent->AddImpulseToBones(FVector(-1.0f, 0.0f, 1.0f), 100000.0f);
+                    Enemy->GetComponentByClass<USkeletalMeshComponent>()->AddImpulseToBones(FVector(-1.0f, 0.0f, 1.0f), 10000.0f);
                     FSoundManager::GetInstance().PlaySound("Roar");
                 });
             });

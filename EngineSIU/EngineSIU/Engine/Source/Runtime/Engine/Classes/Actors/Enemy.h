@@ -55,7 +55,5 @@ public:
 
     EAttackDirection CurrentAttackDirection = AD_None;
 
-    UPROPERTY(EditAnywhere | EditInline, USkeletalMeshComponent*, SkeletalMeshComponent, = nullptr)
-
     float ParryGauge = 0.0f;
 };

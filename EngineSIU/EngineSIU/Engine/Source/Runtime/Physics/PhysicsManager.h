@@ -35,7 +35,9 @@ struct GameObject {
         WorldMatrix = XMLoadFloat4x4(reinterpret_cast<const XMFLOAT4X4*>(&mat));
     }
 
-    void SetRigidBodyType(ERigidBodyType RigidBody) const;
+    void SetRigidBodyType(ERigidBodyType RigidBody);
+
+    ERigidBodyType RigidType;
 };
 
 class FPhysicsManager

@@ -16,7 +16,7 @@ void AEnemy::PostSpawnInitialize()
     Super::PostSpawnInitialize();
 
     // SetActorTickInEditor(true);
-    SkeletalMeshComponent = AddComponent<USkeletalMeshComponent>("SkeletalMeshComponent");
+    USkeletalMeshComponent* SkeletalMeshComponent = AddComponent<USkeletalMeshComponent>("SkeletalMeshComponent");
     SkeletalMeshComponent->SetSkeletalMeshAsset(UAssetManager::Get().GetSkeletalMesh(FName("Contents/GameJamEnemy/GameJamEnemy")));
     SkeletalMeshComponent->StateMachineFileName = TEXT("LuaScripts/Animations/EnemyStateMachine.lua");
     SkeletalMeshComponent->SetAnimationMode(EAnimationMode::AnimationBlueprint);
@@ -68,7 +68,7 @@ void AEnemy::BeginPlay()
 {
     Super::BeginPlay();
     BindAttackNotifies();
-    SkeletalMeshComponent->bSimulate = false;
+    GetComponentByClass<USkeletalMeshComponent>()->bSimulate = false;
     InitialTransform = RootComponent->GetComponentTransform();
 }
 
@@ -89,7 +89,6 @@ UObject* AEnemy::Duplicate(UObject* InOuter)
 {
     AEnemy* NewActor = Cast<AEnemy>(Super::Duplicate(InOuter));
 
-    NewActor->SkeletalMeshComponent = NewActor->GetComponentByClass<USkeletalMeshComponent>();
     NewActor->ParryGauge = 0.0f;
     
     NewActor->AttackToIdleNotify = AttackToIdleNotify;
@@ -251,7 +250,7 @@ void AEnemy::ResetEnemyProperties()
 {
     ParryGauge = 0.0f;
     CurrentAttackDirection = AD_None;
-    ULuaScriptAnimInstance* AnimInstance = Cast<ULuaScriptAnimInstance>(SkeletalMeshComponent->GetAnimInstance());
+    ULuaScriptAnimInstance* AnimInstance = Cast<ULuaScriptAnimInstance>(GetComponentByClass<USkeletalMeshComponent>()->GetAnimInstance());
     AnimInstance->GetStateMachine()->ChangeStateMachineLua(FString("Idle"));
     RootComponent->SetWorldTransform(InitialTransform);
 }

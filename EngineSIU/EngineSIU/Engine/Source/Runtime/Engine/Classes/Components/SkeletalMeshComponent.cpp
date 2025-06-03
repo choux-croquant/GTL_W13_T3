@@ -1035,7 +1035,25 @@ void USkeletalMeshComponent::UpdateBoneTransformToPhysScene()
                 FVector Location = CurrentGlobalBoneMatrices[BoneIndex].GetTranslationVector();
                 FQuat Rotation = FTransform(CurrentGlobalBoneMatrices[BoneIndex]).GetRotation();
                 PxTransform UpdatedPxTransform = PxTransform(PxVec3(Location.X, Location.Y, Location.Z), PxQuat(Rotation.X, Rotation.Y, Rotation.Z, Rotation.W));
-                BIGameObject->DynamicRigidBody->setKinematicTarget(UpdatedPxTransform);
+                // if (BIGameObject->RigidType == ERigidBodyType::DYNAMIC)
+                // {
+                //     LinearVelocity = (NewTransform.Translation - WorldTransform.Translation);
+                //     RigidBody->setLinearVelocity(LinearVelocity.ToPxVec3());
+                //
+                //     FQuat DeltaQuat = NewTransform.Rotation * WorldTransform.Rotation.Inverse();
+                //
+                //     FVector Axis;
+                //     float Angle;
+                //     DeltaQuat.ToAxisAndAngle(Axis, Angle);
+                //
+                //     float DeltaTime = 1.f / 60.f;
+                //     AngularVelocity = Axis * (Angle / DeltaTime);
+                //
+                //     BIGameObject->Dy->setAngularVelocity(AngularVelocity.ToPxVec3());
+                // }else if (BIGameObject->RigidType == ERigidBodyType::KINEMATIC)
+                // {
+                    BIGameObject->DynamicRigidBody->setKinematicTarget(UpdatedPxTransform);
+                // }
             }
         }
     }
@@ -1068,12 +1086,12 @@ void USkeletalMeshComponent::AddImpulseToBones(const FVector& Direction, float I
     {
         return;
     }
-        for (auto& Body : Bodies)
+    for (auto& Body : Bodies)
+    {
+        if (Body->BIGameObject && Body->BIGameObject->DynamicRigidBody)
         {
-            if (Body->BIGameObject && Body->BIGameObject->DynamicRigidBody)
-            {
-                PxVec3 Impulse = PxVec3(Direction.X, Direction.Y, Direction.Z) * ImpulseScale;
-                Body->BIGameObject->DynamicRigidBody->addForce(Impulse, PxForceMode::eIMPULSE);
-            }
+            PxVec3 Impulse = PxVec3(Direction.X, Direction.Y, Direction.Z) * ImpulseScale;
+            Body->BIGameObject->DynamicRigidBody->addForce(Impulse, PxForceMode::eIMPULSE);
         }
+    }
 }

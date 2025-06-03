@@ -8,8 +8,10 @@
 #include <thread>
 
 
-void GameObject::SetRigidBodyType(ERigidBodyType RigidBodyType) const
+void GameObject::SetRigidBodyType(ERigidBodyType RigidBodyType)
 {
+    RigidType = RigidBodyType;
+    
     switch (RigidBodyType)
     {
     case ERigidBodyType::STATIC:

@@ -12,7 +12,7 @@ void UEnemyWeaponComponent::GotParried(float InDamage)
     // 데미지 조정 필요 시 Player속성으로 가지도록 이동
     EnemyActor->ParryGauge += 305.0f;
 
-    ULuaScriptAnimInstance* AnimInstance = Cast<ULuaScriptAnimInstance>(EnemyActor->SkeletalMeshComponent->GetAnimInstance());
+    ULuaScriptAnimInstance* AnimInstance = Cast<ULuaScriptAnimInstance>(EnemyActor->GetComponentByClass<USkeletalMeshComponent>()->GetAnimInstance());
 
     if (EnemyActor->ParryGauge > 100.0f)
     {
