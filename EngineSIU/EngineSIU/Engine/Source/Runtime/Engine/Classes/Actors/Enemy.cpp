@@ -8,6 +8,7 @@
 #include "Engine/Contents/AnimInstance/LuaScriptAnimInstance.h"
 #include "Actors/Player.h"
 #include "UObject/UObjectIterator.h"
+#include "Engine/SkeletalMesh.h"
 #include "Userinterface/Console.h"
 
 void AEnemy::PostSpawnInitialize()
@@ -20,6 +21,15 @@ void AEnemy::PostSpawnInitialize()
     SkeletalMeshComponent->StateMachineFileName = TEXT("LuaScripts/Animations/EnemyStateMachine.lua");
     SkeletalMeshComponent->SetAnimationMode(EAnimationMode::AnimationBlueprint);
     SkeletalMeshComponent->SetAnimClass(UClass::FindClass(FName("ULuaScriptAnimInstance")));
+    
+    UObject* AssetObject = UAssetManager::Get().GetAsset(EAssetType::PhysicsAsset, FName("Contents/PhysicsAsset/UPhysicsAsset_212"));
+    
+    if (UPhysicsAsset* PhysicsAsset = Cast<UPhysicsAsset>(AssetObject))
+    {
+        SkeletalMeshComponent->GetSkeletalMeshAsset()->SetPhysicsAsset(PhysicsAsset);
+    }
+    
+    SkeletalMeshComponent->bSimulate = true;
 
     UAnimSequence* IdleAnim = Cast<UAnimSequence>(UAssetManager::Get().GetAnimation(FString("Contents/Enemy_Idle/Armature|Enemy_Idle")));
     UAnimSequence* ReactionAnim = Cast<UAnimSequence>(UAssetManager::Get().GetAnimation(FString("Contents/Enemy_Impact/Armature|Enemy_Impact")));
@@ -59,6 +69,7 @@ void AEnemy::BeginPlay()
 {
     Super::BeginPlay();
     BindAttackNotifies();
+    SkeletalMeshComponent->bSimulate = false;
 }
 
 void AEnemy::Tick(float DeltaTime)
