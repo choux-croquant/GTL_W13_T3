@@ -6,6 +6,7 @@
 #include <thread>
 
 #include "Container/Array.h"
+#include "Engine/TimerManager.h"
 
 class FSoundManager {
 public:
@@ -71,10 +72,9 @@ public:
     }
 
     void PlaySoundWithDelay(const std::string& name, float delaySeconds, float Volume = 1.0f) {
-        std::thread([=]() {
-            std::this_thread::sleep_for(std::chrono::duration<float>(delaySeconds));
+        FTimerManager::GetInstance().AddTimer(delaySeconds, [=]() {
             PlaySound(name, Volume);
-        }).detach();
+        });
     }
 
     void Update() {

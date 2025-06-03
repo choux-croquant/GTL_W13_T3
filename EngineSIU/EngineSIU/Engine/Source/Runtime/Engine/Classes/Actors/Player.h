@@ -3,7 +3,7 @@
 #include "GameFramework/Actor.h"
 #include "UObject/ObjectMacros.h"
 #include "UObject/ObjectTypes.h"
-
+#include "Particles/ParticleSystem.h"
 
 class USkeletalMeshComponent;
 class UCameraComponent;
@@ -79,6 +79,7 @@ public:
     
     AHeroPlayer() = default;
     virtual void BeginPlay() override;
+    virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
     void GetDamaged(float Damage);
     void Parry(AActor* OverlappedActor, AActor* OtherActor);
     virtual UObject* Duplicate(UObject* InOuter) override;
@@ -108,5 +109,8 @@ private:
     UPROPERTY
     (EditAnywhere, float, Health, = 3.f);
     int32 CameraMoveCounter = 0;
+
+    UParticleSystem* SparkParticle = nullptr;
+    UParticleSystem* FogParticle = nullptr;
 };
 
