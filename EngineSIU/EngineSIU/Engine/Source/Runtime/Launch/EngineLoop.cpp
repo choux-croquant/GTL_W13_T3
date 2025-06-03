@@ -104,6 +104,7 @@ int32 FEngineLoop::Init(HINSTANCE hInstance)
     FSoundManager::GetInstance().LoadSound("shield", "Contents/Sounds/shield.mp3");
     FSoundManager::GetInstance().LoadSound("Parry", "Contents/Sounds/Parry.mp3");
     FSoundManager::GetInstance().LoadSound("SwordSwipe", "Contents/Sounds/SwordSwipe.wav");
+    FSoundManager::GetInstance().LoadSound("Roar", "Contents/Sounds/Roar.wav");
     FSoundManager::GetInstance().LoadSound("FireOn", "Contents/Sounds/FireOn.wav");
 
     UpdateUI();

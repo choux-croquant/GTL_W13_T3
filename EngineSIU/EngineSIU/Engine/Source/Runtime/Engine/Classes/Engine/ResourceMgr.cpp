@@ -25,6 +25,7 @@ void FResourceManager::Initialize(FRenderer* Renderer, FGraphicsDevice* Device)
     LoadTextureFromFile(Device->Device, L"Assets/Texture/PressSpace.png");
     LoadTextureFromFile(Device->Device, L"Assets/Texture/YouDied.png");
     LoadTextureFromFile(Device->Device, L"Assets/Texture/WhiteGradient.png");
+    LoadTextureFromFile(Device->Device, L"Assets/Texture/PressR.png");
 
 
 

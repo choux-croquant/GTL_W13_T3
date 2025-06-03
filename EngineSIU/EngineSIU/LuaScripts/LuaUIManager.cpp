@@ -284,6 +284,7 @@ void LuaUIManager::GenerateResource()
     TextureMap.Add(FName("PressSpace"), FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/PressSpace.png"));
     TextureMap.Add(FName("YouDied"), FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/YouDied.png"));
     TextureMap.Add(FName("WhiteGradient"), FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/WhiteGradient.png"));
+    TextureMap.Add(FName("PressR"), FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/PressR.png"));
 
 }
 
