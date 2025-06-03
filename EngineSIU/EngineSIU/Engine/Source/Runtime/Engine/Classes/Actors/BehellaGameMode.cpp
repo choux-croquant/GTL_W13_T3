@@ -6,6 +6,7 @@
 #include "Engine/World/World.h"
 #include "Engine/Classes/Actors/BehellaGameMode.h"
 
+#include "SoundManager.h"
 #include "Engine/TimerManager.h"
 
 
@@ -212,6 +213,10 @@ void ABehellaGameMode::PlayerWin()
             FTimerManager::GetInstance().AddTimer(2.0f, [this]()
             {
                 HeroPlayer->SetAnimState(FString("FinalAttack"));
+                FTimerManager::GetInstance().AddTimer(3.0f, [this]()
+                {
+                    FSoundManager::GetInstance().PlaySound("Roar");
+                });
             });
         }
     );
