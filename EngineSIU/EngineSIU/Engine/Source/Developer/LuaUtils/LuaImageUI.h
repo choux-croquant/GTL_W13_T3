@@ -19,6 +19,6 @@ public:
 
 public:
     void SetTexture(FTexture* InTexture);
-    void SetColor(FLinearColor& InColor);
-    void SetTextureByName(FString TextureName);
+    void SetColor(const FLinearColor& InColor);
+    void SetTextureByName(const FString TextureName);
 };

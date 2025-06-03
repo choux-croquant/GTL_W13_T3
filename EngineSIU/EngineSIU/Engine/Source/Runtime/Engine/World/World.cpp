@@ -9,6 +9,7 @@
 #include "Engine/Engine.h"
 #include "UnrealEd/SceneManager.h"
 #include "GameFramework/GameMode.h"
+#include "Engine/Classes/Actors/BehellaGameMode.h"
 #include "Classes/Components/TextComponent.h"
 
 class UEditorEngine;
@@ -71,8 +72,9 @@ void UWorld::BeginPlay()
 {
     if (!GameMode && this->WorldType == EWorldType::PIE)
     {
-        GameMode = this->SpawnActor<AGameMode>();
-        GameMode->SetActorLabel(TEXT("OBJ_GAMEMODE"));
+        //GameMode = this->SpawnActor<AGameMode>();
+        GameMode = this->SpawnActor<ABehellaGameMode>();    
+        GameMode->SetActorLabel(TEXT("OBJ_BEHELLA_GAMEMODE"));
         GameMode->InitializeComponent();
 
         GameMode->InitGame();

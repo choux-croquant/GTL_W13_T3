@@ -45,12 +45,12 @@ void LuaImageUI::SetTexture(FTexture* InTexture)
     Texture = InTexture;
 }
 
-void LuaImageUI::SetColor(FLinearColor& InColor)
+void LuaImageUI::SetColor(const FLinearColor& InColor)
 {
     Color = InColor;
 }
 
-void LuaImageUI::SetTextureByName(FString TextureName)
+void LuaImageUI::SetTextureByName(const FString TextureName)
 {
     FTexture* FindTexture = LuaUIManager::Get().GetTextureByName(TextureName);
 

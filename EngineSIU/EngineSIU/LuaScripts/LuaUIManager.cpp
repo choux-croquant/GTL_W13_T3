@@ -280,6 +280,8 @@ void LuaUIManager::GenerateResource()
     
     TextureMap.Add(FName("ExplosionColor"), FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/T_Explosion_SubUV.png"));
     TextureMap.Add(FName("WhiteBox"), FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/WhiteBox.png"));
+    TextureMap.Add(FName("BehellaLogo"), FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/BehellaLogo.png"));
+    TextureMap.Add(FName("PressSpace"), FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/PressSpace.png"));
 
 }
 
