@@ -598,14 +598,14 @@ void UPrimitiveComponent::CreatePhysXGameObject()
     FQuat Quat = GetComponentRotation().Quaternion();
     PxQuat PQuat = PxQuat(Quat.X, Quat.Y, Quat.Z, Quat.W);
 
-    if (GeomAttributes.Num() == 0)
-    {
-        AggregateGeomAttributes DefaultAttribute;
-        DefaultAttribute.GeomType = EGeomType::EBox;
-        DefaultAttribute.Offset = FVector(AABB.MaxLocation + AABB.MinLocation) / 2;
-        DefaultAttribute.Extent = FVector(AABB.MaxLocation - AABB.MinLocation) / 2 * GetComponentScale3D();
-        GeomAttributes.Add(DefaultAttribute);
-    }
+    // if (GeomAttributes.Num() == 0)
+    // {
+    //     AggregateGeomAttributes DefaultAttribute;
+    //     DefaultAttribute.GeomType = EGeomType::EBox;
+    //     DefaultAttribute.Offset = FVector(AABB.MaxLocation + AABB.MinLocation) / 2;
+    //     DefaultAttribute.Extent = FVector(AABB.MaxLocation - AABB.MinLocation) / 2 * GetComponentScale3D();
+    //     GeomAttributes.Add(DefaultAttribute);
+    // }
 
     for (const auto& GeomAttribute : GeomAttributes)
     {

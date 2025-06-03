@@ -70,7 +70,7 @@ void FPhysicsManager::InitPhysX()
         return;
     }
 
-    Material = Physics->createMaterial(0.5f, 0.7f, 0.1f);
+    Material = Physics->createMaterial(0.5f, 0.5f, 0.6f);
     if (!Material)
     {
         UE_LOG(ELogLevel::Error, TEXT("Failed to create PhysX Material"));
@@ -106,7 +106,7 @@ PxScene* FPhysicsManager::CreateScene(UWorld* World)
     
     PxSceneDesc SceneDesc(Physics->getTolerancesScale());
     
-    SceneDesc.gravity = PxVec3(0, 0, -981.f);
+    SceneDesc.gravity = PxVec3(0, 0, -98.1f);
     
     unsigned int hc = std::thread::hardware_concurrency();
     Dispatcher = PxDefaultCpuDispatcherCreate(hc-2);

@@ -1089,7 +1089,7 @@ void USkeletalMeshComponent::SetMassAndInertia()
     {
         if (Body->BIGameObject && Body->BIGameObject->DynamicRigidBody)
         {
-            PxRigidBodyExt::updateMassAndInertia(*Body->BIGameObject->DynamicRigidBody, 10);
+            PxRigidBodyExt::updateMassAndInertia(*Body->BIGameObject->DynamicRigidBody, 100000);
             Body->BIGameObject->DynamicRigidBody->wakeUp();
         }
     }
