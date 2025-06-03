@@ -25,6 +25,20 @@ void ABehellaGameMode::BeginPlay()
 
     SetActorTickInEditor(false); // PIE 모드에서만 Tick 수행
 
+    if (APlayerController* PC = GEngine->ActiveWorld->GetPlayerController())
+    {
+        if (APlayerCameraManager* PCM = PC->PlayerCameraManager)
+        {
+            FVector BackgroundLocation = FVector(29.14f, 36.69f, 31.37f);
+            FRotator BackgroundRotation = FRotator(-3.f, -122.f, 0.f);
+            FMinimalViewInfo BackgroundPOV;
+            BackgroundPOV.Location = BackgroundLocation;
+            BackgroundPOV.Rotation = BackgroundRotation;
+            
+            PCM->ViewTarget.POV = BackgroundPOV;
+        }
+    }
+
     if (FSlateAppMessageHandler* Handler = GEngineLoop.GetAppMessageHandler())
     {
         /*Handler->OnPIEModeStartDelegate.AddLambda([this]()
@@ -134,6 +148,7 @@ void ABehellaGameMode::PrepareMatch()
 
     CloseScreen(CurScreenUI);
 
+    GetWorld()->GetPlayerController()->PlayerCameraManager->StartLetterBoxAnimation(8.0f, 1.7f, 5.0f);
     // 카메라 무빙 시키기
     HeroPlayer->bWaitingStart = false;
 }
@@ -181,9 +196,13 @@ void ABehellaGameMode::PlayerWin()
     FTimerManager::GetInstance().AddTimer(3.0f, [CameraManager, this]() {
             // CameraManager->SetViewTarget();
             CameraManager->StartCameraFade(1.0f, 0.0f, 3.0f, FLinearColor::Black, false);
+            HeroPlayer->OnFinalScene();
+            Enemy->OnFinalScene();
+        
+            // 타이머 대신 처형버튼 으로 수정
             FTimerManager::GetInstance().AddTimer(3.0f, [this]()
             {
-                HeroPlayer->OnFinalScene();
+                HeroPlayer->SetAnimState(FString("FinalAttack"));
             });
         }
     );

@@ -119,6 +119,8 @@ public:
 
     void AssignViewTarget(AActor* NewTarget, FTViewTarget& VT, struct FViewTargetTransitionParams TransitionParams=FViewTargetTransitionParams());
 
+    void StartLetterBoxAnimation(float FromRatio, float ToRation, float Duration);
+
     void StartVignetteAnimation(float FromIntensity, float ToIntensity, float Duration);
 
     void SetViewTarget(class AActor* NewTarget, struct FViewTargetTransitionParams TransitionParams);
@@ -214,8 +216,19 @@ public:
 
     float LetterBoxHeight;
 
+    float LetterBoxRatio;
+
+    float LetterBoxStartRatio;
+
+    float LetterBoxEndRatio;
+
+    float LetterBoxTime;
+
+    float LetterBoxTimeRemaining;
+
     uint32 bEnableFading : 1;
     uint32 bAnimateVignette : 1;
+    uint32 bAnimateLetterBox : 1;
     uint32 bHoldFadeWhenFinished : 1; /* true일 경우 페이드 종료 상태 유지 */
 
     // Depth of Field

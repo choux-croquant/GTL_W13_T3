@@ -893,8 +893,8 @@ void AHeroPlayer::OnFinalScene()
     {
         return;
     }
-    
-    SetAnimState(FString("FinalAttack"));
+    SetActorLocation(FVector(-1010, 0, -2));
+    SetActorRotation(FRotator(0, 180, 0));
     CameraSocketComponent = AddComponent<USocketComponent>();
     CameraSocketComponent->Socket = "mixamorig:Head";
     CameraSocketComponent->SetupAttachment(RootComponent);
