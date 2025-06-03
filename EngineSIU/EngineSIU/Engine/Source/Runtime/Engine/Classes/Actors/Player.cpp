@@ -20,6 +20,7 @@
 #include "Particles/Emitter.h"
 #include "Particles/ParticleSystem.h"
 #include "Engine/Classes/Actors/BehellaGameMode.h"
+#include "Engine/Contents/Objects/DamageCameraShake.h"
 
 
 void AEditorPlayer::Tick(float DeltaTime)
@@ -665,7 +666,8 @@ void AHeroPlayer::BeginPlay()
     OnHealthChanged.AddLambda(
         [this](int32 InHealth, int32 InMaxHealth)
         {
-            //딱히 뭐 필요없을수도
+            GetWorld()->GetPlayerController()->PlayerCameraManager->VignetteColor = FLinearColor(1.0f, 0.0f, 0.0f, 1.0f);
+            GetWorld()->GetPlayerController()->PlayerCameraManager->StartVignetteAnimation(1.0f, 0.0f, 0.3f);
         }
     );
 
@@ -685,7 +687,7 @@ void AHeroPlayer::BeginPlay()
             ParticleActor->SetActorTickInEditor(true);
             ParticleActor->SetActorLocation(FVector(14.0f, -15.0f, 30.0f));
             ParticleActor->ParticleSystemComponent->SetParticleSystem(SparkParticle);
-
+            GetWorld()->GetPlayerController()->ClientStartCameraShake(UDamageCameraShake::StaticClass());
             TWeakObjectPtr<AEmitter> WeakParticleActor(ParticleActor); // 약한 참조
             FTimerManager::GetInstance().AddTimer(1.0f, [WeakParticleActor]() {
                 if (WeakParticleActor.IsValid()) { // 유효성 확인
