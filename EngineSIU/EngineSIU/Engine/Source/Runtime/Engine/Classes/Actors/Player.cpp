@@ -806,7 +806,9 @@ void AHeroPlayer::Tick(float DeltaTime)
     {
         FViewTargetTransitionParams Params;
         Params.BlendTime = 0.0f;
-                
+
+        GetWorld()->GetPlayerController()->PlayerCameraManager->StartLetterBoxAnimation(1.0f, 0.9f, 0.3f);
+        
         AActor* TargetActor = GEngine->ActiveWorld->SpawnActor<AActor>();
         TargetActor->SetActorLocation(FVector(-1000, 0, 30));
         GEngine->ActiveWorld->GetPlayerController()->SetViewTarget(TargetActor, Params);
@@ -841,6 +843,9 @@ void AHeroPlayer::Tick(float DeltaTime)
             Params.BlendFunction = VTBlend_EaseInOut;
             Params.BlendExp = 3.f;
 
+            GetWorld()->GetPlayerController()->PlayerCameraManager->StartLetterBoxAnimation(0.9f, 1.2f, Params.BlendTime);
+
+            
             AActor* TargetActor = GEngine->ActiveWorld->SpawnActor<AActor>();
             TargetActor->SetActorLocation(FVector(-41, 13.5, 32));
             TargetActor->SetActorRotation(FRotator(0.f, -27.34f, -9.36f));

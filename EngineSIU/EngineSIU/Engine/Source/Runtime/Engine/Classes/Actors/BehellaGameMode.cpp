@@ -25,6 +25,7 @@ void ABehellaGameMode::BeginPlay()
 
     SetActorTickInEditor(false); // PIE 모드에서만 Tick 수행
 
+    //배경위치 찍게 카메라 옮기기
     if (APlayerController* PC = GEngine->ActiveWorld->GetPlayerController())
     {
         if (APlayerCameraManager* PCM = PC->PlayerCameraManager)
@@ -38,7 +39,7 @@ void ABehellaGameMode::BeginPlay()
             PCM->ViewTarget.POV = BackgroundPOV;
         }
     }
-
+    
     if (FSlateAppMessageHandler* Handler = GEngineLoop.GetAppMessageHandler())
     {
         /*Handler->OnPIEModeStartDelegate.AddLambda([this]()
@@ -147,8 +148,7 @@ void ABehellaGameMode::PrepareMatch()
     GameState = EBehellaGameState::PrepareToPlay;
 
     CloseScreen(CurScreenUI);
-
-    GetWorld()->GetPlayerController()->PlayerCameraManager->StartLetterBoxAnimation(0.0f, 1.2f, 5.0f);
+    
     // 카메라 무빙 시키기
     HeroPlayer->bWaitingStart = false;
 }
