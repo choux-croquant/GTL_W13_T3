@@ -48,9 +48,11 @@ void AEnemy::PostSpawnInitialize()
 
     // Sound Notify
     // 패링 성공 시 - 피격 시작할 때 Notify
-    CreateSoundNotify(ReactionAnim, ReactionNotify, "Impact", "SwordsClash", 0.0f);
+    CreateSoundNotify(ReactionAnim, ReactionNotify, "Impact", "Parry", 0.0f);
     // 공격 시도 시 사운드
-    CreateSoundNotify(Horizontal1, PlayerHitNotify, "Hit", "sizzle", 0.0f);
+    CreateSoundNotify(Horizontal1, PlayerHitNotify, "Hit", "SwordSwipe", 0.3f);
+    CreateSoundNotify(Horizontal2, PlayerHitNotify, "Hit", "SwordSwipe", 0.3f);
+    CreateSoundNotify(Vertical1, PlayerHitNotify, "Hit", "SwordSwipe", 0.3f);
 }
     
 void AEnemy::BeginPlay()
