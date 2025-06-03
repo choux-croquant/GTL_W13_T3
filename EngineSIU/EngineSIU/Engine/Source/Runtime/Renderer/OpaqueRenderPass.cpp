@@ -253,7 +253,7 @@ void FOpaqueRenderPass::RenderStaticMesh(const std::shared_ptr<FEditorViewportCl
 
         FMatrix WorldMatrix = Comp->GetWorldMatrix();
         FVector4 UUIDColor = Comp->EncodeUUID() / 255.0f;
-        const bool bIsSelected = (Engine && TargetComponent == Comp);
+        const bool bIsSelected = (Engine && TargetComponent == Comp) && (GEngine->ActiveWorld->WorldType != EWorldType::PIE);
 
         UpdateObjectConstant(WorldMatrix, UUIDColor, bIsSelected);
 
@@ -304,7 +304,7 @@ void FOpaqueRenderPass::RenderSkeletalMesh(const std::shared_ptr<FEditorViewport
 
         FMatrix WorldMatrix = Comp->GetWorldMatrix();
         FVector4 UUIDColor = Comp->EncodeUUID() / 255.0f;
-        const bool bIsSelected = (Engine && TargetComponent == Comp);
+        const bool bIsSelected = (Engine && TargetComponent == Comp) && (GEngine->ActiveWorld->WorldType != EWorldType::PIE);
 
         UpdateObjectConstant(WorldMatrix, UUIDColor, bIsSelected);
 
