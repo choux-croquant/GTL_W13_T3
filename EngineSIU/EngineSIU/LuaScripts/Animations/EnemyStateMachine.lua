@@ -28,7 +28,7 @@ AnimFSM = {
         -- print(self.timer)
         -- print(self.currentState)
 
-        if self.GameState <= 1 then
+        if self.GameState <= 1 or self.GameState == 4 then
             return {
             anim = self.idleAnimation,
             blend = 0.0,
@@ -122,7 +122,7 @@ AnimFSM = {
             return {
                 anim = self.kneelAnimation,
                 blend = 0.3,
-                loop = false,
+                loop = true,
                 rate_scale = 1.0,
                 state = self.currentState
             }

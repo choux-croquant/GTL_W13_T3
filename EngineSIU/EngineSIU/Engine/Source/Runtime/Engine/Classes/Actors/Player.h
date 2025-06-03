@@ -110,7 +110,8 @@ public:
 
     USocketComponent* CameraSocketComponent = nullptr;
     
-    
+    void SetCameraMoveCounter(int32 InCameraMoveCounter);
+
 private:
     // UPROPERTY
     // (EditAnywhere, USkeletalMeshComponent*, OriginSkeletalMeshComponent, = nullptr)

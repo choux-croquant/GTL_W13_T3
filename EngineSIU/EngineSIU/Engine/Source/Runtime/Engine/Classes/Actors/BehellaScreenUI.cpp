@@ -166,6 +166,7 @@ void FBehellaGamePlayScreenUI::CloseScreen(float InClosingTime)
 
 void FBehellaGamePlayScreenUI::EndScreen()
 {
+    LuaUIManager::Get().DeleteUI(ScreenName->GetName());
     FBehellaScreenUI::EndScreen();
 }
 
@@ -173,9 +174,9 @@ void FBehellaGameDeadScreenUI::InitScreen()
 {
     FBehellaScreenUI::InitScreen();
 
-    ScreenName = LuaUIManager::Get().CreateText(FName("PlayScreen")
+    ScreenName = LuaUIManager::Get().CreateText(FName("DeadScreen")
         , RectTransform(0.0f, 400.0f, 256.0f, 256.0f, AnchorDirection::MiddleCenter, AnchorDirection::MiddleCenter)
-        , 5, FString("PlayScreenUI"), FName("Default"), 50.0f, FLinearColor(1.0f, 0.0f, 0.0f, 1.0f));
+        , 5, FString("DeadScreenUI"), FName("Default"), 50.0f, FLinearColor(1.0f, 0.0f, 0.0f, 1.0f));
 }
 
 void FBehellaGameDeadScreenUI::TickScreen(float DeltaTime)
@@ -190,6 +191,8 @@ void FBehellaGameDeadScreenUI::CloseScreen(float InClosingTime)
 
 void FBehellaGameDeadScreenUI::EndScreen()
 {
+
+    LuaUIManager::Get().DeleteUI(ScreenName->GetName());
     FBehellaScreenUI::EndScreen();
 }
 
@@ -197,9 +200,9 @@ void FBehellaGameOverScreenUI::InitScreen()
 {
     FBehellaScreenUI::InitScreen();
 
-    ScreenName = LuaUIManager::Get().CreateText(FName("PlayScreen")
+    ScreenName = LuaUIManager::Get().CreateText(FName("GameOverScreen")
         , RectTransform(0.0f, 400.0f, 256.0f, 256.0f, AnchorDirection::MiddleCenter, AnchorDirection::MiddleCenter)
-        , 5, FString("PlayScreenUI"), FName("Default"), 50.0f, FLinearColor(1.0f, 0.0f, 0.0f, 1.0f));
+        , 5, FString("GameOverScreenUI"), FName("Default"), 50.0f, FLinearColor(1.0f, 0.0f, 0.0f, 1.0f));
 }
 
 void FBehellaGameOverScreenUI::TickScreen(float DeltaTime)
@@ -214,5 +217,6 @@ void FBehellaGameOverScreenUI::CloseScreen(float InClosingTime)
 
 void FBehellaGameOverScreenUI::EndScreen()
 {
+    LuaUIManager::Get().DeleteUI(ScreenName->GetName());
     FBehellaScreenUI::EndScreen();
 }

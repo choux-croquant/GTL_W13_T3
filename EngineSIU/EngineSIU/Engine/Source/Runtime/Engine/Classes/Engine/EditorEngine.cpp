@@ -21,6 +21,7 @@
 #include "Components/SocketComponent.h"
 #include "PhysicsEngine/PhysicsAsset.h"
 #include "Particles/ParticleSystem.h"
+#include "LuaScripts/LuaUIManager.h"
 
 extern FEngineLoop GEngineLoop;
 
@@ -600,6 +601,8 @@ void UEditorEngine::EndPIE()
         ClearActorSelection();
         ClearComponentSelection();
         PhysicsManager->CleanupScene();
+
+        LuaUIManager::Get().ClearLuaUI();
     }
 
     FSlateAppMessageHandler* Handler = GEngineLoop.GetAppMessageHandler();
