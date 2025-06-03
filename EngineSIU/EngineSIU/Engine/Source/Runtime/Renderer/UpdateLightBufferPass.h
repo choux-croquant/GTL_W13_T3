@@ -39,6 +39,7 @@ public:
     virtual void PrepareRenderArr() override;
     virtual void ClearRenderArr() override;
     virtual void Render(const std::shared_ptr<FEditorViewportClient>& Viewport) override;
+    void UpdateLightBufferWithoutSpot() const;
     void UpdateLightBuffer() const;
 
     void SetPointLightData(const TArray<UPointLightComponent*>& InPointLights, TArray<TArray<uint32>> InPointLightPerTiles);

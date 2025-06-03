@@ -360,6 +360,25 @@ void FOpaqueRenderPass::ClearRenderArr()
     SkeletalMeshComponents.Empty();
 }
 
+void FOpaqueRenderPass::StaticMeshRender(const std::shared_ptr<FEditorViewportClient>& Viewport)
+{
+    PrepareStaticMesh();
+    RenderStaticMesh(Viewport);
+}
+
+void FOpaqueRenderPass::SkeletalMeshRender(const std::shared_ptr<FEditorViewportClient>& Viewport)
+{
+    PrepareSkeletalMesh();
+    RenderSkeletalMesh(Viewport);
+}
+
+void FOpaqueRenderPass::ClearSpotLight()
+{
+    ID3D11ShaderResourceView* NullSRV[1] = { nullptr };
+
+    Graphics->DeviceContext->PSSetShaderResources(static_cast<int>(EShaderSRVSlot::SRV_SpotLight), 1, NullSRV); // t51 슬롯을 NULL로 설정
+}
+
 void FOpaqueRenderPass::Render(const std::shared_ptr<FEditorViewportClient>& Viewport)
 {
     PrepareRender(Viewport);

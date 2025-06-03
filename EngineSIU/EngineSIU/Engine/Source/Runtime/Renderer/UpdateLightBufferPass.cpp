@@ -74,6 +74,53 @@ void FUpdateLightBufferPass::Render(const std::shared_ptr<FEditorViewportClient>
 }
 
 
+
+void FUpdateLightBufferPass::UpdateLightBufferWithoutSpot() const
+{
+    FLightInfoBuffer LightBufferData = {};
+
+    int DirectionalLightsCount=0;
+    int PointLightsCount=0;
+    int SpotLightsCount=0;
+    int AmbientLightsCount=0;
+    
+    for (auto Light : DirectionalLights)
+    {
+        if (DirectionalLightsCount < MAX_DIRECTIONAL_LIGHT)
+        {
+            LightBufferData.Directional[DirectionalLightsCount] = Light->GetDirectionalLightInfo();
+            LightBufferData.Directional[DirectionalLightsCount].Direction = Light->GetDirection();
+            LightBufferData.Directional[DirectionalLightsCount].LightViewProj = Light->GetViewProjectionMatrix();
+            LightBufferData.Directional[DirectionalLightsCount].LightInvProj = FMatrix::Inverse(Light->GetProjectionMatrix());
+            //ShadowData.LightNearZ = Light->GetShadowNearPlane();
+            //ShadowData.LightFrustumWidth = Light->GetShadowFrustumWidth();
+                        
+            //ShadowData.ShadowMapWidth = Light->GetShadowMapWidth();
+            //ShadowData.ShadowMapHeight = Light->GetShadowMapHeight();
+           
+            DirectionalLightsCount++;
+        }
+    }
+
+    for (auto Light : AmbientLights)
+    {
+        if (AmbientLightsCount < MAX_DIRECTIONAL_LIGHT)
+        {
+            LightBufferData.Ambient[AmbientLightsCount] = Light->GetAmbientLightInfo();
+            LightBufferData.Ambient[AmbientLightsCount].AmbientColor = Light->GetLightColor();
+            AmbientLightsCount++;
+        }
+    }
+    
+    LightBufferData.DirectionalLightsCount = DirectionalLightsCount;
+    LightBufferData.PointLightsCount = PointLightsCount;
+    LightBufferData.SpotLightsCount = SpotLightsCount;
+    LightBufferData.AmbientLightsCount = AmbientLightsCount;
+
+    BufferManager->UpdateConstantBuffer(TEXT("FLightInfoBuffer"), LightBufferData);
+    
+}
+
 void FUpdateLightBufferPass::UpdateLightBuffer() const
 {
     FLightInfoBuffer LightBufferData = {};

@@ -27,16 +27,20 @@ public:
 
     virtual void ClearRenderArr() override;
 
+    void SkeletalMeshRender(const std::shared_ptr<FEditorViewportClient>& Viewport);
+    void ClearSpotLight();
+    void StaticMeshRender(const std::shared_ptr<FEditorViewportClient>& Viewport);
+
     virtual void Render(const std::shared_ptr<FEditorViewportClient>& Viewport) override;
     
     void UpdateLitUnlitConstant(int32 IsLit) const;
     
     void ChangeViewMode(EViewModeIndex ViewMode);
     
-protected:
     virtual void PrepareRender(const std::shared_ptr<FEditorViewportClient>& Viewport) override;
     virtual void CleanUpRender(const std::shared_ptr<FEditorViewportClient>& Viewport) override;
-
+protected:
+    
     virtual void CreateResource() override;
 
     void PrepareStaticMesh();

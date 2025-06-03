@@ -380,7 +380,16 @@ void FRenderer::RenderOpaque(const std::shared_ptr<FEditorViewportClient>& Viewp
         {
             QUICK_SCOPE_CYCLE_COUNTER(OpaquePass_CPU)
             QUICK_GPU_SCOPE_CYCLE_COUNTER(OpaquePass_GPU, *GPUTimingManager)
-            OpaqueRenderPass->Render(Viewport);
+            OpaqueRenderPass->PrepareRender(Viewport);
+            
+            OpaqueRenderPass->StaticMeshRender(Viewport);
+
+            //이 뒤로는 SpotLight적용 안됨
+            OpaqueRenderPass->ClearSpotLight();
+            
+            OpaqueRenderPass->SkeletalMeshRender(Viewport);
+            
+            OpaqueRenderPass->CleanUpRender(Viewport);
         }
     }
     
