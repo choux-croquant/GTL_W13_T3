@@ -26,3 +26,7 @@ map_Kd T_Fire_D.PNG
 
 newmtl T_Smoke_A
 map_Kd T_Smoke_A.PNG
+
+newmtl T_Rocks
+map_Kd T_Rocks.PNG
+map_Bump T_Rocks_NM.PNG
