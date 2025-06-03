@@ -7,19 +7,6 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
-                        "ComponentOwner": "AHeroPlayer_456",
-                        "ComponentOwnerClass": "AHeroPlayer",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
                     "ComponentClass": "UHeroWeaponComponent",
                     "ComponentID": "UHeroWeaponComponent_983",
                     "Properties": {
@@ -31,7 +18,7 @@
                         "ComponentName": "UHeroWeaponComponent_983",
                         "ComponentOwner": "AHeroPlayer_456",
                         "ComponentOwnerClass": "AHeroPlayer",
-                        "RelativeLocation": "X=-19.754 Y=-31.160 Z=33.208",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
                         "RelativeRotation": "Pitch=90.000 Yaw=180.000 Roll=180.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
@@ -40,6 +27,19 @@
                         "bIsActive": "true",
                         "bSimulate": "false",
                         "m_Type": ""
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "AHeroPlayer_456",
+                        "ComponentOwnerClass": "AHeroPlayer",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
                     }
                 },
                 {
@@ -77,7 +77,7 @@
                         "ComponentName": "USocketComponent_982",
                         "ComponentOwner": "AHeroPlayer_456",
                         "ComponentOwnerClass": "AHeroPlayer",
-                        "RelativeLocation": "X=-12.271 Y=97.508 Z=168.820",
+                        "RelativeLocation": "X=-9.817 Y=78.006 Z=135.056",
                         "RelativeRotation": "Pitch=3.042 Yaw=107.934 Roll=-92.238",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "Socket": "mixamorig:Weapon",
@@ -116,19 +116,6 @@
                     }
                 },
                 {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
-                        "ComponentOwner": "ADirectionalLight_462",
-                        "ComponentOwnerClass": "ADirectionalLight",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
                     "ComponentClass": "UBillboardComponent",
                     "ComponentID": "UBillboardComponent_0",
                     "Properties": {
@@ -152,6 +139,19 @@
                         "bSimulate": "false",
                         "m_Type": "UBillboardComponent"
                     }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "ADirectionalLight_462",
+                        "ComponentOwnerClass": "ADirectionalLight",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
                 }
             ],
             "RootComponentID": "UBillboardComponent_0"
@@ -162,6 +162,22 @@
             "ActorLabel": "OBJ_SPHERE_467",
             "ActorTickInEditor": "false",
             "Components": [
+                {
+                    "ComponentClass": "UCameraComponent",
+                    "ComponentID": "UCameraComponent_472",
+                    "Properties": {
+                        "AttachParentID": "USceneComponent_469",
+                        "ComponentClass": "UCameraComponent",
+                        "ComponentName": "UCameraComponent_472",
+                        "ComponentOwner": "AActor_467",
+                        "ComponentOwnerClass": "AActor",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
                 {
                     "ComponentClass": "ULuaScriptComponent",
                     "ComponentID": "LuaComponent",
@@ -177,31 +193,15 @@
                 },
                 {
                     "ComponentClass": "USceneComponent",
-                    "ComponentID": "USceneComponent_741",
+                    "ComponentID": "USceneComponent_469",
                     "Properties": {
-                        "AttachParentID": "USceneComponent_469",
+                        "AttachParentID": "nullptr",
                         "ComponentClass": "USceneComponent",
-                        "ComponentName": "USceneComponent_741",
+                        "ComponentName": "USceneComponent_469",
                         "ComponentOwner": "AActor_467",
                         "ComponentOwnerClass": "AActor",
-                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
-                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "UCameraComponent",
-                    "ComponentID": "UCameraComponent_472",
-                    "Properties": {
-                        "AttachParentID": "USceneComponent_469",
-                        "ComponentClass": "UCameraComponent",
-                        "ComponentName": "UCameraComponent_472",
-                        "ComponentOwner": "AActor_467",
-                        "ComponentOwnerClass": "AActor",
-                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeLocation": "X=-39.655 Y=38.658 Z=169.286",
+                        "RelativeRotation": "Pitch=-13.948 Yaw=-19.785 Roll=2.819",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "bAutoActive": "true",
                         "bIsActive": "true"
@@ -228,38 +228,6 @@
                         "bIsActive": "true",
                         "bSimulate": "false",
                         "m_Type": "USphereComp"
-                    }
-                },
-                {
-                    "ComponentClass": "USceneComponent",
-                    "ComponentID": "USceneComponent_690",
-                    "Properties": {
-                        "AttachParentID": "USceneComponent_469",
-                        "ComponentClass": "USceneComponent",
-                        "ComponentName": "USceneComponent_690",
-                        "ComponentOwner": "AActor_467",
-                        "ComponentOwnerClass": "AActor",
-                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
-                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "USceneComponent",
-                    "ComponentID": "USceneComponent_469",
-                    "Properties": {
-                        "AttachParentID": "nullptr",
-                        "ComponentClass": "USceneComponent",
-                        "ComponentName": "USceneComponent_469",
-                        "ComponentOwner": "AActor_467",
-                        "ComponentOwnerClass": "AActor",
-                        "RelativeLocation": "X=-39.655 Y=38.658 Z=169.286",
-                        "RelativeRotation": "Pitch=-13.948 Yaw=-19.785 Roll=2.819",
-                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
                     }
                 }
             ],
@@ -298,7 +266,7 @@
                         "ComponentOwner": "AEnemy_694",
                         "ComponentOwnerClass": "AEnemy",
                         "RelativeLocation": "X=192.633 Y=-12.841 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=180.000 Roll=-0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=-180.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "SkeletalMeshKey": "Contents/GameJamEnemy/GameJamEnemy",

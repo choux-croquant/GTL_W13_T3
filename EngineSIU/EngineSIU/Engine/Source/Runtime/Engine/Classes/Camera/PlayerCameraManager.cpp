@@ -260,7 +260,7 @@ void APlayerCameraManager::DoUpdateCamera(float DeltaTime)
                         break;
                     }
                 }
-                FSoundManager::GetInstance().PlaySoundWithDelay("FireOn", 1.0f);
+                FSoundManager::GetInstance().PlaySoundWithDelay("FireOn", 1.0f, 2.0f);
                 bFire1 = true;
             }
             else if (bFire2 == false && NewPOV.Location.X > -850)
@@ -283,7 +283,7 @@ void APlayerCameraManager::DoUpdateCamera(float DeltaTime)
                         break;
                     }
                 }
-                FSoundManager::GetInstance().PlaySoundWithDelay("FireOn", 1.0f);
+                FSoundManager::GetInstance().PlaySoundWithDelay("FireOn", 1.0f, 2.0f);
                 bFire2 = true;
             }
             else if (bFire3 == false && NewPOV.Location.X > -800)
@@ -306,7 +306,7 @@ void APlayerCameraManager::DoUpdateCamera(float DeltaTime)
                         break;
                     }
                 }
-                FSoundManager::GetInstance().PlaySoundWithDelay("FireOn", 1.0f);
+                FSoundManager::GetInstance().PlaySoundWithDelay("FireOn", 1.0f, 2.0f);
                 bFire3 = true;
             }
             else if (bFire4 == false && NewPOV.Location.X > -700)
@@ -329,7 +329,7 @@ void APlayerCameraManager::DoUpdateCamera(float DeltaTime)
                         break;
                     }
                 }
-                FSoundManager::GetInstance().PlaySoundWithDelay("FireOn", 1.0f);
+                FSoundManager::GetInstance().PlaySoundWithDelay("FireOn", 1.0f, 2.0f);
                 bFire4 = true;
             }
             else if (bFire5 == false && NewPOV.Location.X > -600)
@@ -352,7 +352,7 @@ void APlayerCameraManager::DoUpdateCamera(float DeltaTime)
                         break;
                     }
                 }
-                FSoundManager::GetInstance().PlaySoundWithDelay("FireOn", 1.0f);
+                FSoundManager::GetInstance().PlaySoundWithDelay("FireOn", 1.0f, 2.0f);
                 bFire5 = true;
             }
             UE_LOG(ELogLevel::Error, TEXT("%.2f %.2f %.2f"), NewPOV.Location.X, NewPOV.Location.Y, NewPOV.Location.Z);

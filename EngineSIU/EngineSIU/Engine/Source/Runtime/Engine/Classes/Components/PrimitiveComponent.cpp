@@ -337,6 +337,11 @@ void UPrimitiveComponent::BeginComponentOverlap(const FOverlapInfo& OtherOverlap
     if (!bComponentsAlreadyTouching)
     {
         UPrimitiveComponent* OtherComp = OtherOverlap.OverlapInfo.Component;
+        //World가 다른 경우
+        if (OtherComp->GetWorld() != GetWorld())
+        {
+            return;
+        }
         if (CanComponentsGenerateOverlap(this, OtherComp))
         {
             AActor* const OtherActor = OtherComp->GetOwner();

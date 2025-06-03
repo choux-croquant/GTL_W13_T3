@@ -299,6 +299,10 @@ bool FCollisionManager::IsOverlapped(const UPrimitiveComponent* Component, const
     {
         return false;
     }
+    if (Component->GetWorld() != OtherComponent->GetWorld())
+    {
+        return false;
+    }
 
     const UShapeComponent* ShapeA = Cast<UShapeComponent>(Component);
     const UShapeComponent* ShapeB = Cast<UShapeComponent>(OtherComponent);
