@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include <vector>
 #include <string>
+#include <thread>
 
 #include "Container/Array.h"
 
@@ -66,6 +67,13 @@ public:
                 activeChannels.push_back(newChannel);
             }
         }
+    }
+
+    void PlaySoundWithDelay(const std::string& name, float delaySeconds) {
+        std::thread([=]() {
+            std::this_thread::sleep_for(std::chrono::duration<float>(delaySeconds));
+            PlaySound(name);
+        }).detach();
     }
 
     void Update() {
