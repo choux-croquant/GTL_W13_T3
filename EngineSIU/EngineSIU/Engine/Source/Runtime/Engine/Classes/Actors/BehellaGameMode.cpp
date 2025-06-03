@@ -6,6 +6,8 @@
 #include "Engine/World/World.h"
 #include "Engine/Classes/Actors/BehellaGameMode.h"
 
+#include "Engine/TimerManager.h"
+
 
 EBehellaGameState ABehellaGameMode::GameState = EBehellaGameState::Ready;
 
@@ -171,9 +173,21 @@ void ABehellaGameMode::PlayerWin()
 
     // TODO 처형 시네마틱 재생
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // 1. 화면을 3초 동안 검게 만들기
+    APlayerCameraManager* CameraManager = GetWorld()->GetPlayerController()->PlayerCameraManager;
+    CameraManager->StartCameraFade(0.0f, 1.0f, 3.0f, FLinearColor::Black, true);
 
+    // 2. 3초 후 화면을 3초 동안 복구하기
+    FTimerManager::GetInstance().AddTimer(3.0f, [CameraManager, this]() {
+            // CameraManager->SetViewTarget();
+            CameraManager->StartCameraFade(1.0f, 0.0f, 3.0f, FLinearColor::Black, false);
+            FTimerManager::GetInstance().AddTimer(3.0f, [this]()
+            {
+                HeroPlayer->OnFinalScene();
+            });
+        }
+    );
     // 처형이 끝났을 때는 처형 시네마틱에서 EndMatch 호출하도록 해야함 Delegate 던지 함수 호출이던지
-
 }
 
 void ABehellaGameMode::PlayerDead()

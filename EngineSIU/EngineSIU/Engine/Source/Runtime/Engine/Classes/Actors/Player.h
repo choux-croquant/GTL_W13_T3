@@ -5,6 +5,7 @@
 #include "UObject/ObjectTypes.h"
 #include "Particles/ParticleSystem.h"
 
+class USocketComponent;
 class USkeletalMeshComponent;
 class UCameraComponent;
 class UGizmoBaseComponent;
@@ -107,7 +108,10 @@ public:
 
     bool bIsParrying = false;
 
+    USocketComponent* CameraSocketComponent = nullptr;
+    
     void SetCameraMoveCounter(int32 InCameraMoveCounter);
+
 private:
     // UPROPERTY
     // (EditAnywhere, USkeletalMeshComponent*, OriginSkeletalMeshComponent, = nullptr)

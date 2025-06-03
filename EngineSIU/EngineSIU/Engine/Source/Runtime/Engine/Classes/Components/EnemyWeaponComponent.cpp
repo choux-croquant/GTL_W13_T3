@@ -18,6 +18,7 @@ void UEnemyWeaponComponent::GotParried(float InDamage)
         if (UAnimStateMachine* StateMachine = AnimInstance->GetStateMachine())
         {
             StateMachine->ChangeStateMachineLua(FString("Defeat"));
+            //EnemyActor->SkeletalMeshComponent->ChangeRigidBodyFlag(ERigidBodyType::DYNAMIC);
             //EnemyActor->SkeletalMeshComponent->bSimulate = true;
         }
     }
@@ -26,6 +27,8 @@ void UEnemyWeaponComponent::GotParried(float InDamage)
         if (UAnimStateMachine* StateMachine = AnimInstance->GetStateMachine())
         {
             StateMachine->ChangeStateMachineLua(FString("Reacting"));
+            //EnemyActor->SkeletalMeshComponent->ChangeRigidBodyFlag(ERigidBodyType::DYNAMIC);
+            //EnemyActor->SkeletalMeshComponent->bSimulate = true;
         }
     }
 }

@@ -103,6 +103,10 @@ public:
     int32 GetLoopEndFrame() const;
 
     void SetLoopEndFrame(int32 InLoopEndFrame);
+
+    void UpdateBoneTransformToPhysScene();
+
+    void ChangeRigidBodyFlag(ERigidBodyType InType);
     
     bool bIsAnimationEnabled() const { return bPlayAnimation; }
     
