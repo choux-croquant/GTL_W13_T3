@@ -237,5 +237,5 @@ void AEnemy::ResetEnemyProperties()
     ParryGauge = 0.0f;
     CurrentAttackDirection = AD_None;
     ULuaScriptAnimInstance* AnimInstance = Cast<ULuaScriptAnimInstance>(SkeletalMeshComponent->GetAnimInstance());
-    AnimInstance->GetStateMachine()->State = FString("Idle");
+    AnimInstance->GetStateMachine()->ChangeStateMachineLua(FString("Idle"));
 }
