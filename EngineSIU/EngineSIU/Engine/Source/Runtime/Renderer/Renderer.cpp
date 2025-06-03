@@ -396,7 +396,7 @@ void FRenderer::RenderOpaque(const std::shared_ptr<FEditorViewportClient>& Viewp
 
 void FRenderer::RenderEditorDepthElement(const std::shared_ptr<FEditorViewportClient>& Viewport) const
 {
-    //if (GEngine->ActiveWorld->WorldType != EWorldType::PIE)
+    if (GEngine->ActiveWorld->WorldType != EWorldType::PIE)
     {
         {
             QUICK_SCOPE_CYCLE_COUNTER(EditorRenderPass_CPU)
