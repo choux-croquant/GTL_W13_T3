@@ -88,6 +88,7 @@ public:
     void SetAnimState(FString InState);
     FName GetStateMachine();
     void ResetHero();
+    void OnHeroDie();
 
     FOnHealthChanged OnHealthChanged;
     FOnHeroDied OnHeroDied;
@@ -101,7 +102,7 @@ private:
     // UPROPERTY
     // (EditAnywhere, USkeletalMeshComponent*, OriginSkeletalMeshComponent, = nullptr)
     UPROPERTY
-    (EditAnywhere, float, MaxHealth, = 3.f);
+    (EditAnywhere, float, MaxHealth, = 1.f);
     UPROPERTY
     (EditAnywhere, float, Health, = 3.f);
     int32 CameraMoveCounter = 0;

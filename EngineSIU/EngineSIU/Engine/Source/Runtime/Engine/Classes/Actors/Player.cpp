@@ -636,6 +636,8 @@ void AHeroPlayer::BeginPlay()
 {
     APlayer::BeginPlay();
 
+    ResetHero();
+    
     //기본적으로 제공되는 BeginOverlap. Component에서 불림
     OnActorBeginOverlap.AddLambda(
         [this](AActor* OverlappedActor, AActor* OtherActor)
@@ -653,7 +655,7 @@ void AHeroPlayer::BeginPlay()
     OnHeroDied.AddLambda(
         [this](bool bDieByHealth)
         {
-            SetAnimState(FString("Die")); 
+            OnHeroDie();
             //TODO: 게임오버 이벤트, RagDoll 전환?
         }
     );
@@ -670,19 +672,31 @@ void AHeroPlayer::BeginPlay()
     { //하드하게 걍 박기 ㅋㅋ
         PlayerController->BindAction(FString("Q"), [this](float DeltaTime)
         {
-            SetAnimState(FString("VerticalFastParry"));
+            if (!IsDead())
+            {
+                SetAnimState(FString("VerticalFastParry"));
+            }
         });
         PlayerController->BindAction(FString("W"), [this](float DeltaTime)
         {
-            SetAnimState(FString("VerticalHardParry"));
+            if (!IsDead())
+            {
+                SetAnimState(FString("VerticalHardParry"));
+            }
         });
         PlayerController->BindAction(FString("A"), [this](float DeltaTime)
         {
-            SetAnimState(FString("HorizontalFastParry"));
+            if (!IsDead())
+            {
+                SetAnimState(FString("HorizontalFastParry"));
+            }
         });
         PlayerController->BindAction(FString("S"), [this](float DeltaTime)
         {
-            SetAnimState(FString("HorizontalHardParry"));
+            if (!IsDead())
+            {
+                SetAnimState(FString("HorizontalHardParry"));
+            }
         });
     }
 }
@@ -719,8 +733,12 @@ FName AHeroPlayer::GetStateMachine()
 
 void AHeroPlayer::GetDamaged(float Damage)
 {
-    SetHealth(Health - Damage);
-    SetAnimState(FString("React"));
+    if (!IsDead())
+    {
+        SetAnimState(FString("DamageReact"));
+        //죽는 판정을 다음에 해야 DamageReact State를 DieState로 덮어씀
+        SetHealth(Health - Damage);
+    }
 }
 
 void AHeroPlayer::Parry(AActor* OverlappedActor, AActor* OtherActor)
@@ -819,6 +837,11 @@ void AHeroPlayer::ResetHero()
 {
     Health = MaxHealth;
     SetAnimState(FString("Idle"));
+}
+
+void AHeroPlayer::OnHeroDie()
+{
+    SetAnimState(FString("Die"));
 }
 
 void AHeroPlayer::SetHealth(float InHealth)
