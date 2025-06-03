@@ -52,9 +52,9 @@ void AEnemy::PostSpawnInitialize()
     CreateAttackNotify(Horizontal2, AttackHorizontalNotify, "Attack_Horizontal", 0.0f);
     CreateAttackNotify(Vertical1, AttackVerticalNotify, "Attack_Vertical", 0.0f);
 
-    CreateAttackNotify(Horizontal1, AttackHorizontalNotifyEnd, "Attack_Horizontal_End", Horizontal1->GetDuration() - 0.01f);
-    CreateAttackNotify(Horizontal2, AttackHorizontalNotifyEnd, "Attack_Horizontal_End", Horizontal2->GetDuration() - 0.01f);
-    CreateAttackNotify(Vertical1, AttackVerticalNotifyEnd, "Attack_Vertical_End", Vertical1->GetDuration() - 0.01f);
+    CreateAttackNotify(Horizontal1, AttackHorizontalNotifyEnd, "Attack_Horizontal_End", Horizontal1->GetDuration() - 0.1f);
+    CreateAttackNotify(Horizontal2, AttackHorizontalNotifyEnd, "Attack_Horizontal_End", Horizontal2->GetDuration() - 0.1f);
+    CreateAttackNotify(Vertical1, AttackVerticalNotifyEnd, "Attack_Vertical_End", Vertical1->GetDuration() - 0.1f);
 
     // Sound Notify
     // 패링 성공 시 - 피격 시작할 때 Notify
@@ -70,6 +70,7 @@ void AEnemy::BeginPlay()
     Super::BeginPlay();
     BindAttackNotifies();
     SkeletalMeshComponent->bSimulate = false;
+    InitialTransform = RootComponent->GetComponentTransform();
 }
 
 void AEnemy::Tick(float DeltaTime)
@@ -253,4 +254,5 @@ void AEnemy::ResetEnemyProperties()
     CurrentAttackDirection = AD_None;
     ULuaScriptAnimInstance* AnimInstance = Cast<ULuaScriptAnimInstance>(SkeletalMeshComponent->GetAnimInstance());
     AnimInstance->GetStateMachine()->ChangeStateMachineLua(FString("Idle"));
+    RootComponent->SetWorldTransform(InitialTransform);
 }
