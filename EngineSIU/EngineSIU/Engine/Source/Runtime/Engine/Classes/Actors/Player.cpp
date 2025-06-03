@@ -669,8 +669,6 @@ void AHeroPlayer::BeginPlay()
     OnHealthChanged.AddLambda(
         [this](int32 InHealth, int32 InMaxHealth)
         {
-            GetWorld()->GetPlayerController()->PlayerCameraManager->VignetteColor = FLinearColor(1.0f, 0.0f, 0.0f, 1.0f);
-            GetWorld()->GetPlayerController()->PlayerCameraManager->StartVignetteAnimation(1.0f, 0.0f, 0.3f);
         }
     );
 
@@ -778,6 +776,8 @@ void AHeroPlayer::GetDamaged(float Damage)
         SetAnimState(FString("DamageReact"));
         //죽는 판정을 다음에 해야 DamageReact State를 DieState로 덮어씀
         SetHealth(Health - Damage);
+        GetWorld()->GetPlayerController()->PlayerCameraManager->VignetteColor = FLinearColor(1.0f, 0.0f, 0.0f, 1.0f);
+        GetWorld()->GetPlayerController()->PlayerCameraManager->StartVignetteAnimation(1.0f, 0.0f, 0.3f);
     }
 }
 

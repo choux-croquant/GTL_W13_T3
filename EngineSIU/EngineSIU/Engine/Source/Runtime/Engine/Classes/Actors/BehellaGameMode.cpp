@@ -190,6 +190,7 @@ void ABehellaGameMode::PlayerWin()
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // 1. 화면을 3초 동안 검게 만들기
     APlayerCameraManager* CameraManager = GetWorld()->GetPlayerController()->PlayerCameraManager;
+    CameraManager->VignetteColor = FLinearColor::Black;
     CameraManager->StartCameraFade(0.0f, 1.0f, 3.0f, FLinearColor::Black, true);
 
     // 2. 3초 후 화면을 3초 동안 복구하기
