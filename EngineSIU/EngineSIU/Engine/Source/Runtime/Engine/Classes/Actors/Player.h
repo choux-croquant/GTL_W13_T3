@@ -90,6 +90,7 @@ public:
     void SetAnimState(FString InState);
     FName GetStateMachine();
     void ResetHero();
+    void OnFinalScene();
     void OnHeroDie();
 
     FOnHealthChanged OnHealthChanged;
@@ -105,6 +106,8 @@ public:
     bool bWaitingStart = true;
 
     bool bIsParrying = false;
+
+    void SetCameraMoveCounter(int32 InCameraMoveCounter);
 private:
     // UPROPERTY
     // (EditAnywhere, USkeletalMeshComponent*, OriginSkeletalMeshComponent, = nullptr)

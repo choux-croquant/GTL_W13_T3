@@ -10,6 +10,7 @@ AnimFSM = {
         DamageReact = "Contents/Player/Armature|DamageReact",
         Die = "Contents/Player/Armature|Die",
         Idle = "Contents/Player/Armature|Idle",
+        FinalAttack = "Contents/Player/Armature|FinalAttack",
     },
     isAttacking = false,
     lastAttackTime = 0,
@@ -48,16 +49,28 @@ AnimFSM = {
             return self:HandleHorizontalFastParryState() 
         elseif self.currentState == "HorizontalHardParry" then
             return self:HandleHorizontalHardParryState() 
+        elseif self.currentState == "FinalAttack" then
+            return self:HandleFinalAttackState()
         else
             return self:HandleIdleState()
         end
+    end,
+
+    HandleFinalAttackState = function(self)
+        return{
+            anim = self.AnimMap["FinalAttack"],
+            blend = 0.1,
+            loop = false, 
+            rate_scale = 1.0,
+            state = self.currentState,
+        }
     end,
 
     HandleIdleState = function(self)
 
         return {
             anim = self.AnimMap["Idle"],
-            blend = 0.0,
+            blend = 0.1,
             loop = true, 
             rate_scale = 1.0,
             state = self.currentState,

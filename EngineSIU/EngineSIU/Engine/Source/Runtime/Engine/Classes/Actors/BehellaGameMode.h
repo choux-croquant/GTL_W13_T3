@@ -8,11 +8,9 @@ enum class EBehellaGameState
     Ready,
     PrepareToPlay,
     Play,
-    PlayToDead,
     Dead,
-    DeadToGameOver,
-    PlayToGameOver,
     GameOver,
+    PlayToGameOver,
     GameOverToPlay,
 };
 
@@ -50,11 +48,16 @@ public:
     // 게임 시작
     virtual void StartMatch() override;
 
+    virtual void RestartMatch();
+
     // 플레이어 승리
     void PlayerWin();
 
     // 플레이어 패배(사망)
     void PlayerDead();
+
+    // 이거로 한번 안걸치면 묶어논거에서 터져버림
+    void EndMatchWrap(bool bIsWin);
 
     // 게임 종료
     virtual void EndMatch(bool bIsWin) override;
