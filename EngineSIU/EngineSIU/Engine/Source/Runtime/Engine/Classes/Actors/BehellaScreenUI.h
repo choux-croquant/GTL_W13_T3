@@ -37,8 +37,8 @@ public:
     float FadeContinueTime = 1.0f;
     float FadeOutTime = 1.0f;
     float LogoFadeTime = 1.0f;
-    float PressKeyRevealTime = 2.5f;
-    float PressKeyLoopTime = 3.0f;
+    float PressKeyRevealTime = 1.5f;
+    float PressKeyLoopTime = 4.0f;
 };
 
 

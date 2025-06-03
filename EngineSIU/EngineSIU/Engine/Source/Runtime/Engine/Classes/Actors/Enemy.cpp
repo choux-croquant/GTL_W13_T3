@@ -82,7 +82,7 @@ void AEnemy::Tick(float DeltaTime)
     }
 
     //UE_LOG(ELogLevel::Warning, TEXT("PARRY %f"), ParryGauge);
-    UE_LOG(ELogLevel::Warning, TEXT("ATTACK_DIRECTION %d"), CurrentAttackDirection);
+    //UE_LOG(ELogLevel::Warning, TEXT("ATTACK_DIRECTION %d"), CurrentAttackDirection);
 }
 
 UObject* AEnemy::Duplicate(UObject* InOuter)

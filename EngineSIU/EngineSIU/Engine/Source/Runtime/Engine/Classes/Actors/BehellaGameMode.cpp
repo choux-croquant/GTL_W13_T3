@@ -32,10 +32,23 @@ void ABehellaGameMode::BeginPlay()
         Handler->OnKeyDownDelegate.AddLambda([this](const FKeyEvent& KeyEvent)
             {
                 // 키가 Space, 아직 게임이 안 시작됐고, 실패 또는 종료되지 않았다면
-                if (KeyEvent.GetKeyCode() == VK_SPACE &&
-                    !bGameRunning && bGameEnded)
+                if (KeyEvent.GetKeyCode() == VK_SPACE)
                 {
-                    PrepareMatch();
+                    if (!bGameRunning && bGameEnded) 
+                    {
+                        PrepareMatch();
+                    }
+                    if (GameState == EBehellaGameState::Dead) 
+                    {
+                        EndMatchWrap(false);
+                    }
+                }
+                if (KeyEvent.GetKeyCode() == 'R')
+                {
+                    if (GameState == EBehellaGameState::GameOver)
+                    {
+                        RestartMatch();
+                    }
                 }
             });
     }
@@ -114,6 +127,7 @@ void ABehellaGameMode::InitGame()
 
 void ABehellaGameMode::PrepareMatch()
 {
+    bGameRunning = true;
     GameState = EBehellaGameState::PrepareToPlay;
 
     CloseScreen(CurScreenUI);
@@ -135,6 +149,21 @@ void ABehellaGameMode::StartMatch()
 
 }
 
+void ABehellaGameMode::RestartMatch()
+{
+    ResetValue(); //Player 체력 값이나 Enemy 게이지 값 초기화
+
+    GameState = EBehellaGameState::Play;
+    HeroPlayer->SetCameraMoveCounter(3);
+    CloseScreen(CurScreenUI);
+    // 지금 Fade로 Closing하는게 잘 안됨 일단 시간 없어서 아래처럼 바로 끄기로
+    ClosingScreenUI->EndScreen();
+    ClosingScreenUI = nullptr;
+
+    CurScreenUI = &PlayScreenUI;
+    CurScreenUI->InitScreen();
+}
+
 void ABehellaGameMode::PlayerWin()
 {
     // 게임 State 설정
@@ -150,8 +179,12 @@ void ABehellaGameMode::PlayerWin()
 void ABehellaGameMode::PlayerDead()
 {
     // 게임 State 설정
-    GameState = EBehellaGameState::PlayToDead;
+    GameState = EBehellaGameState::Dead;
     CloseScreen(CurScreenUI);
+    // 지금 Fade로 Closing하는게 잘 안됨 일단 시간 없어서 아래처럼 바로 끄기로
+    ClosingScreenUI->EndScreen();
+    ClosingScreenUI = nullptr;
+
     CurScreenUI = &DeadScreenUI;
     // You Died 뜨는 UI FadeIn
     CurScreenUI->InitScreen();
@@ -160,24 +193,35 @@ void ABehellaGameMode::PlayerDead()
 
 }
 
+void ABehellaGameMode::EndMatchWrap(bool bIsWin)
+{
+    EndMatch(bIsWin);
+}
+
 void ABehellaGameMode::EndMatch(bool bIsWin)    // 현재는 bIsWin이 쓰이진 않음
 {
+    GameState = EBehellaGameState::GameOver;
+
     // 게임 End 화면 UI 켜기
     CloseScreen(CurScreenUI);
+    // 지금 Fade로 Closing하는게 잘 안됨 일단 시간 없어서 아래처럼 바로 끄기로
+    ClosingScreenUI->EndScreen();
+    ClosingScreenUI = nullptr;
+
     CurScreenUI = &GameOverScreenUI;
     CurScreenUI->InitScreen();
     // 캐릭터에 대한 Input 차단 걸기
 
-    ResetValue(); // TODO Player 체력 값이나 Enemy 게이지 값 초기화
 
-    Super::EndMatch(bIsWin);  //  Super에서 Delegate BroadCast 걸어줌
+    //Super::EndMatch(bIsWin);  //  Super에서 Delegate BroadCast 걸어줌
 }
 
 void ABehellaGameMode::ResetValue()
 {
     // TODO Player 체력 값이나 Enemy 게이지 값 초기화
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+    HeroPlayer->ResetHero();
+    Enemy->ResetEnemyProperties();
 }
 
 void ABehellaGameMode::CheckFatality()
