@@ -185,6 +185,7 @@ void ABehellaGameMode::PlayerWin()
             FTimerManager::GetInstance().AddTimer(3.0f, [this]()
             {
                 HeroPlayer->OnFinalScene();
+                Enemy->OnFinalScene();
             });
         }
     );
