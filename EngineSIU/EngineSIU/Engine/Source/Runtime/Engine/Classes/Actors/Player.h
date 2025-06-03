@@ -114,6 +114,8 @@ private:
     (EditAnywhere, float, Health, = 3.f);
     int32 CameraMoveCounter = 0;
 
+    FTransform InitialActorTransform;
+
     UParticleSystem* SparkParticle = nullptr;
     UParticleSystem* FogParticle = nullptr;
 };
