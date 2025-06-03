@@ -10,6 +10,8 @@
 #include "UObject/UObjectIterator.h"
 #include "Engine/SkeletalMesh.h"
 #include "Userinterface/Console.h"
+#include "Engine/Engine.h"
+#include "Physics/PhysicsManager.h"
 
 void AEnemy::PostSpawnInitialize()
 {
@@ -248,11 +250,17 @@ void AEnemy::BindAttackNotifies()
 
 void AEnemy::ResetEnemyProperties()
 {
+    SkeletalMeshComponent->ChangeRigidBodyFlag(ERigidBodyType::KINEMATIC);
+    SkeletalMeshComponent->bSimulate = false;
+    GEngine->PhysicsManager->GetScene(GetWorld())->fetchResults(true);
+    
     ParryGauge = 0.0f;
     CurrentAttackDirection = AD_None;
     ULuaScriptAnimInstance* AnimInstance = Cast<ULuaScriptAnimInstance>(GetComponentByClass<USkeletalMeshComponent>()->GetAnimInstance());
     AnimInstance->GetStateMachine()->ChangeStateMachineLua(FString("Idle"));
     RootComponent->SetWorldTransform(InitialTransform);
+
+
 }
 
 void AEnemy::OnFinalScene()

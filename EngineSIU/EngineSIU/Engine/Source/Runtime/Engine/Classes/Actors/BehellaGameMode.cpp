@@ -8,6 +8,7 @@
 #include "Physics/PhysicsManager.h"
 #include "SoundManager.h"
 #include "Engine/TimerManager.h"
+#include "Engine/Contents/Objects/DamageCameraShake.h"
 
 
 EBehellaGameState ABehellaGameMode::GameState = EBehellaGameState::Ready;
@@ -213,6 +214,9 @@ void ABehellaGameMode::PlayerWin()
             FTimerManager::GetInstance().AddTimer(2.0f, [this]()
             {
                 HeroPlayer->SetAnimState(FString("FinalAttack"));
+                FSoundManager::GetInstance().PlaySound("footprint");
+                FSoundManager::GetInstance().PlaySoundWithDelay("footprint", 0.4f);
+                FSoundManager::GetInstance().PlaySoundWithDelay("footprint", 0.8f);
                 FTimerManager::GetInstance().AddTimer(2.0f, [this]()
                 {
                     Enemy->GetComponentByClass<USkeletalMeshComponent>()->ChangeRigidBodyFlag(ERigidBodyType::DYNAMIC);
