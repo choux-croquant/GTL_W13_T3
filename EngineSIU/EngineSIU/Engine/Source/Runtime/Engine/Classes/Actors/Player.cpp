@@ -640,6 +640,8 @@ void AHeroPlayer::BeginPlay()
 {
     APlayer::BeginPlay();
 
+    InitialActorTransform = GetRootComponent()->GetComponentTransform();
+    
     ResetHero();
 
     // Spawn할 파티클
@@ -868,6 +870,7 @@ void AHeroPlayer::PostSpawnInitialize()
 
 void AHeroPlayer::ResetHero()
 {
+    GetRootComponent()->SetWorldTransform(InitialActorTransform);
     Health = MaxHealth;
     SetAnimState(FString("Idle"));
 }
