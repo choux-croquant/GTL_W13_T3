@@ -98,11 +98,13 @@ public:
     bool IsDead();
     float GetHealth();
     float GetMaxHealth();
+
+    bool bIsParrying = false;
 private:
     // UPROPERTY
     // (EditAnywhere, USkeletalMeshComponent*, OriginSkeletalMeshComponent, = nullptr)
     UPROPERTY
-    (EditAnywhere, float, MaxHealth, = 1.f);
+    (EditAnywhere, float, MaxHealth, = 100.f);
     UPROPERTY
     (EditAnywhere, float, Health, = 3.f);
     int32 CameraMoveCounter = 0;

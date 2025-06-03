@@ -60,13 +60,16 @@ void UHeroWeaponComponent::OnWeaponOverlapped(UPrimitiveComponent* OverlappedCom
     {
         if (UEnemyWeaponComponent* EnemyWeaponComponent = Cast<UEnemyWeaponComponent>(OtherComp))
         {
-            AHeroPlayer* Player = Cast<AHeroPlayer>(GetOwner());
-             
-            if (Enemy->CurrentAttackDirection != AD_None)
+            if (AHeroPlayer* Player = Cast<AHeroPlayer>(GetOwner()))
             {
-                Player->Parry(Player, Enemy);
-                EnemyWeaponComponent->GotParried(GetStateDamage(Player->GetStateMachine()));
-                
+                if (Enemy->CurrentAttackDirection != AD_None)
+                {
+                    if (Player->GetStateMachine() != TEXT("Idle"))
+                    {
+                        Player->Parry(Player, Enemy);
+                        EnemyWeaponComponent->GotParried(GetStateDamage(Player->GetStateMachine()));
+                    }
+                }
             }
         }
     }
