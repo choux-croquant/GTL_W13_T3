@@ -25,6 +25,20 @@ void ABehellaGameMode::BeginPlay()
 
     SetActorTickInEditor(false); // PIE 모드에서만 Tick 수행
 
+    if (APlayerController* PC = GEngine->ActiveWorld->GetPlayerController())
+    {
+        if (APlayerCameraManager* PCM = PC->PlayerCameraManager)
+        {
+            FVector BackgroundLocation = FVector(29.14f, 36.69f, 31.37f);
+            FRotator BackgroundRotation = FRotator(-3.f, -122.f, 0.f);
+            FMinimalViewInfo BackgroundPOV;
+            BackgroundPOV.Location = BackgroundLocation;
+            BackgroundPOV.Rotation = BackgroundRotation;
+            
+            PCM->ViewTarget.POV = BackgroundPOV;
+        }
+    }
+
     if (FSlateAppMessageHandler* Handler = GEngineLoop.GetAppMessageHandler())
     {
         /*Handler->OnPIEModeStartDelegate.AddLambda([this]()
