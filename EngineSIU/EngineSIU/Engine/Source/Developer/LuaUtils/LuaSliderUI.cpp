@@ -30,7 +30,7 @@ void LuaSliderUI::DrawImGuiUI()
 
     // 1) 월드 좌표계에서 절대 위치와 크기 계산
     RectTransform worldRect = GetWorldRectTransform();
-    ImVec2 screenPos = ImVec2(worldRect.Position.X, worldRect.Position.Y);
+    ImVec2 screenPos = worldRect.GetAlignedPosition();
     ImVec2 fullSize = ImVec2(worldRect.Size.X, worldRect.Size.Y);
 
     // 2) 배경 텍스처가 있으면 그리기
