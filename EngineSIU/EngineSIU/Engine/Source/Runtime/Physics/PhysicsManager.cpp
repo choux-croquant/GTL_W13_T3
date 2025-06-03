@@ -40,6 +40,12 @@ void FPhysicsManager::InitPhysX()
 {
     Foundation = PxCreateFoundation(PX_PHYSICS_VERSION, Allocator, ErrorCallback);
 
+    if (!Foundation)
+    {
+        UE_LOG(ELogLevel::Error, TEXT("Failed to create PhysX Foundation"));
+        return;
+    }
+    
     // PVD 생성 및 연결
     Pvd = PxCreatePvd(*Foundation);
     if (Pvd) {
@@ -51,14 +57,37 @@ void FPhysicsManager::InitPhysX()
     }
     
     Physics = PxCreatePhysics(PX_PHYSICS_VERSION, *Foundation, PxTolerancesScale(), true, Pvd);
-    
-    Material = Physics->createMaterial(0.5f, 0.7f, 0.1f);
+    if (!Physics)
+    {
+        UE_LOG(ELogLevel::Error, TEXT("Failed to create PhysX Physics"));
+        if (Foundation)
+        {
+            Foundation->release();
+            Foundation = nullptr;
+        }
+        return;
+    }
 
-    PxInitExtensions(*Physics, Pvd);
+    Material = Physics->createMaterial(0.5f, 0.7f, 0.1f);
+    if (!Material)
+    {
+        UE_LOG(ELogLevel::Error, TEXT("Failed to create PhysX Material"));
+        return;
+    }
+
+    bool extensionsResult = PxInitExtensions(*Physics, Pvd);
+    if (!extensionsResult)
+    {
+        UE_LOG(ELogLevel::Warning, TEXT("PhysX Extensions initialization failed, but continuing"));
+    }
+    
+    UE_LOG(ELogLevel::Display, TEXT("PhysX initialization completed successfully"));
 }
 
 PxScene* FPhysicsManager::CreateScene(UWorld* World)
 {
+
+    
     if (SceneMap[World])
     {
         // PVD 클라이언트 생성 및 씬 연결
