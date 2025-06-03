@@ -71,6 +71,10 @@ APlayerCameraManager::APlayerCameraManager()
     F_Stop = 2.8f;
     SensorWidth = 24.576f; // mm
     FocalDistance = 0.f; // cm
+
+    LetterBoxRatio = 2.0f;
+
+    bAnimateLetterBox = false;
 }
 
 void APlayerCameraManager::PostSpawnInitialize()
