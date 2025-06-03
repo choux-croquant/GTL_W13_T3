@@ -86,8 +86,6 @@ AnimFSM = {
             if self.timer >= self.AnimStartTime + (self.CurrentAnimDuration / self.parrySpeed) then
                 self:TransitionToState("Idle")
 
-                print("ParryEnd")
-
                 if self.isReacting then
                     isReacting = false
                     self:ChangeParryState(false)
