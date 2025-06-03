@@ -76,6 +76,11 @@ public:
     virtual void EndScreen() override;
 
     LuaTextUI* ScreenName;
+    LuaImageUI* DiedImage;
+    LuaImageUI* BGImage;
+
+    float BGFadeInTime = 3.743f;
+    float DiedFadeInTime = 1.743f;
 };
 
 class FBehellaGameOverScreenUI : public FBehellaScreenUI
