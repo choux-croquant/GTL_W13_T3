@@ -9,7 +9,7 @@ AnimFSM = {
     reactionAnimation = "Contents/Enemy_Impact/Armature|Enemy_Impact",
     kneelAnimation = "Contents/Kneel/Armature|Kneel",
     kneelIdleAnimation = "Contents/Kneel_Idle/Armature|Kneel_Idle",
-    attackCooldown = 2.0,
+    attackCooldown = 2.5,
     isAttacking = false,
     isReacting = false,
     isDefeated = false,
@@ -25,7 +25,8 @@ AnimFSM = {
 
     Update = function(self, dt)
         self.timer = self.timer + dt
-
+        -- print(self.timer)
+        -- print(self.currentState)
         if self.currentState == "Reacting" then
             return self:HandleReactionState()
         elseif self.currentState == "Attacking" then
@@ -45,7 +46,7 @@ AnimFSM = {
 
         return {
             anim = self.idleAnimation,
-            blend = 0.2,
+            blend = 0.0,
             loop = true,
             rate_scale = 1.0,
             state = self.currentState
@@ -58,8 +59,13 @@ AnimFSM = {
             self.selectedAttack = self.attackAnimations[math.random(#self.attackAnimations)]
             self.attackStartTime = self.timer;
         end
-
+        -- print("ATTACK DURATION")
+        -- print(self.CurrentAnimDuration)
         if self.timer > self.attackStartTime + self.CurrentAnimDuration / 0.8 then
+            print("CATCH")
+            print(self.timer)
+            print(self.attackStartTime)
+            print(self.CurrentAnimDuration)
             self.isAttacking = false
             self.lastAttackTime = self.timer
             self:TransitionToState("Idle")
@@ -67,7 +73,7 @@ AnimFSM = {
 
         return {
             anim = self.selectedAttack,
-            blend = 0.5,
+            blend = 1.0,
             loop = false,
             rate_scale = 0.8,
             state = self.currentState
@@ -78,18 +84,19 @@ AnimFSM = {
         if not self.isReacting then
             self.isReacting = true
             self.isAttacking = false
-            self.lastAttackTime = self.timer
             self.reactionStartTime = self.timer;
         end
-
+        -- print("REACTION DURATION")
+        -- print(self.CurrentAnimDuration)
         if self.reactionStartTime and self.timer > self.reactionStartTime + self.CurrentAnimDuration then
             self.isReacting = false
+            self.lastAttackTime = self.timer
             self:TransitionToState("Idle")
         end
 
         return {
             anim = self.reactionAnimation,
-            blend = 0.1,
+            blend = 0.5,
             loop = false,
             rate_scale = 1.0,
             state = self.currentState

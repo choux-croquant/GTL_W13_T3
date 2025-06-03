@@ -18,6 +18,7 @@ void UEnemyWeaponComponent::GotParried(float InDamage)
         if (UAnimStateMachine* StateMachine = AnimInstance->GetStateMachine())
         {
             StateMachine->ChangeStateMachineLua(FString("Defeat"));
+            //EnemyActor->SkeletalMeshComponent->bSimulate = true;
         }
     }
     else 
