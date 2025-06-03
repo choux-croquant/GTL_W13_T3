@@ -188,6 +188,12 @@ void ABehellaGameMode::PlayerWin()
     // 게임 State 설정
     GameState = EBehellaGameState::PlayToGameOver;
 
+    CloseScreen(CurScreenUI);
+    // 지금 Fade로 Closing하는게 잘 안됨 일단 시간 없어서 아래처럼 바로 끄기로
+    ClosingScreenUI->EndScreen();
+    ClosingScreenUI = nullptr;
+    CurScreenUI = nullptr;
+
     // TODO 처형 시네마틱 재생
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // 1. 화면을 3초 동안 검게 만들기
@@ -202,10 +208,15 @@ void ABehellaGameMode::PlayerWin()
             Enemy->OnFinalScene();
         
             // 타이머 대신 처형버튼 으로 수정
-            FTimerManager::GetInstance().AddTimer(3.0f, [this]()
+            FTimerManager::GetInstance().AddTimer(2.0f, [this]()
             {
                 HeroPlayer->SetAnimState(FString("FinalAttack"));
             });
+        }
+    );
+
+    FTimerManager::GetInstance().AddTimer(10.0f, [this]() {
+        EndMatchWrap(true);
         }
     );
     // 처형이 끝났을 때는 처형 시네마틱에서 EndMatch 호출하도록 해야함 Delegate 던지 함수 호출이던지
@@ -240,10 +251,17 @@ void ABehellaGameMode::EndMatch(bool bIsWin)    // 현재는 bIsWin이 쓰이진
     GetWorld()->GetPlayerController()->PlayerCameraManager->StartLetterBoxAnimation(1.2f, 0.0f, 2.0f);
 
     // 게임 End 화면 UI 켜기
-    CloseScreen(CurScreenUI);
-    // 지금 Fade로 Closing하는게 잘 안됨 일단 시간 없어서 아래처럼 바로 끄기로
-    ClosingScreenUI->EndScreen();
-    ClosingScreenUI = nullptr;
+    if (CurScreenUI != nullptr) 
+    {
+        CloseScreen(CurScreenUI);
+    }
+    
+    if (ClosingScreenUI != nullptr) 
+    {
+        // 지금 Fade로 Closing하는게 잘 안됨 일단 시간 없어서 아래처럼 바로 끄기로
+        ClosingScreenUI->EndScreen();
+        ClosingScreenUI = nullptr;
+    }
 
     CurScreenUI = &GameOverScreenUI;
     CurScreenUI->InitScreen();
@@ -255,8 +273,6 @@ void ABehellaGameMode::EndMatch(bool bIsWin)    // 현재는 bIsWin이 쓰이진
 
 void ABehellaGameMode::ResetValue()
 {
-    // TODO Player 체력 값이나 Enemy 게이지 값 초기화
-    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     HeroPlayer->ResetHero();
     Enemy->ResetEnemyProperties();
 }
@@ -281,7 +297,11 @@ void ABehellaGameMode::Tick(float DeltaTime)
         ClosingScreenUI = nullptr;
     }
 
-    CurScreenUI->TickScreen(DeltaTime);
+    if (CurScreenUI != nullptr)
+    {
+        CurScreenUI->TickScreen(DeltaTime);
+    }
+    
 
     PlayScreenUI.ParryRatio = Enemy->ParryGauge / MaxParryGauge;
 
