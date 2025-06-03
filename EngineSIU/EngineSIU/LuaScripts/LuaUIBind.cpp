@@ -27,12 +27,13 @@ void LuaUIBind::Bind(sol::table& Table)
         RectTransform,
 
         // 생성자
-        sol::constructors<RectTransform(), RectTransform(float, float, float, float, AnchorDirection)>(),
+        sol::constructors<RectTransform(), RectTransform(float, float, float, float, AnchorDirection, AnchorDirection)>(),
 
         // 멤버 변수
         LUA_BIND_MEMBER(&RectTransform::Position),
         LUA_BIND_MEMBER(&RectTransform::Size),
-        LUA_BIND_MEMBER(&RectTransform::AnchorDir)
+        LUA_BIND_MEMBER(&RectTransform::AnchorDir),
+        LUA_BIND_MEMBER(&RectTransform::AlignDir)
     );
 
     // LuaTextUI 바인딩
@@ -45,7 +46,7 @@ void LuaUIBind::Bind(sol::table& Table)
 
         // 멤버 변수
         LUA_BIND_MEMBER(&LuaTextUI::Text),
-        LUA_BIND_MEMBER(&LuaTextUI::FontSytle),
+        LUA_BIND_MEMBER(&LuaTextUI::FontStyle),
         LUA_BIND_MEMBER(&LuaTextUI::FontSize),
         LUA_BIND_MEMBER(&LuaTextUI::FontColor),
 

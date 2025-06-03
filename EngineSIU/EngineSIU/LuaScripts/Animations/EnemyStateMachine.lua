@@ -27,6 +27,17 @@ AnimFSM = {
         self.timer = self.timer + dt
         -- print(self.timer)
         -- print(self.currentState)
+
+        if self.GameState <= 1 then
+            return {
+            anim = self.idleAnimation,
+            blend = 0.0,
+            loop = true,
+            rate_scale = 1.0,
+            state = self.currentState
+            }
+        end
+
         if self.currentState == "Reacting" then
             return self:HandleReactionState()
         elseif self.currentState == "Attacking" then

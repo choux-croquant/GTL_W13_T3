@@ -2,7 +2,6 @@
 
 #include "LuaUI.h"
 #include "Engine/Source/Runtime/Core/Container/String.h"
-#include "Engine/Source/ThirdParty/ImGui/include/ImGui/imgui.h"
 #include "Engine/Source/Runtime/Core/Math/Color.h"
 
 class LuaTextUI : public LuaUI 
@@ -15,7 +14,7 @@ public:
 
 public:
     FString Text;
-    ImFont* FontSytle;
+    ImFont* FontStyle;
     float FontSize;
     FLinearColor FontColor;
 

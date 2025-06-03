@@ -21,6 +21,10 @@ void FResourceManager::Initialize(FRenderer* Renderer, FGraphicsDevice* Device)
     LoadTextureFromFile(Device->Device, L"Assets/Texture/UUID_Font.png");
     LoadTextureFromFile(Device->Device, L"Assets/Texture/spotLight.png");
     LoadTextureFromFile(Device->Device, L"Assets/Texture/WhiteBox.png");
+    LoadTextureFromFile(Device->Device, L"Assets/Texture/BehellaLogo.png");
+    LoadTextureFromFile(Device->Device, L"Assets/Texture/PressSpace.png");
+
+
 
     LoadTextureFromFile(Device->Device, L"Assets/Editor/Icon/S_Actor.PNG");
     LoadTextureFromFile(Device->Device, L"Assets/Editor/Icon/S_LightSpot.PNG");

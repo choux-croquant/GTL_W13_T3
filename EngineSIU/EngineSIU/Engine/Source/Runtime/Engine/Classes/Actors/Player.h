@@ -70,6 +70,7 @@ public:
 DECLARE_MULTICAST_DELEGATE_TwoParams(FOnHealthChanged, int32 /* CurrentHealth */, int32 /* MaxHealth */);
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnHeroDied, bool /* DieByHealth */);
 DECLARE_MULTICAST_DELEGATE(FOnParry);
+DECLARE_MULTICAST_DELEGATE(FOnCinematicFinish);
 // DECLARE_MULTICAST_DELEGATE_
 
 class AHeroPlayer : public APlayer
@@ -94,11 +95,14 @@ public:
     FOnHealthChanged OnHealthChanged;
     FOnHeroDied OnHeroDied;
     FOnParry OnParry;
+    FOnCinematicFinish OnCinematicFinish;
 
     void SetHealth(float InHealth);
     bool IsDead();
     float GetHealth();
     float GetMaxHealth();
+
+    bool bWaitingStart = true;
 
     bool bIsParrying = false;
 private:

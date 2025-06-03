@@ -23,7 +23,7 @@ void LuaImageUI::DrawImGuiUI()
     }
 
     RectTransform worldRect = GetWorldRectTransform();
-    ImVec2 screenPos = ImVec2(worldRect.Position.X, worldRect.Position.Y);
+    ImVec2 screenPos = worldRect.GetAlignedPosition();
     ImVec2 drawSize = ImVec2(worldRect.Size.X, worldRect.Size.Y);
 
     ImVec4 tintColor = ImVec4(Color.R, Color.G, Color.B, Color.A);
@@ -45,12 +45,12 @@ void LuaImageUI::SetTexture(FTexture* InTexture)
     Texture = InTexture;
 }
 
-void LuaImageUI::SetColor(FLinearColor& InColor)
+void LuaImageUI::SetColor(const FLinearColor& InColor)
 {
     Color = InColor;
 }
 
-void LuaImageUI::SetTextureByName(FString TextureName)
+void LuaImageUI::SetTextureByName(const FString TextureName)
 {
     FTexture* FindTexture = LuaUIManager::Get().GetTextureByName(TextureName);
 

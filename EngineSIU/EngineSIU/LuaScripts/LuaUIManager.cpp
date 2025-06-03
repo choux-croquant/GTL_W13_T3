@@ -17,7 +17,7 @@ void LuaUIManager::CreateUI(FName InName)
     UpdateUIArrayForSort();
 }
 
-void LuaUIManager::CreateText(FName InName, RectTransform InRectTransform, int InSortOrder, FString InText, FName FontStyleName, float InFontSize, FLinearColor InFontColor)
+LuaTextUI* LuaUIManager::CreateText(FName InName, RectTransform InRectTransform, int InSortOrder, FString InText, FName FontStyleName, float InFontSize, FLinearColor InFontColor)
 {
     ImFont* FindFont = GetFontStyleByName(FontStyleName);
 
@@ -25,9 +25,10 @@ void LuaUIManager::CreateText(FName InName, RectTransform InRectTransform, int I
 
     UIMap.Add(InName, NewTextUI);
     UpdateUIArrayForSort();
+    return NewTextUI;
 }
 
-void LuaUIManager::CreateImage(FName InName, RectTransform InRectTransform, int InSortOrder, FName TextureName, FLinearColor InTextureColor)
+LuaImageUI* LuaUIManager::CreateImage(FName InName, RectTransform InRectTransform, int InSortOrder, FName TextureName, FLinearColor InTextureColor)
 {
     FTexture* FindTexture = GetTextureByName(TextureName);
     
@@ -35,17 +36,21 @@ void LuaUIManager::CreateImage(FName InName, RectTransform InRectTransform, int 
 
     UIMap.Add(InName, NewImageUI);
     UpdateUIArrayForSort();
+
+    return NewImageUI;
 }
 
-void LuaUIManager::CreateButton(FName InName,  RectTransform InRectTransform, int InSortOrder, FString LuaFunctionName)
+LuaButtonUI* LuaUIManager::CreateButton(FName InName,  RectTransform InRectTransform, int InSortOrder, FString LuaFunctionName)
 {
     LuaButtonUI* NewButtonUI = new LuaButtonUI(InName, InRectTransform, InSortOrder, LuaFunctionName);
 
     UIMap.Add(InName, NewButtonUI);
     UpdateUIArrayForSort();
+
+    return NewButtonUI;
 }
 
-void LuaUIManager::CreateSlider(FName InName, RectTransform InRectTransform, int InSortOrder, FName InBackgroundTexture, FLinearColor InBackgroundColor, FName InFillTexture, FLinearColor InFillColor, float InMarginTop, float InMarginBottom, float InMarginLeft, float InMarginRight)
+LuaSliderUI* LuaUIManager::CreateSlider(FName InName, RectTransform InRectTransform, int InSortOrder, FName InBackgroundTexture, FLinearColor InBackgroundColor, FName InFillTexture, FLinearColor InFillColor, float InMarginTop, float InMarginBottom, float InMarginLeft, float InMarginRight)
 {
     FTexture* FindBackgroundTexture = GetTextureByName(InBackgroundTexture);
     FTexture* FindFillTexture = GetTextureByName(InFillTexture);
@@ -54,6 +59,8 @@ void LuaUIManager::CreateSlider(FName InName, RectTransform InRectTransform, int
 
     UIMap.Add(InName, NewSliderUI);
     UpdateUIArrayForSort();
+
+    return NewSliderUI;
 }
 
 void LuaUIManager::DeleteUI(FName InName)
@@ -168,9 +175,9 @@ void LuaUIManager::DrawLuaUIs()
 
 void LuaUIManager::TestCODE()
 {
-    CreateText("TestTEXT", RectTransform(0, 0, 100, 100, AnchorDirection::MiddleCenter), 10, FString("Chan GOOOD!"), FName("Default"), 30, FLinearColor(1, 0, 0, 1));
-    CreateImage("TestImage", RectTransform(-100, -100, 200, 200, AnchorDirection::MiddleCenter), 3, FName("ExplosionColor"), FLinearColor(1, 1, 1, 1));
-    CreateButton("TestButton", RectTransform(-100, -100, 200, 200, AnchorDirection::MiddleCenter), 15, FString("TEstbutonFUn"));
+    CreateText("TestTEXT", RectTransform(0, 0, 100, 100, AnchorDirection::MiddleCenter, AnchorDirection::MiddleCenter), 10, FString("Chan GOOOD!"), FName("Default"), 30, FLinearColor(1, 0, 0, 1));
+    CreateImage("TestImage", RectTransform(-100, -100, 200, 200, AnchorDirection::MiddleCenter, AnchorDirection::MiddleCenter), 3, FName("ExplosionColor"), FLinearColor(1, 1, 1, 1));
+    CreateButton("TestButton", RectTransform(-100, -100, 200, 200, AnchorDirection::MiddleCenter, AnchorDirection::MiddleCenter), 15, FString("TEstbutonFUn"));
 
     auto GotsText = GetTextUI("TestTEXT");
     auto GotsImage = GetImageUI("TestImage");
@@ -273,6 +280,8 @@ void LuaUIManager::GenerateResource()
     
     TextureMap.Add(FName("ExplosionColor"), FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/T_Explosion_SubUV.png"));
     TextureMap.Add(FName("WhiteBox"), FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/WhiteBox.png"));
+    TextureMap.Add(FName("BehellaLogo"), FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/BehellaLogo.png"));
+    TextureMap.Add(FName("PressSpace"), FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/PressSpace.png"));
 
 }
 

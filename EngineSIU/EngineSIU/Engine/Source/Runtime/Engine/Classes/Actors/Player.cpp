@@ -19,6 +19,7 @@
 #include "Engine/Contents/AnimInstance/LuaScriptAnimInstance.h"
 #include "Particles/Emitter.h"
 #include "Particles/ParticleSystem.h"
+#include "Engine/Classes/Actors/BehellaGameMode.h"
 
 
 void AEditorPlayer::Tick(float DeltaTime)
@@ -699,28 +700,28 @@ void AHeroPlayer::BeginPlay()
     { //하드하게 걍 박기 ㅋㅋ
         PlayerController->BindAction(FString("Q"), [this](float DeltaTime)
         {
-            if (!IsDead())
+            if (!IsDead() && (int)ABehellaGameMode::GameState > 1) 
             {
                 SetAnimState(FString("VerticalFastParry"));
             }
         });
         PlayerController->BindAction(FString("W"), [this](float DeltaTime)
         {
-            if (!IsDead())
+            if (!IsDead() && (int)ABehellaGameMode::GameState > 1)
             {
                 SetAnimState(FString("VerticalHardParry"));
             }
         });
         PlayerController->BindAction(FString("A"), [this](float DeltaTime)
         {
-            if (!IsDead())
+            if (!IsDead() && (int)ABehellaGameMode::GameState > 1)
             {
                 SetAnimState(FString("HorizontalFastParry"));
             }
         });
         PlayerController->BindAction(FString("S"), [this](float DeltaTime)
         {
-            if (!IsDead())
+            if (!IsDead() && (int)ABehellaGameMode::GameState > 1)
             {
                 SetAnimState(FString("HorizontalHardParry"));
             }
@@ -793,6 +794,8 @@ void AHeroPlayer::Tick(float DeltaTime)
 {
     APlayer::Tick(DeltaTime);
 
+    if (bWaitingStart) return;
+
     // 개 레전드 하드 코딩 카메라 이동
     if (CameraMoveCounter == 0)
     {
@@ -848,6 +851,8 @@ void AHeroPlayer::Tick(float DeltaTime)
     if (CameraMoveCounter == 5)
     {
         GEngine->ActiveWorld->GetPlayerController()->PlayerCameraManager->OnBlendCompleteEvent.Clear();
+        OnCinematicFinish.Broadcast();
+        CameraMoveCounter++;
     }
 }
 
