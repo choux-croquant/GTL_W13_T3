@@ -32,7 +32,7 @@ void ABehellaGameMode::BeginPlay()
     {
         if (APlayerCameraManager* PCM = PC->PlayerCameraManager)
         {
-            FVector BackgroundLocation = FVector(29.14f, 36.69f, 31.37f);
+            FVector BackgroundLocation = FVector(205.38f, 130.33f, 142.96f);
             FRotator BackgroundRotation = FRotator(-3.f, -122.f, 0.f);
             FMinimalViewInfo BackgroundPOV;
             BackgroundPOV.Location = BackgroundLocation;
