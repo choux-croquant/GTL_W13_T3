@@ -690,13 +690,22 @@ void AHeroPlayer::BeginPlay()
             ParticleActor->ParticleSystemComponent->SetParticleSystem(SparkParticle);
             GetWorld()->GetPlayerController()->ClientStartCameraShake(UDamageCameraShake::StaticClass());
             TWeakObjectPtr<AEmitter> WeakParticleActor(ParticleActor); // 약한 참조
-            FTimerManager::GetInstance().AddTimer(0.5f, [WeakParticleActor]() {
+
+            ABehellaGameMode* BGM = Cast<ABehellaGameMode>(GetWorld()->GetGameMode());
+            
+            FTimerManager::GetInstance().AddTimer(0.5f, [WeakParticleActor, BGM]() {
                 if (WeakParticleActor.IsValid()) { // 유효성 확인
                     WeakParticleActor->Destroy();
                 }
-                GEngineLoop.SlowMoFactor = 1.0f;
+                if (BGM)
+                {
+                    BGM->AnimSlowFactor = 1.0f;
+                }
             });
-            GEngineLoop.SlowMoFactor = 0.4f;
+            if (BGM)
+            {
+                BGM->AnimSlowFactor = 0.0f;
+            }
             //TODO: 패리 사운드 실행
         }
     );

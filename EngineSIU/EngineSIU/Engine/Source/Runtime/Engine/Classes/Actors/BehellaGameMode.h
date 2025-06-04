@@ -50,6 +50,16 @@ public:
 
     virtual void RestartMatch();
 
+    void SetAnimTimeFactor(float InTimeFact)
+    {
+        AnimSlowFactor = InTimeFact;
+    }
+
+    float GetAnimTimeFactor()
+    {
+        return AnimSlowFactor;
+    }
+    
     // 플레이어 승리
     void PlayerWin();
 
@@ -72,6 +82,8 @@ public:
     static EBehellaGameState GameState;
   
     float StepTimer = 0.0f;
+
+    float AnimSlowFactor = 1.0f;
 
     FBehellaScreenUI* CurScreenUI = nullptr;
     FBehellaScreenUI* ClosingScreenUI = nullptr;

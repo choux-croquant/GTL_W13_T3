@@ -46,7 +46,6 @@ int32 FEngineLoop::Init(HINSTANCE hInstance)
 {
     FPlatformTime::InitTiming();
 
-    SlowMoFactor = 1.0f;
     /* must be initialized before window. */
     WindowInit(hInstance);
 
@@ -174,7 +173,7 @@ void FEngineLoop::Tick()
             }
         }
         
-        const float DeltaTime = static_cast<float>(ElapsedTime / 1000.f) * SlowMoFactor;
+        const float DeltaTime = static_cast<float>(ElapsedTime / 1000.f);
 
         GEngine->Tick(DeltaTime);
         FTimerManager::GetInstance().Update(DeltaTime);

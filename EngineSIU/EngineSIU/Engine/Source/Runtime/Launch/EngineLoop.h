@@ -45,7 +45,6 @@ public:
     static FResourceManager ResourceManager;
     static uint32 TotalAllocationBytes;
     static uint32 TotalAllocationCount;
-    float SlowMoFactor;
     HWND AppWnd;
 
     FGPUTimingManager GPUTimingManager;
