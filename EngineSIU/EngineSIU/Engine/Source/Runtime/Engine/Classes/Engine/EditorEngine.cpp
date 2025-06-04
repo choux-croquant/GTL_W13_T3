@@ -138,10 +138,9 @@ void UEditorEngine::Tick(float DeltaTime)
             {
                 World->Tick(DeltaTime);
                 ULevel* Level = World->GetActiveLevel();
-                TArray CachedActors = Level->Actors;
                 if (Level)
                 {
-
+                    TArray CachedActors = Level->Actors;
                     for (AActor* Actor : CachedActors)
                     {
                         if (Actor)
