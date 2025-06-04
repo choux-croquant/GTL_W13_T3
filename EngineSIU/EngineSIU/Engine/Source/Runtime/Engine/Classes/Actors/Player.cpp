@@ -910,7 +910,7 @@ void AHeroPlayer::OnFinalScene()
     {
         return;
     }
-    SetActorLocation(FVector(-1010, 0, -2));
+    SetActorLocation(FVector(-3950, 0, -8));
     SetActorRotation(FRotator(0, 180, 0));
     CameraSocketComponent = AddComponent<USocketComponent>();
     CameraSocketComponent->Socket = "mixamorig:Head";
@@ -919,7 +919,7 @@ void AHeroPlayer::OnFinalScene()
     UCameraComponent* CameraComponent = AddComponent<UCameraComponent>();
     CameraComponent->SetupAttachment(CameraSocketComponent);
     // FTransform CameraTransform();
-    CameraComponent->SetRelativeLocation(FVector(0, 2.f, 5.3f));
+    CameraComponent->SetRelativeLocation(FVector(0, 7.12f, 18.07f));
     CameraComponent->SetRelativeRotation(FRotator(85.f, 90.f, 180.f));
 }
 

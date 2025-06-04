@@ -265,6 +265,6 @@ void AEnemy::ResetEnemyProperties()
 
 void AEnemy::OnFinalScene()
 {
-    SetActorLocation(FVector(-1145, 0, 0));
+    SetActorLocation(FVector(-4490, 0, 0));
     SetActorRotation(FRotator(0, 0, 0));
 }
