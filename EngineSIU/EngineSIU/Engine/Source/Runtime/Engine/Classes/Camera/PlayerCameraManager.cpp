@@ -320,7 +320,7 @@ void APlayerCameraManager::DoUpdateCamera(float DeltaTime)
                 
                 AEmitter* ParticleActor2 = GetWorld()->SpawnActor<AEmitter>();
                 ParticleActor2->SetActorTickInEditor(true);
-                ParticleActor2->SetActorLocation(FVector(-712, 1414, 228));
+                ParticleActor2->SetActorLocation(FVector(-712, 141, 228));
                 ParticleActor1->ParticleSystemComponent->SetParticleSystem(FireParticle);
                 ParticleActor2->ParticleSystemComponent->SetParticleSystem(FireParticle);
                 FSoundManager::GetInstance().PlaySound("FireOn", 2.0f);
