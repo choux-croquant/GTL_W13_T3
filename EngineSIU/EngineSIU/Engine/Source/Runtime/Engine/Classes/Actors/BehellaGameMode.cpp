@@ -217,15 +217,15 @@ void ABehellaGameMode::PlayerWin()
                 FSoundManager::GetInstance().PlaySound("footprint");
                 FSoundManager::GetInstance().PlaySoundWithDelay("footprint", 0.4f);
                 FSoundManager::GetInstance().PlaySoundWithDelay("footprint", 0.8f);
-                FTimerManager::GetInstance().AddTimer(2.0f, [this]()
-                {
-                    Enemy->GetComponentByClass<USkeletalMeshComponent>()->ChangeRigidBodyFlag(ERigidBodyType::DYNAMIC);
-                    Enemy->GetComponentByClass<USkeletalMeshComponent>()->bSimulate = true;
-                    // GEngine->PhysicsManager->GetScene(GetWorld())->simulate(FLT_MIN);
-                    GEngine->PhysicsManager->GetScene(GetWorld())->fetchResults(true);
-                    Enemy->GetComponentByClass<USkeletalMeshComponent>()->AddImpulseToBones(FVector(-1.0f, 0.0f, 1.0f), 10000.0f);
-                    FSoundManager::GetInstance().PlaySound("Roar");
-                });
+            });
+            FTimerManager::GetInstance().AddTimer(4.0f, [this]()
+            {
+                Enemy->GetComponentByClass<USkeletalMeshComponent>()->ChangeRigidBodyFlag(ERigidBodyType::DYNAMIC);
+                Enemy->GetComponentByClass<USkeletalMeshComponent>()->bSimulate = true;
+                // GEngine->PhysicsManager->GetScene(GetWorld())->simulate(FLT_MIN);
+                GEngine->PhysicsManager->GetScene(GetWorld())->fetchResults(true);
+                Enemy->GetComponentByClass<USkeletalMeshComponent>()->AddImpulseToBones(FVector(-1.0f, 0.0f, 1.0f), 10000.0f);
+                FSoundManager::GetInstance().PlaySound("Roar");
             });
         }
     );

@@ -686,7 +686,7 @@ void AHeroPlayer::BeginPlay()
             UE_LOG(ELogLevel::Error,"Parry");
             AEmitter* ParticleActor = GetWorld()->SpawnActor<AEmitter>();
             ParticleActor->SetActorTickInEditor(true);
-            ParticleActor->SetActorLocation(FVector(14.0f, -15.0f, 30.0f));
+            ParticleActor->SetActorLocation(FVector(144.0f, -67.0f, 134.0f));
             ParticleActor->ParticleSystemComponent->SetParticleSystem(SparkParticle);
             GetWorld()->GetPlayerController()->ClientStartCameraShake(UDamageCameraShake::StaticClass());
             TWeakObjectPtr<AEmitter> WeakParticleActor(ParticleActor); // 약한 참조
@@ -821,7 +821,7 @@ void AHeroPlayer::Tick(float DeltaTime)
         GetWorld()->GetPlayerController()->PlayerCameraManager->StartLetterBoxAnimation(1.0f, 0.9f, 0.3f);
         
         AActor* TargetActor = GEngine->ActiveWorld->SpawnActor<AActor>();
-        TargetActor->SetActorLocation(FVector(-3777.0f, 0, 120));
+        TargetActor->SetActorLocation(FVector(-3777.0f, 0, 150));
         GEngine->ActiveWorld->GetPlayerController()->SetViewTarget(TargetActor, Params);
         CameraMoveCounter++;
         FSoundManager::GetInstance().PlaySound("GameBGM", 0.1f);
@@ -837,7 +837,7 @@ void AHeroPlayer::Tick(float DeltaTime)
             Params.BlendExp = 3.f;
 
             AActor* TargetActor = GEngine->ActiveWorld->SpawnActor<AActor>();
-            TargetActor->SetActorLocation(FVector(-100, 0, 120));
+            TargetActor->SetActorLocation(FVector(-100, 0, 150));
             GEngine->ActiveWorld->GetPlayerController()->SetViewTarget(TargetActor, Params);
             CameraMoveCounter++;
         });
