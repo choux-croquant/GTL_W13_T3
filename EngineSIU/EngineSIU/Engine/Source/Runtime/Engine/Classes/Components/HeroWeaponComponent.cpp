@@ -66,8 +66,8 @@ void UHeroWeaponComponent::OnWeaponOverlapped(UPrimitiveComponent* OverlappedCom
                 {
                     if (Player->GetStateMachine() != TEXT("Idle") && Player->GetStateMachine() != TEXT("FinalAttack"))
                     {
-                        Player->Parry(Player, Enemy);
                         EnemyWeaponComponent->GotParried(GetStateDamage(Player->GetStateMachine()));
+                        Player->Parry(Player, Enemy);
                     }
                 }
             }

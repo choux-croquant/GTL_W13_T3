@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include <functional>
 
+#include "Container/Array.h"
+
 class FTimerManager {
 public:
     static FTimerManager& GetInstance() {
@@ -11,7 +13,7 @@ public:
     void Update(float DeltaTime);
     void ClearAllTimers()
     {
-        Timers.clear();
+        Timers.Empty();
     }
 
 private:
@@ -20,5 +22,5 @@ private:
         float TimeLeft;
         std::function<void()> Callback;
     };
-    std::vector<FTimer> Timers;
+    TArray<FTimer> Timers;
 };
