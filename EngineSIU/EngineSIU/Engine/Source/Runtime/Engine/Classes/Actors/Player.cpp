@@ -863,6 +863,7 @@ void AHeroPlayer::Tick(float DeltaTime)
             GEngine->ActiveWorld->GetPlayerController()->SetViewTarget(TargetActor, Params);
             AEmitter* ParticleActor = GetWorld()->SpawnActor<AEmitter>();
             ParticleActor->SetActorTickInEditor(true);
+            ParticleActor->SetActorLocation((FVector(96, -190, 20)));
             ParticleActor->ParticleSystemComponent->SetParticleSystem(FogParticle);
             CameraMoveCounter++;
         });

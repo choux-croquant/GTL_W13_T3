@@ -256,71 +256,71 @@ void APlayerCameraManager::DoUpdateCamera(float DeltaTime)
             NewPOV.BlendViewInfo(PendingViewTarget.POV, BlendPct);
 
             // 개 레전드 하드코딩 2
-            if (bFire1 == false && NewPOV.Location.X > -875)
+            if (bFire1 == false && NewPOV.Location.X > -2930 -480)
             {
                 AEmitter* ParticleActor1 = GetWorld()->SpawnActor<AEmitter>();
                 ParticleActor1->SetActorTickInEditor(true);
-                ParticleActor1->SetActorLocation(FVector(-755, 35, 51));
+                ParticleActor1->SetActorLocation(FVector(-2930, -141, 228));
                 
                 AEmitter* ParticleActor2 = GetWorld()->SpawnActor<AEmitter>();
                 ParticleActor2->SetActorTickInEditor(true);
-                ParticleActor2->SetActorLocation(FVector(-755, -35, 51));
+                ParticleActor2->SetActorLocation(FVector(-2930, 141, 228));
                 ParticleActor1->ParticleSystemComponent->SetParticleSystem(FireParticle);
                 ParticleActor2->ParticleSystemComponent->SetParticleSystem(FireParticle);
                 FSoundManager::GetInstance().PlaySound("FireOn", 2.0f);
                 bFire1 = true;
             }
-            else if (bFire2 == false && NewPOV.Location.X > -742)
+            else if (bFire2 == false && NewPOV.Location.X > -2400 -480)
             {
                 AEmitter* ParticleActor1 = GetWorld()->SpawnActor<AEmitter>();
                 ParticleActor1->SetActorTickInEditor(true);
-                ParticleActor1->SetActorLocation(FVector(-622, 35, 51));
+                ParticleActor1->SetActorLocation(FVector(-2400, -141, 228));
                 
                 AEmitter* ParticleActor2 = GetWorld()->SpawnActor<AEmitter>();
                 ParticleActor2->SetActorTickInEditor(true);
-                ParticleActor2->SetActorLocation(FVector(-622, -35, 51));
+                ParticleActor2->SetActorLocation(FVector(-2400, 141, 228));
                 ParticleActor1->ParticleSystemComponent->SetParticleSystem(FireParticle);
                 ParticleActor2->ParticleSystemComponent->SetParticleSystem(FireParticle);
                 FSoundManager::GetInstance().PlaySound("FireOn", 2.0f);
                 bFire2 = true;
             }
-            else if (bFire3 == false && NewPOV.Location.X > -592)
+            else if (bFire3 == false && NewPOV.Location.X > -1808 - 480)
             {
                 AEmitter* ParticleActor1 = GetWorld()->SpawnActor<AEmitter>();
                 ParticleActor1->SetActorTickInEditor(true);
-                ParticleActor1->SetActorLocation(FVector(-472, 35, 51));
+                ParticleActor1->SetActorLocation(FVector(-1808, -141, 228));
                 
                 AEmitter* ParticleActor2 = GetWorld()->SpawnActor<AEmitter>();
                 ParticleActor2->SetActorTickInEditor(true);
-                ParticleActor2->SetActorLocation(FVector(-472, -35, 51));
+                ParticleActor2->SetActorLocation(FVector(-1808, 141, 228));
                 ParticleActor1->ParticleSystemComponent->SetParticleSystem(FireParticle);
                 ParticleActor2->ParticleSystemComponent->SetParticleSystem(FireParticle);
                 FSoundManager::GetInstance().PlaySound("FireOn", 2.0f);
                 bFire3 = true;
             }
-            else if (bFire4 == false && NewPOV.Location.X > -444)
+            else if (bFire4 == false && NewPOV.Location.X > -1210 -480)
             {
                 AEmitter* ParticleActor1 = GetWorld()->SpawnActor<AEmitter>();
                 ParticleActor1->SetActorTickInEditor(true);
-                ParticleActor1->SetActorLocation(FVector(-324, 35, 51));
+                ParticleActor1->SetActorLocation(FVector(-1210 , -141, 228));
                 
                 AEmitter* ParticleActor2 = GetWorld()->SpawnActor<AEmitter>();
                 ParticleActor2->SetActorTickInEditor(true);
-                ParticleActor2->SetActorLocation(FVector(-324, -35, 51));
+                ParticleActor2->SetActorLocation(FVector(-1210 , 141, 228));
                 ParticleActor1->ParticleSystemComponent->SetParticleSystem(FireParticle);
                 ParticleActor2->ParticleSystemComponent->SetParticleSystem(FireParticle);
                 FSoundManager::GetInstance().PlaySound("FireOn", 2.0f);
                 bFire4 = true;
             }
-            else if (bFire5 == false && NewPOV.Location.X > -320)
+            else if (bFire5 == false && NewPOV.Location.X > -712 - 480)
             {
                 AEmitter* ParticleActor1 = GetWorld()->SpawnActor<AEmitter>();
                 ParticleActor1->SetActorTickInEditor(true);
-                ParticleActor1->SetActorLocation(FVector(-200, 35, 51));
+                ParticleActor1->SetActorLocation(FVector(-712, -141, 228));
                 
                 AEmitter* ParticleActor2 = GetWorld()->SpawnActor<AEmitter>();
                 ParticleActor2->SetActorTickInEditor(true);
-                ParticleActor2->SetActorLocation(FVector(-200, -35, 51));
+                ParticleActor2->SetActorLocation(FVector(-712, 1414, 228));
                 ParticleActor1->ParticleSystemComponent->SetParticleSystem(FireParticle);
                 ParticleActor2->ParticleSystemComponent->SetParticleSystem(FireParticle);
                 FSoundManager::GetInstance().PlaySound("FireOn", 2.0f);
