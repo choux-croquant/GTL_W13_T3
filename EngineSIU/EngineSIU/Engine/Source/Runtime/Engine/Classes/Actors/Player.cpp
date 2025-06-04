@@ -690,11 +690,13 @@ void AHeroPlayer::BeginPlay()
             ParticleActor->ParticleSystemComponent->SetParticleSystem(SparkParticle);
             GetWorld()->GetPlayerController()->ClientStartCameraShake(UDamageCameraShake::StaticClass());
             TWeakObjectPtr<AEmitter> WeakParticleActor(ParticleActor); // 약한 참조
-            FTimerManager::GetInstance().AddTimer(1.0f, [WeakParticleActor]() {
+            FTimerManager::GetInstance().AddTimer(0.5f, [WeakParticleActor]() {
                 if (WeakParticleActor.IsValid()) { // 유효성 확인
                     WeakParticleActor->Destroy();
                 }
+                GEngineLoop.SlowMoFactor = 1.0f;
             });
+            GEngineLoop.SlowMoFactor = 0.4f;
             //TODO: 패리 사운드 실행
         }
     );
