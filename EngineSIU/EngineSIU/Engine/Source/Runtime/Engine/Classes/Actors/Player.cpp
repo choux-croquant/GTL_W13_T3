@@ -821,7 +821,7 @@ void AHeroPlayer::Tick(float DeltaTime)
         GetWorld()->GetPlayerController()->PlayerCameraManager->StartLetterBoxAnimation(1.0f, 0.9f, 0.3f);
         
         AActor* TargetActor = GEngine->ActiveWorld->SpawnActor<AActor>();
-        TargetActor->SetActorLocation(FVector(-1000, 0, 30));
+        TargetActor->SetActorLocation(FVector(-3777.0f, 0, 120));
         GEngine->ActiveWorld->GetPlayerController()->SetViewTarget(TargetActor, Params);
         CameraMoveCounter++;
         FSoundManager::GetInstance().PlaySound("GameBGM", 0.1f);
@@ -837,7 +837,7 @@ void AHeroPlayer::Tick(float DeltaTime)
             Params.BlendExp = 3.f;
 
             AActor* TargetActor = GEngine->ActiveWorld->SpawnActor<AActor>();
-            TargetActor->SetActorLocation(FVector(-50, 0, 30));
+            TargetActor->SetActorLocation(FVector(-100, 0, 120));
             GEngine->ActiveWorld->GetPlayerController()->SetViewTarget(TargetActor, Params);
             CameraMoveCounter++;
         });
@@ -858,7 +858,7 @@ void AHeroPlayer::Tick(float DeltaTime)
 
             
             AActor* TargetActor = GEngine->ActiveWorld->SpawnActor<AActor>();
-            TargetActor->SetActorLocation(FVector(-41, 13.5, 32));
+            TargetActor->SetActorLocation(FVector(-54, 45, 155));
             TargetActor->SetActorRotation(FRotator(0.f, -27.34f, -9.36f));
             GEngine->ActiveWorld->GetPlayerController()->SetViewTarget(TargetActor, Params);
             AEmitter* ParticleActor = GetWorld()->SpawnActor<AEmitter>();
